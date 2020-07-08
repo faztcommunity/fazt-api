@@ -12,7 +12,7 @@ export const getProjects: Handler = async (req, res) => {
 
 export const getProject: Handler = async (req, res) => {
   const project = await Project.findById(req.params.id);
-  if (!project) {
+  if (!project || project.status === 'deleted') {
     return res.status(404).json({ message: 'Project not found' });
   }
 
