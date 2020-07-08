@@ -1,5 +1,14 @@
 # fazt api
 
+![Continuous Integration](https://github.com/faztdevelopers/fazt-api/workflows/Continuous%20Integration/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=alert_status)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=code_smells)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=ncloc)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=sqale_index)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=bugs)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=coverage)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
 # scripts
 ```bash
 npm run dev

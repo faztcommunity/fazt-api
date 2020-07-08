@@ -99,5 +99,11 @@ typings/
 
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode
 
+# IDE webstorm
 .idea
+
+# build tsc
 dist
+
+# sonarQube
+.scannerwork
