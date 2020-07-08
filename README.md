@@ -1,11 +1,15 @@
 # fazt api
 
 # scripts
+```bash
 npm run dev
-
+```
+```bash
 npm start
-
+```
+```bash
 npm run build
+```
 
 # endpoints
 
@@ -34,7 +38,7 @@ npm run build
 
 # Docker
 to run with docker compose
-```
+```bash
 docker-compose up
 ```
 
