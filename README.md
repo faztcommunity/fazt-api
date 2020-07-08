@@ -38,8 +38,14 @@ npm run build
 * Encriptar contraseña
 
 # Environment Variables
-* FAZT_API_PORT
-* FAZT_API_MONGODB_URI
+* PORT, this is the default http port, by default is `3000`
+* MONGODB_URI, this is the mongodb URI for connection. By default is `mongodb://localhost/faztapi`
+
+# Docker
+to run with docker compose
+```
+docker-compose up
+```
 
 # Contributors
 * fazt [About me](https://github.com/fazttech) 

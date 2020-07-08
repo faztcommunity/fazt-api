@@ -1,0 +1,21 @@
+version: "3"
+
+services: 
+  api:
+    image: node
+    container_name: faztapi
+    build: .
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - .:/usr/src/app
+    links: 
+      - mongo 
+  mongo:
+    container_name: mydatabase
+    image: mongo
+    ports: 
+      - "27018:27017"
+    logging: 
+      driver: none
+
