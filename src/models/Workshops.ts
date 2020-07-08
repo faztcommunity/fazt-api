@@ -1,7 +1,30 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Document } from "mongoose";
 
-const newWorkshopSchema = new Schema({
+export interface IWorkshop extends Document {
+    title: string;
+    description: string;
+    date: Date;
+  }
 
+const newWorkshopSchema: Schema<IWorkshop> = new Schema<IWorkshop>({
+    title: {
+        type: String, 
+        required: true
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    date: {
+        type: Date,
+        required: true
+    },
+    workshopUser: {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+    }
+}, {
+    timestamps: true,
 });
 
-export default model("Workshop", newWorkshopSchema);
+export default model<IWorkshop>("Workshop", newWorkshopSchema);
