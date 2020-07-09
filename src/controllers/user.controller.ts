@@ -1,6 +1,7 @@
 import { Handler } from "../types";
 import User from "../models/User";
 import { success, error } from "../network/response";
+import { generateAndSignToken } from "../auth/auth";
 
 export const getUsers: Handler = async (req, res) => {
   try {
@@ -39,12 +40,33 @@ export const deleteUser: Handler = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     await User.findByIdAndRemove(req.params.id);
-    return res.status(200).json({ message: "User Deleted" });
+    return success(res, User, "200");
   } catch (e) {
-    return res.status(404).json({ message: "User not Found" });
+    return error(res, "404", "User not found");
   }
 };
 
 export const updateUser: Handler = async (req, res) => {
   return res.json({ message: "User Updated" });
+};
+
+export const signinUser: Handler = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    if (!(email && password)) {
+      return error(res, "400", "llenar los campos");
+    }
+
+    //validate credentials
+    const crendential = (await User.find({ email })).pop();
+    if (!crendential) {
+      return error(res, "401", "Credentials invalidad, verify");
+    }
+
+    //compare password
+    const token = await generateAndSignToken({ user: crendential.id });
+    return success(res, token, "200");
+  } catch (error) {
+    return error(res, "500");
+  }
 };

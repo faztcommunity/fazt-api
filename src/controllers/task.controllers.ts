@@ -41,7 +41,6 @@ export const deleteTask: Handler = async (req, res) => {
 
 export const updateTask: Handler = async (req, res) => {
   let task = await Task.findById(req.params.id);
-
   if (!task) {
     return res.status(404).json({ message: "Task not found" });
   }
