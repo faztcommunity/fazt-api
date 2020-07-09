@@ -1,24 +1,39 @@
 import { Handler } from "../types";
 import User from "../models/User";
-import { success, error } from "../network/response";
 import { generateAndSignToken } from "../auth/auth";
+import * as response from "../network/response";
 
 export const getUsers: Handler = async (req, res) => {
   try {
     const Users = await User.find();
-    return success(res, Users, "200");
+    return response.success(res, {
+      code: 200,
+      data: Users,
+      message: "OK!",
+    });
   } catch (e) {
-    return error(res, "500", "Error getting users");
+    return response.error(res, {
+      code: 500,
+      message: "Error getting users",
+    });
   }
 };
 export const getUser: Handler = async (req, res) => {
   const user = await User.findById(req.params.id);
   if (!user) {
-    return error(res, "404", "User not found");
+    return response.error(res, {
+      code: 404,
+      message: "User not found",
+    });
   }
 
-  return success(res, User, "200");
+  return response.success(res, {
+    code: 200,
+    data: user,
+    message: "OK!",
+  });
 };
+
 export const createUser: Handler = async (req, res) => {
   const { nickname, email, password, firstName, lastName } = req.body;
 
@@ -29,10 +44,17 @@ export const createUser: Handler = async (req, res) => {
     const newUser = await user.save();
     console.log(newUser);
     delete newUser.password;
-    return success(res, newUser, "201");
+    return response.success(res, {
+      code: 201,
+      data: newUser,
+      message: "CREATED!",
+    });
   } catch (e) {
     console.log(e);
-    return error(res, "404", "Error creating an user");
+    return response.error(res, {
+      code: 500,
+      message: "Error creating an user",
+    });
   }
 };
 
@@ -40,9 +62,16 @@ export const deleteUser: Handler = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     await User.findByIdAndRemove(req.params.id);
-    return success(res, User, "200");
+    return response.success(res, {
+      code: 200,
+      data: User,
+      message: "Deleted succesfuly",
+    });
   } catch (e) {
-    return error(res, "404", "User not found");
+    return response.error(res, {
+      code: 404,
+      message: "User not found",
+    });
   }
 };
 
@@ -54,19 +83,32 @@ export const signinUser: Handler = async (req, res) => {
   const { email, password } = req.body;
   try {
     if (!(email && password)) {
-      return error(res, "400", "llenar los campos");
+      return response.error(res, {
+        code: 401,
+        message: "fill all the fields",
+      });
     }
 
     //validate credentials
     const crendential = (await User.find({ email })).pop();
     if (!crendential) {
-      return error(res, "401", "Credentials invalidad, verify");
+      return response.error(res, {
+        code: 401,
+        message: "Credentials invalidad, verify",
+      });
     }
 
     //compare password
     const token = await generateAndSignToken({ user: crendential.id });
-    return success(res, token, "200");
+    return response.success(res, {
+      code: 200,
+      data: token,
+      message: "Ok!",
+    });
   } catch (error) {
-    return error(res, "500");
+    return response.error(res, {
+      code: 500,
+      message: "Internal server error",
+    });
   }
 };

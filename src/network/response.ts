@@ -1,6 +1,25 @@
 import { Response } from "express";
+import { ErrorCodes, SuccessCodes } from "../types/httpCodes";
 
-type StatusCode = "200" | "201" | "400" | "401" | "404" | "500"; //status for server
+interface HttpResponse {
+  message: string;
+  data?: any;
+}
+
+export interface HTTPError extends HttpResponse {
+  code: ErrorCodes;
+}
+
+export interface HTTPSuccess extends HttpResponse {
+  code: SuccessCodes;
+}
+
+export const success = (res: Response, data: HTTPSuccess) =>
+  res.status(data.code).send(data);
+
+export const error = (res: Response, data: HTTPError) =>
+  res.status(data.code).send(data);
+/*type StatusCode = "200" | "201" | "400" | "401" | "404" | "500"; //status for server
 
 interface IMessage {
   //interface for message the status server
@@ -35,4 +54,4 @@ export const error = (
   return res
     .status(Number(statusCode))
     .json({ message: statusResponse[statusCode], statusCode, extraInfo }); //message: statusResponse: 'internal error', 'client error'..., extraInfo: "Credentials invalid"
-};
+};*/
