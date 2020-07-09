@@ -1,54 +1,56 @@
-import { Request, Response } from 'express';
+import { Handler } from '../types';
 import User from '../models/User';
+import { success, error } from '../network/response';
+import { generateAndSignToken } from '../auth/auth';
+import { ErrorHandler } from '../error';
+import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED } from 'http-status-codes';
 
-export const getUsers = async (req: Request, res: Response) => {
-    try {
-        const Users = await User.find();
-        return res.status(200).json(Users)
-    } catch (e) {
-        return res.status(500).send({message: "Error getting users"})
-    }
-}
-export const getUser = async (req: Request, res: Response) => {
-    const user = await User.findById(req.params.id);
-    if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-    }
+export const getUsers: Handler = async (req, res) => {
+  const Users = await User.find();
+  return success(res, Users, '200');
+};
+export const getUser: Handler = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
 
-    return res.status(200).json(User);
-}
-export const createUser = async (req: Request, res: Response) => {
-    const { 
-        nickname, 
-        email, 
-        password,
-        firstName,
-        lastName 
-    } = req.body;
+  return success(res, User, '200');
+};
+export const createUser: Handler = async (req, res) => {
+  const { nickname, email, password, firstName, lastName } = req.body;
+  const user = new User({ nickname, email, firstName, password, lastName });
+  await user.setPassword(password);
 
-    try {
-        const user = new User({ nickname, email, firstName, password, lastName });
-        await user.setPassword(password);
+  const newUser = await user.save();
+  console.log(newUser);
+  delete newUser.password;
+  return success(res, newUser, '201');
+};
 
-        const newUser = await user.save();
-        console.log(newUser)
-        delete newUser.password;
-        return res.status(201).json(newUser);
-    } catch(e) {
-        console.log(e)
-        return res.status(404).json({ message: 'Error creating an user' });
-    }
-}
-export const deleteUser = async (req: Request, res: Response) => {
-    try {
-        const user = await User.findById(req.params.id);   
-        await User.findByIdAndRemove(req.params.id);
-        res.status(200).json({ message: 'User Deleted' });
-    } catch (e) {
-        return res.status(404).json({ message: 'User not Found' });
-    } 
-}
+export const deleteUser: Handler = async (req, res) => {
+  const user = await User.findById(req.params.id);
+  if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
 
-export const updateUser = async (req: Request, res: Response) => {
+  await User.findByIdAndRemove(req.params.id);
+  return res.status(200).json(user);
+};
 
-}
+export const updateUser: Handler = async (req, res) => {
+  return res.json({ message: 'User Updated' });
+};
+
+export const signinUser: Handler = async (req, res) => {
+  const { email, password } = req.body;
+  if (!(email && password)) {
+    throw new ErrorHandler(BAD_REQUEST, 'Complete Fields');
+  }
+
+  //validate credentials
+  const crendential = (await User.find({ email })).pop();
+  if (!crendential) {
+    throw new ErrorHandler(UNAUTHORIZED, 'Invalid Credentials');
+  }
+
+  //compare password
+  const token = await generateAndSignToken({ user: crendential.id });
+  return res.json(token);
+};

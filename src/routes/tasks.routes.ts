@@ -1,16 +1,19 @@
 import { Router } from 'express';
 
-import * as taskCtrl from "../controllers/task.controllers";
+import * as taskCtrl from '../controllers/task.controllers';
+import { handlerExceptionRoute } from '../error';
 
 const router = Router();
 
-router.route('/')
-    .get(taskCtrl.getTasks)
-    .post(taskCtrl.createTask)
+router
+  .route('/')
+  .get(handlerExceptionRoute(taskCtrl.getTasks))
+  .post(handlerExceptionRoute(taskCtrl.createTask));
 
-router.route('/:id')
-    .get(taskCtrl.getTask)
-    .put(taskCtrl.updateTask)
-    .delete(taskCtrl.deleteTask)
+router
+  .route('/:id')
+  .get(handlerExceptionRoute(taskCtrl.getTask))
+  .put(handlerExceptionRoute(taskCtrl.updateTask))
+  .delete(handlerExceptionRoute(taskCtrl.deleteTask));
 
 export default router;

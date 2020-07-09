@@ -1,53 +1,47 @@
-import { Request, Response } from 'express';
+import { Handler } from '../types';
 import Project from '../models/Project';
+import { ErrorHandler } from '../error';
+import { NOT_FOUND } from 'http-status-codes';
 
-export const getProjects = async (req: Request, res: Response) => {
-  try {
-    const projects = await Project.find();
-    return res.status(200).json(projects);
-  } catch (e) {
-    return res.status(400).json({message: "Error Searching Projects"});
-  }
-}
+export const getProjects: Handler = async (req, res) => {
+  let projects = await Project.find().where('status').ne('deleted');
+  return res.status(200).json(projects);
+};
 
-export const getProject = async (req: Request, res: Response) => {
+export const getProject: Handler = async (req, res) => {
   const project = await Project.findById(req.params.id);
-  if (!project) {
-    return res.status(404).json({ message: 'Project not found' }); 
-  }
+  if (!project || project.status === 'deleted')
+    throw new ErrorHandler(NOT_FOUND, 'Project not found');
 
   return res.status(200).json(project);
-}
+};
 
-export const createProject = async (req: Request, res: Response) => {
+export const createProject: Handler = async (req, res) => {
   const project = new Project(req.body);
-  try {
-    await project.save();
-    return res.status(200).json({ message: 'Product Created' });
-  } catch (err) {
-    return res.status(500).json({ message: 'Internal server error' });
-  }
-  
-}
+  await project.save();
+  return res.status(200).json(project);
+};
 
-export const deleteProject = async (req: Request, res: Response) => { 
-  try {
-    const projectDeleted = await Project.findByIdAndDelete(req.params.id);
-    if(!projectDeleted) return res.status(404).json({ message: 'Project not Found' })
-    res.status(200).json({ message: "Project deleted" });
-  } catch (e) {
-    res.status(400).json({ message: "Project not found" });
-  }
-}
+export const deleteProject: Handler = async (req, res) => {
+  const projectDeleted = await Project.findByIdAndUpdate(
+    req.params.id,
+    { status: 'deleted' },
+    { new: true }
+  );
 
-export const updateProject = async (req: Request, res: Response) => {
+  if (!projectDeleted) throw new ErrorHandler(NOT_FOUND, 'Project not found');
+
+  return res.status(200).json(projectDeleted);
+};
+
+export const updateProject: Handler = async (req, res) => {
   let project = await Project.findById(req.params.id);
 
-  if (!project) {
-    return res.status(404).json({ message: 'Project not found' }); 
-  }
+  if (!project) throw new ErrorHandler(NOT_FOUND, 'Project not found');
 
-  project = await Project.findByIdAndUpdate(req.params.id, req.body);
+  project = await Project.findByIdAndUpdate(req.params.id, req.body, {
+    new: true
+  });
 
-  return res.status(200).json({ message: 'Project updated' });
-}
+  return res.status(200).json(project);
+};

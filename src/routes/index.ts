@@ -1,12 +1,20 @@
 import { Router } from "express";
 
+import taskRoutes from "./tasks.routes";
+import projectsRoutes from "./projects.routes";
+import userRoutes from "./users.routes";
+import jobRoutes from "./jobs.routes";
+import indexRoutes from "./index.routes";
+
 const routes = Router();
 
-routes.use('/discord', require('./discord.routes'));
-routes.use('/github', require('./github.routes'));
-routes.use('/job', require('./jobs.routes'));
-routes.use('/task', require('./tasks.routes'));
-routes.use('/project', require('./projects.routes'));
-routes.use('/user', require('./users.routes'));
+// routes.use('/discord', route);
+// routes.use('/github', route);
+// routes.use('/job', route);
+routes.use("/", indexRoutes);
+routes.use("/tasks", taskRoutes);
+routes.use("/projects", projectsRoutes);
+routes.use("/users", userRoutes);
+routes.use("/jobs", jobRoutes);
 
 export default routes;
