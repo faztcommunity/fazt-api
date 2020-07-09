@@ -3,7 +3,10 @@ import { Schema, model, Document } from 'mongoose';
 export interface IJob extends Document {
     title: string;
     description: string;
-    date: Date;    
+    date: Date;
+    employer: string;
+    employerEmail: string;
+    proposals: Schema.Types.ObjectId[];
 }
 
 const JobsSchema = new Schema({
@@ -15,19 +18,18 @@ const JobsSchema = new Schema({
         type: String,
         required: true
     },
-    date: {
+    employer: {
         type: String,
         required: true
     },
-    employer: {
-        type: Schema.Types.ObjectId,
-        ref: 'User',
+    employerEmail: {
+        type: String,
         required: true
     },
-    proposals: {
-        type: [Schema.Types.ObjectId],
+    proposals: [{
+        type: Schema.Types.ObjectId,
         ref: 'User'
-    }
+    }]
 },{
     timestamps: true
 });
