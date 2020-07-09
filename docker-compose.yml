@@ -1,4 +1,4 @@
-version: "3"
+version: "3.1"
 
 services: 
   api:
@@ -14,8 +14,8 @@ services:
   mongo:
     container_name: mydatabase
     image: mongo
+    command: mongod
+    volumes:
+      - /data/db
     ports: 
-      - "27018:27017"
-    logging: 
-      driver: none
-
+      - "27017:27017"
