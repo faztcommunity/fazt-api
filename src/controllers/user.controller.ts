@@ -1,6 +1,6 @@
 import { Handler } from "../types";
 import User from "../models/User";
-import { generateAndSignToken } from "../auth/auth";
+import { generateAndSignToken } from "./../auth/auth";
 import * as response from "../network/response";
 
 export const getUsers: Handler = async (req, res) => {
@@ -9,7 +9,7 @@ export const getUsers: Handler = async (req, res) => {
     return response.success(res, {
       code: 200,
       data: Users,
-      message: "OK!",
+      message: "Ok!",
     });
   } catch (e) {
     return response.error(res, {
@@ -30,7 +30,7 @@ export const getUser: Handler = async (req, res) => {
   return response.success(res, {
     code: 200,
     data: user,
-    message: "OK!",
+    message: "Ok!",
   });
 };
 
@@ -47,12 +47,12 @@ export const createUser: Handler = async (req, res) => {
     return response.success(res, {
       code: 201,
       data: newUser,
-      message: "CREATED!",
+      message: "Created!",
     });
   } catch (e) {
     console.log(e);
     return response.error(res, {
-      code: 500,
+      code: 404,
       message: "Error creating an user",
     });
   }
@@ -64,13 +64,12 @@ export const deleteUser: Handler = async (req, res) => {
     await User.findByIdAndRemove(req.params.id);
     return response.success(res, {
       code: 200,
-      data: User,
-      message: "Deleted succesfuly",
+      message: "User Deleted",
     });
   } catch (e) {
     return response.error(res, {
       code: 404,
-      message: "User not found",
+      message: "User not Found",
     });
   }
 };
