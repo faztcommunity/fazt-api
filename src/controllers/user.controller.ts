@@ -1,22 +1,36 @@
 import { Handler } from "../types";
 import User from "../models/User";
-import { success, error } from "../network/response";
+import * as response from "../network/response";
 
 export const getUsers: Handler = async (req, res) => {
   try {
     const Users = await User.find();
-    return success(res, Users, "200");
+    return response.success(res, {
+      code: 200,
+      data: Users,
+      message: "Ok!",
+    });
   } catch (e) {
-    return error(res, "500", "Error getting users");
+    return response.error(res, {
+      code: 500,
+      message: "Error getting users",
+    });
   }
 };
 export const getUser: Handler = async (req, res) => {
   const user = await User.findById(req.params.id);
   if (!user) {
-    return error(res, "404", "User not found");
+    return response.error(res, {
+      code: 404,
+      message: "User not found",
+    });
   }
 
-  return success(res, User, "200");
+  return response.success(res, {
+    code: 200,
+    data: user,
+    message: "Ok!",
+  });
 };
 export const createUser: Handler = async (req, res) => {
   const { nickname, email, password, firstName, lastName } = req.body;
@@ -28,10 +42,17 @@ export const createUser: Handler = async (req, res) => {
     const newUser = await user.save();
     console.log(newUser);
     delete newUser.password;
-    return success(res, newUser, "201");
+    return response.success(res, {
+      code: 201,
+      data: newUser,
+      message: "Created!",
+    });
   } catch (e) {
     console.log(e);
-    return error(res, "404", "Error creating an user");
+    return response.error(res, {
+      code: 404,
+      message: "Error creating an user",
+    });
   }
 };
 
@@ -39,9 +60,15 @@ export const deleteUser: Handler = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     await User.findByIdAndRemove(req.params.id);
-    return res.status(200).json({ message: "User Deleted" });
+    return response.success(res, {
+      code: 200,
+      message: "User Deleted",
+    });
   } catch (e) {
-    return res.status(404).json({ message: "User not Found" });
+    return response.error(res, {
+      code: 404,
+      message: "User not Found",
+    });
   }
 };
 
