@@ -7,7 +7,8 @@
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly src/index.ts",
     "start": "node dist/index.js",
-    "clean": "rimraf dist"
+    "clean": "rimraf dist",
+    "release": "standard-version"
   },
   "repository": {
     "type": "git",
@@ -20,17 +21,27 @@
     "url": "https://github.com/faztdevelopers/fazt-api/issues"
   },
   "homepage": "https://github.com/faztdevelopers/fazt-api#readme",
+  "husky": {
+    "hooks": {
+        "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
   "dependencies": {
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "helmet": "^3.23.3",
+    "husky": "^4.2.5",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.22",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "standard-version": "^8.0.0"
   },
   "devDependencies": {
+    "@commitlint/cli": "^9.1.1",
+    "@commitlint/config-conventional": "^7.5.0",
+    "@commitlint/config-lerna-scopes": "^8.1.0",
     "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.7",

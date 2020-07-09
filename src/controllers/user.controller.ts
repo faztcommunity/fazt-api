@@ -1,21 +1,22 @@
-import { Handler } from '../types';
-import User from '../models/User';
+import { Handler } from "../types";
+import User from "../models/User";
+import { success, error } from "../network/response";
 
 export const getUsers: Handler = async (req, res) => {
   try {
     const Users = await User.find();
-    return res.status(200).json(Users);
+    return success(res, Users, "200");
   } catch (e) {
-    return res.status(500).send({ message: 'Error getting users' });
+    return error(res, "500", "Error getting users");
   }
 };
 export const getUser: Handler = async (req, res) => {
   const user = await User.findById(req.params.id);
   if (!user) {
-    return res.status(404).json({ message: 'User not found' });
+    return error(res, "404", "User not found");
   }
 
-  return res.status(200).json(User);
+  return success(res, User, "200");
 };
 export const createUser: Handler = async (req, res) => {
   const { nickname, email, password, firstName, lastName } = req.body;
@@ -27,10 +28,10 @@ export const createUser: Handler = async (req, res) => {
     const newUser = await user.save();
     console.log(newUser);
     delete newUser.password;
-    return res.status(201).json(newUser);
+    return success(res, newUser, "201");
   } catch (e) {
     console.log(e);
-    return res.status(404).json({ message: 'Error creating an user' });
+    return error(res, "404", "Error creating an user");
   }
 };
 
@@ -38,12 +39,12 @@ export const deleteUser: Handler = async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     await User.findByIdAndRemove(req.params.id);
-    return res.status(200).json({ message: 'User Deleted' });
+    return res.status(200).json({ message: "User Deleted" });
   } catch (e) {
-    return res.status(404).json({ message: 'User not Found' });
+    return res.status(404).json({ message: "User not Found" });
   }
 };
 
 export const updateUser: Handler = async (req, res) => {
-  return res.json({ message: 'User Updated' });
+  return res.json({ message: "User Updated" });
 };

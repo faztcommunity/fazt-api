@@ -46,7 +46,7 @@ npm run build
 * MONGODB_URI, this is the mongodb URI for connection. By default is `mongodb://localhost/faztapi`
 
 # Docker
-to run with docker compose
+to run with docker compose, create file .env with MONGODB_URI
 ```bash
 docker-compose up
 ```

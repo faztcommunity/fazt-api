@@ -3,7 +3,7 @@ import Project from '../models/Project';
 
 export const getProjects: Handler = async (req, res) => {
   try {
-    const projects = await Project.find();
+    let projects = await Project.find().where('status').ne('deleted');
     return res.status(200).json(projects);
   } catch (err) {
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -12,7 +12,7 @@ export const getProjects: Handler = async (req, res) => {
 
 export const getProject: Handler = async (req, res) => {
   const project = await Project.findById(req.params.id);
-  if (!project) {
+  if (!project || project.status === 'deleted') {
     return res.status(404).json({ message: 'Project not found' });
   }
 
@@ -31,12 +31,16 @@ export const createProject: Handler = async (req, res) => {
 
 export const deleteProject: Handler = async (req, res) => {
   try {
-    const projectDeleted = await Project.findByIdAndDelete(req.params.id);
+    const projectDeleted = await Project.findByIdAndUpdate(
+      req.params.id,
+      { status: 'deleted' },
+      { new: true }
+    );
 
     if (!projectDeleted)
       return res.status(404).json({ message: 'Project not Found' });
 
-    return res.status(200).json({ message: 'Project Deleted' });
+    return res.status(200).json(projectDeleted);
   } catch (e) {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
