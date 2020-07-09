@@ -1,11 +1,23 @@
 # fazt api
-
+![Continuous Integration](https://github.com/faztdevelopers/fazt-api/workflows/Continuous%20Integration/badge.svg)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=alert_status)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=code_smells)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=ncloc)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=sqale_index)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=bugs)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=coverage)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=hulkike_fazt-api&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=hulkike_fazt-api)
 # scripts
+```bash
 npm run dev
-
+```
+```bash
 npm start
-
+```
+```bash
 npm run build
+```
 
 # endpoints
 
@@ -28,18 +40,15 @@ npm run build
 * `/misc` Enlaces de interés.
 * `/github`, para listar los repos de la comunidad
 
-# pending
-* doc api (jsdoc, apidoc, swagger, postman, manual)
-* foros
-* seed (datos de ejemplo para desarrollo). Puede estar basado en un backup
-* docker (env y prod)
-* PATCH
-* servicios para models
-* Encriptar contraseña
-
 # Environment Variables
-* FAZT_API_PORT
-* FAZT_API_MONGODB_URI
+* PORT, this is the default http port, by default is `3000`
+* MONGODB_URI, this is the mongodb URI for connection. By default is `mongodb://localhost/faztapi`
+
+# Docker
+to run with docker compose, create file .env with MONGODB_URI
+```bash
+docker-compose up
+```
 
 # Contributors
 * fazt [About me](https://github.com/fazttech) 

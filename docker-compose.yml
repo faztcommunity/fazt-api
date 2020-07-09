@@ -1,0 +1,23 @@
+version: "3.1"
+
+services: 
+  api:
+    image: node
+    container_name: faztapi
+    build: .
+    ports: 
+      - "3000:3000"
+    volumes: 
+      - .:/usr/src/app
+    links: 
+      - mongo 
+    environment: 
+      - MONGODB_URI=mongodb://mongo/faztdb
+  mongo:
+    container_name: mydatabase
+    image: mongo
+    command: mongod
+    volumes:
+      - /data/db
+    ports: 
+      - "27017:27017"
