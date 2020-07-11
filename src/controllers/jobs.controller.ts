@@ -1,54 +1,53 @@
-import {Handler, Request, Response} from 'express';
-import Jobs, {IJob} from '../models/Jobs';
-import {error, success} from '../network/response';
-import {isNull} from 'util';
+import { Handler, Request, Response } from "express";
+import Jobs, { IJob } from "../models/Jobs";
+import { isNull } from "util";
+import { ErrorHandler } from "../error";
+import {
+  NOT_FOUND,
+  INTERNAL_SERVER_ERROR,
+  BAD_REQUEST,
+} from "http-status-codes";
 
-export const getJobs: Handler = async (req: Request, res: Response) => {
-  try {
-    const results = await Jobs.find();
-    return success(res, results, "200");
-  } catch (e) {
-    return error(res, "500", "Error getting jobs");
-  }
-}
+export const getJobs: Handler = async (req, res) => {
+  const results = await Jobs.find();
+  return res.status(200).json(results);
+};
 
-export const getJob = async (req: Request, res: Response) => {
+export const getJob: Handler = async (req, res) => {
+  const result = await Jobs.findById(req.params.id);
+  if (!result) throw new ErrorHandler(NOT_FOUND, "Job Not Found");
+
+  return res.status(200).json(result);
+};
+
+export const createJob: Handler = async (req, res) => {
   try {
-    const result = await Jobs.findById(req.params.id);
-    if (!result) throw new Error("JobNotFound");
-    return success(res, result, "200");
-  } catch (e) {
-    return error(res, "404", "Job not found");
-  }
-}
-export const createJob = async (req: Request, res: Response) => {
-  try { 
     const newJob = new Jobs(req.body);
     newJob.save();
-    return success(res, newJob, "200");
+    return res.status(200).json(newJob);
   } catch (e) {
-    return error(res, "400", "Error creating Job");
+    throw new ErrorHandler(BAD_REQUEST, "Error creating Job");
   }
-}
-export const deleteJob = async (req: Request, res: Response) => {
-  try {
-    await Jobs.findByIdAndRemove(req.params.id);
-    return success(res, {message: "User deleted"}, "200");
-  } catch(e) {
-    return error(res, "500", "Error deleting user");
-  }
-}
-export const updateJob = async (req: Request, res: Response) => {
+};
+
+export const deleteJob: Handler = async (req, res) => {
+  await Jobs.findByIdAndRemove(req.params.id);
+  if (!Jobs) throw new ErrorHandler(NOT_FOUND, "Error deleting user");
+
+  return res.status(200).json({ message: "Jobs Deleted" });
+};
+
+export const updateJob: Handler = async (req, res) => {
   const updateData = req.body;
-  const idFilter = {_id: req.params.id}
+  const idFilter = { _id: req.params.id };
   let updatedJob: IJob | null;
   try {
     await Jobs.findOneAndUpdate(idFilter, updateData);
     updatedJob = await Jobs.findById(req.params.id);
-    if (isNull(updatedJob)) throw new Error("UserDontExists"); 
-  } catch (e) {
-    return error(res, "500", "Error updating job");
-  }
-  return success(res, updatedJob, "200");
-}
 
+    if (isNull(updatedJob)) throw new ErrorHandler(NOT_FOUND, "UserDontExists");
+  } catch (e) {
+    throw new ErrorHandler(INTERNAL_SERVER_ERROR, "Error updating job");
+  }
+  return res.status(200).json(updatedJob);
+};
