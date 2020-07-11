@@ -5,7 +5,7 @@ import { ErrorHandler } from "../../error";
 import { UNAUTHORIZED } from "http-status-codes";
 
 interface IPayload {
-  sub: {
+  user: {
     id: string;
   };
 }
@@ -24,7 +24,7 @@ export const generateAndSignToken = async (payload: IPayload) => {
 export const decodeToken = async (token: string) => {
   const payload = (await jwt.verify(token, "secre198247242")) as IPayload;
   if (!payload) {
-    throw { message: "Token invalid" };
+    throw new ErrorHandler(UNAUTHORIZED, "token invalid");
   }
   return payload;
 };

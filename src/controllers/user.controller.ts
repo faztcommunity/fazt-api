@@ -44,10 +44,10 @@ export const signin: Handler = async (req, res) => {
   const credential = (await User.find({ email })).pop();
 
   if (!credential) {
-    res.status(401).json({ message: "Credentials invalidad, verify" });
+    throw new ErrorHandler(UNAUTHORIZED, "Credentials invalidad, verify");
   }
 
   /*const passwordCorrect = await comparePassword(password, credential?.password)*/
-  const token = await generateAndSignToken({ sub: credential?._id });
+  const token = await generateAndSignToken({ user: credential?._id });
   return res.status(200).json({ token: token });
 };
