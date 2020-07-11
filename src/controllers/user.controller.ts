@@ -1,19 +1,19 @@
-import { Handler } from '../types';
-import User from '../models/User';
-import { success, error } from '../network/response';
-import { generateAndSignToken } from '../auth/auth';
-import { ErrorHandler } from '../error';
-import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED } from 'http-status-codes';
+import { Handler } from "../types";
+import User from "../models/User";
+import { success } from "../network/response";
+import { ErrorHandler } from "../error";
+import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED } from "http-status-codes";
+import { generateAndSignToken } from "../util/service/Auth";
 
 export const getUsers: Handler = async (req, res) => {
   const Users = await User.find();
-  return success(res, Users, '200');
+  return success(res, Users, "200");
 };
 export const getUser: Handler = async (req, res) => {
   const user = await User.findById(req.params.id);
-  if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
+  if (!user) throw new ErrorHandler(NOT_FOUND, "User not found");
 
-  return success(res, User, '200');
+  return success(res, User, "200");
 };
 export const createUser: Handler = async (req, res) => {
   const { nickname, email, password, firstName, lastName } = req.body;
@@ -23,34 +23,31 @@ export const createUser: Handler = async (req, res) => {
   const newUser = await user.save();
   console.log(newUser);
   delete newUser.password;
-  return success(res, newUser, '201');
+  return success(res, newUser, "201");
 };
 
 export const deleteUser: Handler = async (req, res) => {
   const user = await User.findById(req.params.id);
-  if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
+  if (!user) throw new ErrorHandler(NOT_FOUND, "User not found");
 
   await User.findByIdAndRemove(req.params.id);
   return res.status(200).json(user);
 };
 
 export const updateUser: Handler = async (req, res) => {
-  return res.json({ message: 'User Updated' });
+  return res.json({ message: "User Updated" });
 };
 
-export const signinUser: Handler = async (req, res) => {
+export const signin: Handler = async (req, res) => {
   const { email, password } = req.body;
-  if (!(email && password)) {
-    throw new ErrorHandler(BAD_REQUEST, 'Complete Fields');
+
+  const credential = (await User.find({ email })).pop();
+
+  if (!credential) {
+    res.status(401).json({ message: "Credentials invalidad, verify" });
   }
 
-  //validate credentials
-  const crendential = (await User.find({ email })).pop();
-  if (!crendential) {
-    throw new ErrorHandler(UNAUTHORIZED, 'Invalid Credentials');
-  }
-
-  //compare password
-  const token = await generateAndSignToken({ user: crendential.id });
-  return res.json(token);
+  /*const passwordCorrect = await comparePassword(password, credential?.password)*/
+  const token = await generateAndSignToken({ sub: credential?._id });
+  return success(res, token, "200");
 };

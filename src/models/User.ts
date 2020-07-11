@@ -6,11 +6,10 @@ export interface IUser extends Document {
   firstName?: string;
   lastName?: string;
   email: string;
-  password?: string;
+  password: string;
   createdAt: Date;
 
   setPassword(password: string): Promise<void>;
-  comparePassword(password: string): boolean;
 }
 
 const UserSchema: Schema<IUser> = new Schema<IUser>(
@@ -33,7 +32,7 @@ const UserSchema: Schema<IUser> = new Schema<IUser>(
     },
     password: {
       type: String,
-      required: true
+      required: true,
     },
   },
   {
@@ -41,13 +40,9 @@ const UserSchema: Schema<IUser> = new Schema<IUser>(
   }
 );
 
-UserSchema.methods.setPassword = async function (password: String) {
+UserSchema.methods.setPassword = async function (password: string) {
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(password, salt);
 };
-
-// UserSchema.methods.comparePassword = async function(password: String) {
-//     return await bcrypt.compare(password, this.password);
-// };
 
 export default model<IUser>("User", UserSchema);

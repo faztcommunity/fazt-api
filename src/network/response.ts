@@ -26,13 +26,3 @@ export const success = (
     .status(Number(statusCode))
     .json({ message: statusResponse[statusCode], data, statusCode }); //message: statusResponse:'ok', 'create'... data:User:{name, password..}
 };
-
-export const error = (
-  res: Response,
-  statusCode: StatusCode,
-  extraInfo?: string
-) => {
-  return res
-    .status(Number(statusCode))
-    .json({ message: statusResponse[statusCode], statusCode, extraInfo }); //message: statusResponse: 'internal error', 'client error'..., extraInfo: "Credentials invalid"
-};
