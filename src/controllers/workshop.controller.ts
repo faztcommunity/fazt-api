@@ -30,7 +30,7 @@ export const deleteWorshop: Handler = async (req, res) => {
   return res.status(200).json({ message: 'Workshop Deleted' });
 };
 export const updateWorshop: Handler = async (req, res) => {
-  const workshop = await Workshop.findById(req.params.id);
+  const workshop = await Workshop.findById(req.params.id).exec();
   if (!workshop) throw new ErrorHandler(NOT_FOUND, 'WorkShop not Found');
   await Workshop.findByIdAndUpdate(req.params.id, req.body).exec();
   return res.status(200).json({ message: 'Workshop Updated' });
