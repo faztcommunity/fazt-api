@@ -1,3 +1,4 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import { Handler } from '../types';
 import { NOT_FOUND } from 'http-status-codes';
 

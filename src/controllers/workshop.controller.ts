@@ -1,3 +1,4 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import Workshop from '../models/Workshops';
 import { ErrorHandler } from '../error';
 import { NOT_FOUND } from 'http-status-codes';

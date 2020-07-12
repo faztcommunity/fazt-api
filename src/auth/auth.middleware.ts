@@ -1,3 +1,4 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import { decodeAuthorization, decodeToken } from "./auth";
 import { Request, Response, NextFunction } from "express";
 

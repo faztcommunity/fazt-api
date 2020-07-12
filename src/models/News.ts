@@ -1,3 +1,4 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import {Schema, model} from 'mongoose';
 
 const NewsSchema = new Schema({

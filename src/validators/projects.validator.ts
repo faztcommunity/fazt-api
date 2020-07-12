@@ -1,3 +1,4 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import { check } from "express-validator";
 
 export const createProjectValidator = [
