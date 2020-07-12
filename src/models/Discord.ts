@@ -1,6 +1,21 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model, Document } from 'mongoose';
 
-const SettingSchema = new Schema({
+interface ISetting extends Document {
+  name: string;
+  value: string;
+}
+
+interface IModeration extends Document {
+  user_id: string;
+  type: string;
+  reason: string;
+  moderator_id: string;
+  creation_date: Date;
+  expiration_date: Date;
+  revoked: boolean;
+}
+
+const SettingSchema = new Schema<ISetting>({
   name: {
     type: String
   },
@@ -9,7 +24,7 @@ const SettingSchema = new Schema({
   }
 });
 
-const ModerationSchema = new Schema({
+const ModerationSchema = new Schema<IModeration>({
   type: {
     type: String,
     required: true
@@ -39,5 +54,5 @@ const ModerationSchema = new Schema({
   }
 });
 
-export const Setting = model('Setting', SettingSchema);
-export const Moderation = model('Moderation', ModerationSchema);
+export const Setting = model<ISetting>('Setting', SettingSchema);
+export const Moderation = model<IModeration>('Moderation', ModerationSchema);
