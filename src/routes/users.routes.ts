@@ -1,7 +1,7 @@
-import { Router } from "express";
-import * as userCtrl from "../controllers/user.controller";
-import { checkAuth } from "../auth/auth.middleware";
-import { handlerExceptionRoute } from "../error";
+import { Router } from 'express';
+import * as userCtrl from '../controllers/user.controller';
+import { checkAuth } from '../auth/auth.middleware';
+import { handlerExceptionRoute } from '../error';
 
 const router = Router();
 
@@ -18,7 +18,7 @@ const router = Router();
  * @apiSuccess {String} password Contraseña del Usuario
  *
  */
-router.get("/", handlerExceptionRoute(userCtrl.getUsers));
+router.get('/', handlerExceptionRoute(userCtrl.getUsers));
 
 /**
  * @api {post} /usuers Crea una nueva Usuario
@@ -38,7 +38,7 @@ router.get("/", handlerExceptionRoute(userCtrl.getUsers));
  * @apiSuccess {String} email Correo electrónico del Usuario
  * @apiSuccess {String} password Contraseña del Usuario
  */
-router.post("/", handlerExceptionRoute(userCtrl.getUsers));
+router.post('/', handlerExceptionRoute(userCtrl.getUsers));
 
 /**
  * @api {get} /users/:id Obtiene un usuario en especifico.
@@ -56,34 +56,7 @@ router.post("/", handlerExceptionRoute(userCtrl.getUsers));
  *
  * @apiError User not found.
  */
-router.get("/:id", userCtrl.getUser);
-
-
-/**
- * @api {put} /users/:id Actualiza un usuario en especifico.
- * @apiDescription Obtiene un usuario en especifico de los guardados en la base de datos y lo actualiza.
- * @apiName GetUserID
- * @apiGroup Users
- *
- * @apiParam id
- * @apiParam (Request body) {String} nickname Nombre de Usuario
- * @apiParam (Request body) {String} firstname Primer nombre del Usuario
- * @apiParam (Request body) {String} lastname Apellido del Usuario
- * @apiParam (Request body) {String} email Correo electrónico del Usuario
- * @apiParam (Request body) {String} password Contraseña del Usuario
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
- * 
- * @apiError User not found.
- */
-router.put("/", checkAuth("updateOrDelete"), handlerExceptionRoute(userCtrl.updateUser));
-
-router.get("/:id", userCtrl.getUser);
-
+router.get('/:id', userCtrl.getUser);
 
 /**
  * @api {put} /users/:id Actualiza un usuario en especifico.
@@ -103,165 +76,11 @@ router.get("/:id", userCtrl.getUser);
  * @apiSuccess {String} lastname Apellido del Usuario
  * @apiSuccess {String} email Correo electrónico del Usuario
  * @apiSuccess {String} password Contraseña del Usuario
- * 
+ *
  * @apiError User not found.
  */
-router.put("/", checkAuth("updateOrDelete"), handlerExceptionRoute(userCtrl.updateUser));
+router.put('/', handlerExceptionRoute(userCtrl.updateUser));
 
-router.get("/:id", userCtrl.getUser);
-
-
-/**
- * @api {put} /users/:id Actualiza un usuario en especifico.
- * @apiDescription Obtiene un usuario en especifico de los guardados en la base de datos y lo actualiza.
- * @apiName GetUserID
- * @apiGroup Users
- *
- * @apiParam id
- * @apiParam (Request body) {String} nickname Nombre de Usuario
- * @apiParam (Request body) {String} firstname Primer nombre del Usuario
- * @apiParam (Request body) {String} lastname Apellido del Usuario
- * @apiParam (Request body) {String} email Correo electrónico del Usuario
- * @apiParam (Request body) {String} password Contraseña del Usuario
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
- * 
- * @apiError User not found.
- */
-router.put("/", checkAuth("updateOrDelete"), handlerExceptionRoute(userCtrl.updateUser));
-
-router.get("/:id", userCtrl.getUser);
-
-
-/**
- * @api {put} /users/:id Actualiza un usuario en especifico.
- * @apiDescription Obtiene un usuario en especifico de los guardados en la base de datos y lo actualiza.
- * @apiName GetUserID
- * @apiGroup Users
- *
- * @apiParam id
- * @apiParam (Request body) {String} nickname Nombre de Usuario
- * @apiParam (Request body) {String} firstname Primer nombre del Usuario
- * @apiParam (Request body) {String} lastname Apellido del Usuario
- * @apiParam (Request body) {String} email Correo electrónico del Usuario
- * @apiParam (Request body) {String} password Contraseña del Usuario
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
- * 
- * @apiError User not found.
- */
-router.put("/", checkAuth("updateOrDelete"), handlerExceptionRoute(userCtrl.updateUser));
-
-router.get("/:id", userCtrl.getUser);
-
-
-/**
- * @api {put} /users/:id Actualiza un usuario en especifico.
- * @apiDescription Obtiene un usuario en especifico de los guardados en la base de datos y lo actualiza.
- * @apiName GetUserID
- * @apiGroup Users
- *
- * @apiParam id
- * @apiParam (Request body) {String} nickname Nombre de Usuario
- * @apiParam (Request body) {String} firstname Primer nombre del Usuario
- * @apiParam (Request body) {String} lastname Apellido del Usuario
- * @apiParam (Request body) {String} email Correo electrónico del Usuario
- * @apiParam (Request body) {String} password Contraseña del Usuario
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
- * 
- * @apiError User not found.
- */
-router.put("/", checkAuth("updateOrDelete"), handlerExceptionRoute(userCtrl.updateUser));
-
-router.get("/:id", userCtrl.getUser);
-
-
-/**
- * @api {put} /users/:id Actualiza un usuario en especifico.
- * @apiDescription Obtiene un usuario en especifico de los guardados en la base de datos y lo actualiza.
- * @apiName GetUserID
- * @apiGroup Users
- *
- * @apiParam id
- * @apiParam (Request body) {String} nickname Nombre de Usuario
- * @apiParam (Request body) {String} firstname Primer nombre del Usuario
- * @apiParam (Request body) {String} lastname Apellido del Usuario
- * @apiParam (Request body) {String} email Correo electrónico del Usuario
- * @apiParam (Request body) {String} password Contraseña del Usuario
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
- * 
- * @apiError User not found.
- */
-router.put("/", checkAuth("updateOrDelete"), handlerExceptionRoute(userCtrl.updateUser));
-
-router.get("/:id", userCtrl.getUser);
-
-/**
- * @api {put} /users/:id Actualiza un usuario en especifico.
- * @apiDescription Obtiene un usuario en especifico de los guardados en la base de datos y lo actualiza.
- * @apiName GetUserID
- * @apiGroup Users
- *
- * @apiParam id
- * @apiParam (Request body) {String} nickname Nombre de Usuario
- * @apiParam (Request body) {String} firstname Primer nombre del Usuario
- * @apiParam (Request body) {String} lastname Apellido del Usuario
- * @apiParam (Request body) {String} email Correo electrónico del Usuario
- * @apiParam (Request body) {String} password Contraseña del Usuario
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
- * 
- * @apiError User not found.
- */
-router.put("/", checkAuth("updateOrDelete"), handlerExceptionRoute(userCtrl.updateUser));
-
-export default router;
-router.get("/:id", userCtrl.getUser);
-
-
-/**
- * @api {put} /users/:id Actualiza un usuario en especifico.
- * @apiDescription Obtiene un usuario en especifico de los guardados en la base de datos y lo actualiza.
- * @apiName GetUserID
- * @apiGroup Users
- *
- * @apiParam id
- * @apiParam (Request body) {String} nickname Nombre de Usuario
- * @apiParam (Request body) {String} firstname Primer nombre del Usuario
- * @apiParam (Request body) {String} lastname Apellido del Usuario
- * @apiParam (Request body) {String} email Correo electrónico del Usuario
- * @apiParam (Request body) {String} password Contraseña del Usuario
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
- * 
- * @apiError User not found.
- */
-router.put("/", checkAuth("updateOrDelete"), handlerExceptionRoute(userCtrl.updateUser));
+router.get('/:id', userCtrl.getUser);
 
 export default router;
