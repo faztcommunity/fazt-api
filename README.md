@@ -50,8 +50,9 @@ to run with docker compose, create file .env with
 ```bash
 docker-compose up
 ```
+# [How to contribute](https://github.com/faztcommunity/docs/blob/dev/contribute.md)
 
-# Contributors
+## Contributors
 * fazt [About me](https://github.com/fazttech) 
 * nfortiz (elfer in Discord) [About me](https://github.com/nfortiz) 
 * LordBeor [About me](https://github.com/Beor18)
@@ -61,3 +62,5 @@ docker-compose up
 * Lea (Lea.js in Discord) [About me](https://github.com/venezia-dev)
 * CejasClaudio [About me](https://github.com/CejasClaudioA)
 * Paolinsky (Paolo Torregroza) [About me](https://github.com/PaoloTorregroza)
+
+## [LICENSE](https://github.com/faztcommunity/docs/blob/dev/LICENSE)
