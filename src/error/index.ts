@@ -3,6 +3,7 @@ import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from 'http-status-codes';
 import { MongoError } from 'mongodb';
 import { Error as MongooseError } from 'mongoose';
 import { Handler } from '../types';
+import { JsonWebTokenError } from 'jsonwebtoken';
 
 export class ErrorHandler extends Error {
   statusCode: number;
@@ -37,7 +38,8 @@ const errorParse = (error: Error, next: NextFunction) => {
   if (
     error instanceof MongooseError.ValidationError ||
     error instanceof MongooseError.CastError ||
-    error instanceof MongoError
+    error instanceof MongoError ||
+    error instanceof JsonWebTokenError
   )
     next(new ErrorHandler(BAD_REQUEST, error.message, error.stack));
   else if (error instanceof ErrorHandler) next(error);
@@ -60,7 +62,7 @@ export const handlerExceptionRoute = (fn: Handler): any => (
     const route = fn(req, res);
     if (route instanceof Promise) {
       route?.catch((error: Error) => {
-        errorParse(error, next);                                                                                                                                           
+        errorParse(error, next);
       });
     }
   } catch (error) {
