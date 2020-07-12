@@ -1,3 +1,4 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import mongoose from 'mongoose';
 import { MONGODB_URI } from '../config';
 

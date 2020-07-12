@@ -1,3 +1,4 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import { Handler } from '../types';
 import User from '../models/User';
 import { generateAndSignToken, comparePassword } from '../util/service/Auth';

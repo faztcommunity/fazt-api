@@ -1,3 +1,4 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import { Response, Request, NextFunction } from 'express';
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from 'http-status-codes';
 import { MongoError } from 'mongodb';

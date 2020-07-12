@@ -4,13 +4,8 @@ on:
   push:
     branches:
 
-    pull_request:
-      branches:
-        - master
-        - dev
 jobs:
   SonarCloud:
-
     runs-on: ubuntu-latest
 
     steps:

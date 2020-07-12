@@ -1,24 +1,72 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import { Handler } from '../types';
-import { ErrorHandler } from '../error';
 import { NOT_FOUND } from 'http-status-codes';
-import Discord from '../models/Discord';
 
-export const getDiscords: Handler = async (req, res) => {
-  return res.json();
-};
+import { Setting, Moderation } from '../models/Discord';
 
-export const getDiscord: Handler = async (req, res) => {
-  const discord = await Discord.findById(req.params.id).exec();
-  if (!discord) {
-    throw new ErrorHandler(NOT_FOUND, 'Discord not found');
+export const getSetting: Handler = async (req, res) => {
+  const setting = await Setting.findOne({ name: req.params.name }).exec();
+  if (!setting) {
+    return res.status(NOT_FOUND).json({ value: null });
   }
 
-  return res.status(200).json(discord);
+  return res.status(200).json(setting);
 };
-export const createDiscord: Handler = async (req, res) => {
-  const discord = new Discord(req.body);
-  await discord.save();
-  return res.status(200).json({ message: 'Discord Created' });
+
+export const updateOrCreateSetting: Handler = async (req, res) => {
+  const existSetting = await Setting.findOneAndUpdate(
+    { name: req.params.name },
+    { value: req.body.value },
+    { new: true }
+  ).exec();
+
+  if (!existSetting) {
+    const setting = new Setting({
+      name: req.params.name,
+      value: req.body.value
+    });
+
+    await setting.save();
+    return res.json(setting);
+  }
+
+  return res.json(existSetting);
 };
-export const deleteDiscord = async () => {};
-export const updateDiscord = async () => {};
+
+export const getUserModerations: Handler = async (req, res) => {
+  const user = await Moderation.find({ user_id: req.params.user_id }).exec();
+
+  return res.status(200).json(user);
+};
+
+export const getUserModerationsWithType: Handler = async (req, res) => {
+  const user = await Moderation.find({ user_id: req.params.user_id })
+    .where('type')
+    .equals(req.params.type)
+    .exec();
+
+  console.log(req.params.type);
+
+  return res.status(200).json(user);
+};
+
+export const createModerationUser: Handler = async (req, res) => {
+  const user = new Moderation({
+    ...req.body,
+    user_id: req.params.user_id
+  });
+
+  await user.save();
+
+  return res.status(200).json(user);
+};
+
+export const revokeModeration: Handler = async (req, res) => {
+  const moderation = await Moderation.findByIdAndUpdate(
+    req.params.id,
+    { revoked: true },
+    { new: true }
+  ).exec();
+
+  return res.status(200).json(moderation);
+};

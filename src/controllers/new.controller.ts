@@ -1,3 +1,4 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import New from '../models/News';
 
 export const getNews = () => {};

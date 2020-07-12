@@ -24,6 +24,7 @@
   "homepage": "https://github.com/faztdevelopers/fazt-api#readme",
   "husky": {
     "hooks": {
+      "pre-commit": "npm run build",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
