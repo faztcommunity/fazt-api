@@ -1,6 +1,5 @@
 import { Router } from 'express';
 import * as userCtrl from '../controllers/user.controller';
-import { checkAuth } from '../auth/auth.middleware';
 import { handlerExceptionRoute } from '../error';
 
 const router = Router();
