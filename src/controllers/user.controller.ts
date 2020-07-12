@@ -5,7 +5,7 @@ import { ErrorHandler } from '../error';
 import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED } from 'http-status-codes';
 
 export const getUsers: Handler = async (req, res) => {
-  const Users = await User.find();
+  const Users = await User.find().exec();
   return res.status(200).json({
     code: 200,
     data: Users,
@@ -14,7 +14,7 @@ export const getUsers: Handler = async (req, res) => {
 };
 
 export const getUser: Handler = async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).exec();
   if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
 
   return res.status(200).json({
@@ -40,10 +40,10 @@ export const createUser: Handler = async (req, res) => {
 };
 
 export const deleteUser: Handler = async (req, res) => {
-  const user = await User.findById(req.params.id);
+  const user = await User.findById(req.params.id).exec();
   if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
 
-  await User.findByIdAndRemove(req.params.id);
+  await User.findByIdAndRemove(req.params.id).exec();
   return res.status(200).json({
     code: 200,
     message: 'Ok!'
@@ -61,7 +61,7 @@ export const signinUser: Handler = async (req, res) => {
   }
 
   //validate credentials
-  const crendential = (await User.find({ email })).pop();
+  const crendential = (await User.find({ email }).exec()).pop();
   if (!crendential) {
     throw new ErrorHandler(UNAUTHORIZED, 'Invalid Credentials');
   }

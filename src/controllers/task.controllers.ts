@@ -4,16 +4,16 @@ import { ErrorHandler } from '../error';
 import { NOT_FOUND } from 'http-status-codes';
 
 export const getTasks: Handler = async (req, res) => {
-  const tasks = await Task.find();
+  const tasks = await Task.find().exec();
   return res.status(200).json({
     code: 200,
     data: tasks,
-    message:'Ok!'
+    message: 'Ok!'
   });
 };
 
 export const getTask: Handler = async (req, res) => {
-  const task = await Task.findById(req.params.id);
+  const task = await Task.findById(req.params.id).exec();
   if (!task) throw new ErrorHandler(NOT_FOUND, 'Task not found');
 
   return res.status(200).json({
@@ -35,7 +35,7 @@ export const createTask: Handler = async (req, res) => {
 };
 
 export const deleteTask: Handler = async (req, res) => {
-  const taskDeleted = await Task.findByIdAndDelete(req.params.id);
+  const taskDeleted = await Task.findByIdAndDelete(req.params.id).exec();
 
   if (!taskDeleted) throw new ErrorHandler(NOT_FOUND, 'Task not found');
 
@@ -47,14 +47,16 @@ export const deleteTask: Handler = async (req, res) => {
 };
 
 export const updateTask: Handler = async (req, res) => {
-  let task = await Task.findById(req.params.id);
+  let task = await Task.findById(req.params.id).exec();
 
   if (!task) throw new ErrorHandler(NOT_FOUND, 'Task not found');
 
-  task = await Task.findByIdAndUpdate(req.params.id, req.body, { new: true });
+  task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+    new: true
+  }).exec();
 
   return res.status(200).json({
-    code: 200, 
+    code: 200,
     message: 'Ok!'
-  })
+  });
 };
