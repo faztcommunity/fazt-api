@@ -37,7 +37,7 @@ router.get('/', handlerExceptionRoute(userCtrl.getUsers));
  * @apiSuccess {String} email Correo electrónico del Usuario
  * @apiSuccess {String} password Contraseña del Usuario
  */
-router.post('/', handlerExceptionRoute(userCtrl.getUsers));
+router.post('/', handlerExceptionRoute(userCtrl.createUser));
 
 /**
  * @api {get} /users/:id Obtiene un usuario en especifico.
@@ -55,7 +55,7 @@ router.post('/', handlerExceptionRoute(userCtrl.getUsers));
  *
  * @apiError User not found.
  */
-router.get('/:id', userCtrl.getUser);
+router.get('/:id', handlerExceptionRoute(userCtrl.getUser));
 
 /**
  * @api {put} /users/:id Actualiza un usuario en especifico.
@@ -80,6 +80,7 @@ router.get('/:id', userCtrl.getUser);
  */
 router.put('/', handlerExceptionRoute(userCtrl.updateUser));
 
-router.get('/:id', userCtrl.getUser);
+router.delete('/:id', handlerExceptionRoute(userCtrl.deleteUser));
 
+router.post('/signin', handlerExceptionRoute(userCtrl.signinUser));
 export default router;

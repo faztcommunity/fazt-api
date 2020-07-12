@@ -1,6 +1,6 @@
 import { Handler } from '../types';
 import User from '../models/User';
-import { generateAndSignToken } from '../auth/auth';
+import { generateAndSignToken, comparePassword } from '../util/service/Auth';
 import { ErrorHandler } from '../error';
 import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED } from 'http-status-codes';
 
@@ -67,6 +67,13 @@ export const signinUser: Handler = async (req, res) => {
   }
 
   //compare password
+  const passwordCorrect: boolean = await crendential.comparePassword(password);
+  if (!passwordCorrect) {
+    throw new ErrorHandler(UNAUTHORIZED, 'Invalid Credentials')
+  }
   const token = await generateAndSignToken({ user: crendential.id });
-  return res.json(token);
+  return res.status(200).json({
+    code: 200,
+    data: token
+  });
 };
