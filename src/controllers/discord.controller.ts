@@ -1,7 +1,7 @@
 import { Handler } from '../types';
 import { NOT_FOUND } from 'http-status-codes';
 
-import { Setting, DiscordUser } from '../models/Discord';
+import { Setting, Moderation } from '../models/Discord';
 
 export const getSetting: Handler = async (req, res) => {
   const setting = await Setting.findOne({ name: req.params.name }).exec();
@@ -30,4 +30,42 @@ export const updateOrCreateSetting: Handler = async (req, res) => {
   }
 
   return res.json(existSetting);
+};
+
+export const getUserModerations: Handler = async (req, res) => {
+  const user = await Moderation.find({ user_id: req.params.user_id }).exec();
+
+  return res.status(200).json(user);
+};
+
+export const getUserModerationsWithType: Handler = async (req, res) => {
+  const user = await Moderation.find({ user_id: req.params.user_id })
+    .where('type')
+    .equals(req.params.type)
+    .exec();
+
+  console.log(req.params.type);
+
+  return res.status(200).json(user);
+};
+
+export const createModerationUser: Handler = async (req, res) => {
+  const user = new Moderation({
+    ...req.body,
+    user_id: req.params.user_id
+  });
+
+  await user.save();
+
+  return res.status(200).json(user);
+};
+
+export const revokeModeration: Handler = async (req, res) => {
+  const moderation = await Moderation.findByIdAndUpdate(
+    req.params.id,
+    { revoked: true },
+    { new: true }
+  ).exec();
+
+  return res.status(200).json(moderation);
 };
