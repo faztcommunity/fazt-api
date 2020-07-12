@@ -6,7 +6,7 @@ import { Setting, Moderation } from '../models/Discord';
 export const getSetting: Handler = async (req, res) => {
   const setting = await Setting.findOne({ name: req.params.name }).exec();
   if (!setting) {
-    return res.status(NOT_FOUND).json(null);
+    return res.status(NOT_FOUND).json({ value: null });
   }
 
   return res.status(200).json(setting);
