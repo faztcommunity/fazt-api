@@ -27,8 +27,7 @@ const ModerationSchema = new Schema({
     required: true
   },
   expiration_date: {
-    type: Date,
-    required: true
+    type: Date
   },
   creation_date: {
     type: Date,
