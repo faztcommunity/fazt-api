@@ -1,8 +1,7 @@
-import {Request, Response} from 'express';
 import New from '../models/News';
 
-export const getNews = () => {}
-export const getNew = () => {}
-export const createNew = () => {}
-export const deleteNew= () => {}
-export const updateNew = () => {}
+export const getNews = () => {};
+export const getNew = () => {};
+export const createNew = () => {};
+export const deleteNew = () => {};
+export const updateNew = () => {};
