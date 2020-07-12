@@ -61,3 +61,5 @@ docker-compose up
 * Lea (Lea.js in Discord) [About me](https://github.com/venezia-dev)
 * CejasClaudio [About me](https://github.com/CejasClaudioA)
 * Paolinsky (Paolo Torregroza) [About me](https://github.com/PaoloTorregroza)
+<!-- Other contributors -->
+* Keneth Sandoval [GitHub](https://github.com/keneth3000)
