@@ -47,13 +47,11 @@ export const deleteTask: Handler = async (req, res) => {
 };
 
 export const updateTask: Handler = async (req, res) => {
-  let task = await Task.findById(req.params.id).exec();
-
-  if (!task) throw new ErrorHandler(NOT_FOUND, 'Task not found');
-
-  task = await Task.findByIdAndUpdate(req.params.id, req.body, {
+  const task = await Task.findByIdAndUpdate(req.params.id, req.body, {
     new: true
   }).exec();
+
+  if (!task) throw new ErrorHandler(NOT_FOUND, 'Task not found');
 
   return res.status(200).json({
     code: 200,
