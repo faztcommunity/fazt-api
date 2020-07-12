@@ -1,24 +1,33 @@
 import { Handler } from '../types';
-import { ErrorHandler } from '../error';
 import { NOT_FOUND } from 'http-status-codes';
-import Discord from '../models/Discord';
 
-export const getDiscords: Handler = async (req, res) => {
-  return res.json();
-};
+import { Setting, DiscordUser } from '../models/Discord';
 
-export const getDiscord: Handler = async (req, res) => {
-  const discord = await Discord.findById(req.params.id).exec();
-  if (!discord) {
-    throw new ErrorHandler(NOT_FOUND, 'Discord not found');
+export const getSetting: Handler = async (req, res) => {
+  const setting = await Setting.findOne({ name: req.params.name }).exec();
+  if (!setting) {
+    return res.status(NOT_FOUND).json(null);
   }
 
-  return res.status(200).json(discord);
+  return res.status(200).json(setting);
 };
-export const createDiscord: Handler = async (req, res) => {
-  const discord = new Discord(req.body);
-  await discord.save();
-  return res.status(200).json({ message: 'Discord Created' });
+
+export const updateOrCreateSetting: Handler = async (req, res) => {
+  const existSetting = await Setting.findOneAndUpdate(
+    { name: req.params.name },
+    { value: req.body.value },
+    { new: true }
+  ).exec();
+
+  if (!existSetting) {
+    const setting = new Setting({
+      name: req.params.name,
+      value: req.body.value
+    });
+
+    await setting.save();
+    return res.json(setting);
+  }
+
+  return res.json(existSetting);
 };
-export const deleteDiscord = async () => {};
-export const updateDiscord = async () => {};
