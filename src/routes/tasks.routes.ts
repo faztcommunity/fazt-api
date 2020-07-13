@@ -1,64 +1,109 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 import { Router } from "express";
-
 import * as taskCtrl from "../controllers/task.controllers";
 import { handlerExceptionRoute } from "../error";
 
 const router = Router();
 
 /**
+ * @apiDefine ErrorResponse
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "message": "dataMessage",
+ *     }
+ */
+/**
+ * @apiDefine OneSuccessResponse
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "_id": "dataId",
+ *       "title": " dataTitle",
+ *       "description": "dataDescription",
+ *       "date": "dataDate",
+ *       "postingUser": {"dataPostingUser"},
+ *     }
+ */
+/**
+ * @apiDefine PostPut
+ * @apiParam (Request body) {String} title Titulo de la tarea.
+ * @apiParam (Request body) {String} description Descripcion de la tarea.
+ * @apiParam (Request body) {Date} date Fecha de la tarea.
+ * @apiParam (Request body) {ObjectId} postingUser Usuario creador de la tarea.
+ */
+
+
+/**
  * @api {get} /tasks Obtiene todas las Tareas
- * @apiDescription Obtiene todas las tareas guardadas en la base de datos
+ * @apiDescription Obtiene un arreglo de todas las tareas almacenadas en la base de datos.
  * @apiName GetTask
  * @apiGroup Tasks
- * 
- * @apiSuccess {String} title Firstname of the User.
- * @apiSuccess {String} description Firstname of the User.
- * @apiSuccess {String} date Firstname of the User.
- * @apiSuccess {String} postingUser Firstname of the User.
- * @apiSuccess {String} createdAt Lastname of the User.
- * @apiSuccess {String} updatedAt Lastname of the User.
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    [
+ *     {
+ *       "_id": "dataId",
+ *       "title": " dataTitle",
+ *       "description": "dataDescription",
+ *       "date": "dataDate",
+ *       "postingUser": {"dataPostingUser"},
+ *     }
+ *      ]
+ * @apiUse ErrorResponse
  */
 router.get("/", handlerExceptionRoute(taskCtrl.getTasks));
 
 /**
  * @api {post} /tasks Crea una nueva tarea
- * @apiDescription Crea una tarea nueva
+ * @apiDescription Crea una tarea nueva y la almacena en la base de datos.
  * @apiName PostTask
  * @apiGroup Tasks
- * 
- * @apiParam (Request body) {String} title Titulo de la tarea
- * @apiParam (Request body) {String} description Descripción de la tarea
- * @apiParam (Request body) {Date} date La fecha para realizar la tarea
- * @apiParam (Request body) {String} postingUser El usuario que ha creado la tarea
- * 
- * @apiSuccess {String} title Firstname of the User.
- * @apiSuccess {String} description Firstname of the User.
- * @apiSuccess {String} date Firstname of the User.
- * @apiSuccess {String} postingUser Firstname of the User.
- * @apiSuccess {String} createdAt Lastname of the User.
- * @apiSuccess {String} updatedAt Lastname of the User.
+ * @apiUse PostPut
+ * @apiUse OneSuccessResponse
+ * @apiUse ErrorResponse
  */
 router.post("/", handlerExceptionRoute(taskCtrl.createTask));
 
 
 /**
- * @api {get} /tasks Obtiene una tarea en especifico.
- * @apiDescription Obtiene una tarea en especifico de las guardadas en la base de datos
+ * @api {get} /tasks/:id Obtiene una tarea en especifico.
+ * @apiDescription Obtiene una tarea en especifico de los almacenados en la base de datos a traves de su _id.
  * @apiName GetTask
  * @apiGroup Tasks
- * 
- * @apiSuccess {String} title Firstname of the User.
- * @apiSuccess {String} description Firstname of the User.
- * @apiSuccess {String} date Firstname of the User.
- * @apiSuccess {String} postingUser Firstname of the User.
- * @apiSuccess {String} createdAt Lastname of the User.
- * @apiSuccess {String} updatedAt Lastname of the User.
+ * @apiParam {String} _id Identificador del objeto almacenado.
+ * @apiUse OneSuccessResponse
+ * @apiUse ErrorResponse
  */
 router.route("/:id").get(handlerExceptionRoute(taskCtrl.getTask));
 
+/**
+ * @api {put} /tasks/:id Actualiza una tarea en especifico.
+ * @apiDescription Obtiene una tarea en especifico de los guardados en la base de datos y lo actualiza con el
+ * contenido del cuerpo.
+ * @apiName GetTask
+ * @apiGroup Tasks
+ * @apiParam {String} _id Identificador del objeto almacenado.
+ * @apiUse PostPut
+ * @apiUse OneSuccessResponse
+ * @apiUse ErrorResponse
+ */
 router.route("/:id").put(handlerExceptionRoute(taskCtrl.updateTask));
 
+/**
+ * @api {delete} /tasks/:id Elimina una tarea en especifico.
+ * @apiDescription Obtiene una tarea en especifico de los guardados en la base de datos a traves de su _id
+ * y lo elimina.
+ * @apiName DeleteTaskID
+ * @apiGroup Tasks
+ * @apiParam {String} _id Identificador del objeto.
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "message": "dataMessage",
+ *     }
+ * @apiUse ErrorResponse
+ */
 router.route("/:id").delete(handlerExceptionRoute(taskCtrl.deleteTask));
 
 export default router;
