@@ -1,31 +1,29 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Schema, model, Document } from "mongoose";
 
-export interface IWorkshop extends Document {
-    title: string;
-    description: string;
-    date: Date;
-  }
+import { Schema, model } from 'mongoose';
 
-const newWorkshopSchema: Schema<IWorkshop> = new Schema<IWorkshop>({
+const newWorkshopSchema: Schema<IWorkshop> = new Schema<IWorkshop>(
+  {
     title: {
-        type: String, 
-        required: true
+      type: String,
+      required: true
     },
     description: {
-        type: String,
-        required: true
+      type: String,
+      required: true
     },
     date: {
-        type: Date,
-        required: true
+      type: Date,
+      required: true
     },
     workshopUser: {
-        type: Schema.Types.ObjectId,
-        ref: 'User'
+      type: Schema.Types.ObjectId,
+      ref: 'User'
     }
-}, {
-    timestamps: true,
-});
+  },
+  {
+    timestamps: true
+  }
+);
 
-export default model<IWorkshop>("Workshop", newWorkshopSchema);
+export default model<IWorkshop>('Workshop', newWorkshopSchema);

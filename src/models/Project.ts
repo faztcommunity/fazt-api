@@ -1,30 +1,31 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Schema, model, Document } from "mongoose";
+
+import { Schema, model } from 'mongoose';
 
 const ProjectSchema = new Schema(
   {
     name: {
       type: String,
-      required: true,
+      required: true
     },
     description: {
       type: String,
-      required: true,
+      required: true
     },
     status: {
       type: String,
-      default: "active",
-      enum: ["active", "deleted", "csanceled", "deprecated"],
+      default: 'active',
+      enum: ['active', 'deleted', 'csanceled', 'deprecated']
     },
     tags: [
       {
-        type: String,
-      },
+        type: String
+      }
     ],
     projectType: {
       type: String,
-      default: "code",
-      enum: ["code", "design"],
+      default: 'code',
+      enum: ['code', 'design']
     },
     url: {
       type: String
@@ -34,15 +35,8 @@ const ProjectSchema = new Schema(
     }
   },
   {
-    timestamps: true,
+    timestamps: true
   }
 );
 
-export interface IProject extends Document {
-  name: string;
-  description: string;
-  status: "active" | "deleted" | "canceled" | "deprecated";
-  tags: string[];
-}
-
-export default model<IProject>("Project", ProjectSchema);
+export default model<IProject>('Project', ProjectSchema);

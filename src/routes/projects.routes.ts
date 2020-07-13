@@ -1,10 +1,9 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Router } from "express";
 
-import * as projectCtrl from "../controllers/project.controller";
-import { handlerExceptionRoute } from "../error";
-
-import * as projectValidators from "../validators/projects.validator";
+import { Router } from 'express';
+import { handlerExceptionRoute } from '../error';
+import * as projectCtrl from '../controllers/project.controller';
+import * as projectValidators from '../validators/projects.validator';
 
 const router = Router();
 
@@ -17,7 +16,7 @@ const router = Router();
  *     }
  */
 
- /**
+/**
  * @apiDefine OneSuccessResponse
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
@@ -33,7 +32,7 @@ const router = Router();
  *      }
  */
 
- /**
+/**
  * @apiDefine PostPut
  * @apiParam (Request body) {String} name Nombre del proyecto
  * @apiParam (Request body) {String} description Descripción del proyecto
@@ -65,7 +64,7 @@ const router = Router();
  *     ]
  * @apiUse ErrorResponse
  */
-router.get("/", handlerExceptionRoute(projectCtrl.getProjects));
+router.get('/', handlerExceptionRoute(projectCtrl.getProjects));
 
 /**
  * @api {post} /projects Crea un nuevo proyecto
@@ -77,7 +76,7 @@ router.get("/", handlerExceptionRoute(projectCtrl.getProjects));
  * @apiUse ErrorResponse
  */
 router.post(
-  "/",
+  '/',
   projectValidators.createProjectValidator,
   handlerExceptionRoute(projectCtrl.createProject)
 );
@@ -87,11 +86,20 @@ router.post(
  * @apiDescription Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id.
  * @apiName GetProjectID
  * @apiGroup Projects
- * @apiParam {String} _id Identificador del objeto almacenado.
- * @apiUse OneSuccessResponse
- * @apiUse ErrorResponse
+ *
+ * @apiParam id
+ *
+ * @apiSuccess {String} name Name of the project.
+ * @apiSuccess {String} description Description of the Project.
+ * @apiSuccess {String} status Status of the Project.
+ * @apiSuccess {String} tags of the Project.
+ * @apiSuccess {String} projectType Type of the Project.
+ * @apiSuccess {String} url URL of the Project.
+ * @apiSuccess {String} githubURL githubURL of the Project.
+ *
+ * @apiError Project not found.
  */
-router.get("/:id", handlerExceptionRoute(projectCtrl.getProject));
+router.get('/:id', handlerExceptionRoute(projectCtrl.getProject));
 
 /**
  * @api {put} /projects/:id Actualiza un proyecto en especifico.
@@ -104,7 +112,7 @@ router.get("/:id", handlerExceptionRoute(projectCtrl.getProject));
  * @apiUse OneSuccessResponse
  * @apiUse ErrorResponse
  */
-router.put("/:id", handlerExceptionRoute(projectCtrl.updateProject));
+router.put('/:id', handlerExceptionRoute(projectCtrl.updateProject));
 
 /**
  * @api {delete} /projects/:id Elimina un proyecto en especifico
@@ -120,6 +128,6 @@ router.put("/:id", handlerExceptionRoute(projectCtrl.updateProject));
  *     }
  * @apiUse ErrorResponse
  */
-router.delete("/:id", handlerExceptionRoute(projectCtrl.deleteProject));
+router.delete('/:id', handlerExceptionRoute(projectCtrl.deleteProject));
 
 export default router;

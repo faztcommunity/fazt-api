@@ -1,20 +1,5 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Schema, model, Document } from 'mongoose';
-
-interface ISetting extends Document {
-  name: string;
-  value: string;
-}
-
-interface IModeration extends Document {
-  user_id: string;
-  type: string;
-  reason: string;
-  moderator_id: string;
-  creation_date: Date;
-  expiration_date: Date;
-  revoked: boolean;
-}
+import { Schema, model } from 'mongoose';
 
 const SettingSchema = new Schema<ISetting>({
   name: {

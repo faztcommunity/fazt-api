@@ -1,7 +1,8 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Router } from "express";
-import * as taskCtrl from "../controllers/task.controllers";
-import { handlerExceptionRoute } from "../error";
+
+import { Router } from 'express';
+import { handlerExceptionRoute } from '../error';
+import * as taskCtrl from '../controllers/task.controllers';
 
 const router = Router();
 
@@ -33,7 +34,6 @@ const router = Router();
  * @apiParam (Request body) {ObjectId} postingUser Usuario creador de la tarea.
  */
 
-
 /**
  * @api {get} /tasks Obtiene todas las Tareas
  * @apiDescription Obtiene un arreglo de todas las tareas almacenadas en la base de datos.
@@ -52,7 +52,7 @@ const router = Router();
  *      ]
  * @apiUse ErrorResponse
  */
-router.get("/", handlerExceptionRoute(taskCtrl.getTasks));
+router.get('/', handlerExceptionRoute(taskCtrl.getTasks));
 
 /**
  * @api {post} /tasks Crea una nueva tarea
@@ -63,8 +63,7 @@ router.get("/", handlerExceptionRoute(taskCtrl.getTasks));
  * @apiUse OneSuccessResponse
  * @apiUse ErrorResponse
  */
-router.post("/", handlerExceptionRoute(taskCtrl.createTask));
-
+router.post('/', handlerExceptionRoute(taskCtrl.createTask));
 
 /**
  * @api {get} /tasks/:id Obtiene una tarea en especifico.
@@ -75,7 +74,7 @@ router.post("/", handlerExceptionRoute(taskCtrl.createTask));
  * @apiUse OneSuccessResponse
  * @apiUse ErrorResponse
  */
-router.route("/:id").get(handlerExceptionRoute(taskCtrl.getTask));
+router.route('/:id').get(handlerExceptionRoute(taskCtrl.getTask));
 
 /**
  * @api {put} /tasks/:id Actualiza una tarea en especifico.
@@ -88,7 +87,7 @@ router.route("/:id").get(handlerExceptionRoute(taskCtrl.getTask));
  * @apiUse OneSuccessResponse
  * @apiUse ErrorResponse
  */
-router.route("/:id").put(handlerExceptionRoute(taskCtrl.updateTask));
+router.route('/:id').put(handlerExceptionRoute(taskCtrl.updateTask));
 
 /**
  * @api {delete} /tasks/:id Elimina una tarea en especifico.
@@ -104,6 +103,6 @@ router.route("/:id").put(handlerExceptionRoute(taskCtrl.updateTask));
  *     }
  * @apiUse ErrorResponse
  */
-router.route("/:id").delete(handlerExceptionRoute(taskCtrl.deleteTask));
+router.route('/:id').delete(handlerExceptionRoute(taskCtrl.deleteTask));
 
 export default router;

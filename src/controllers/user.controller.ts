@@ -1,5 +1,5 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Handler } from '../types';
+
 import User from '../models/User';
 import { generateAndSignToken } from '../utils/auth';
 import bcrypt from 'bcryptjs';

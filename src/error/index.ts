@@ -1,9 +1,9 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
+
 import { Response, Request, NextFunction } from 'express';
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from 'http-status-codes';
 import { MongoError } from 'mongodb';
 import { Error as MongooseError } from 'mongoose';
-import { Handler } from '../types';
 import { JsonWebTokenError } from 'jsonwebtoken';
 
 export class ErrorHandler extends Error {
@@ -17,22 +17,13 @@ export class ErrorHandler extends Error {
   }
 }
 
-const handleError = (err: ErrorHandler, res: Response) => {
+export const handleError = (err: ErrorHandler, res: Response) => {
   const { statusCode = 500, message } = err;
   res.status(statusCode).json({
     status: 'error',
     statusCode,
     message
   });
-};
-
-export const handleErrorMiddleware = (
-  err: any,
-  _req: Request,
-  res: Response,
-  _next: NextFunction
-) => {
-  handleError(err, res);
 };
 
 const errorParse = (error: Error, next: NextFunction) => {
@@ -45,13 +36,7 @@ const errorParse = (error: Error, next: NextFunction) => {
     next(new ErrorHandler(BAD_REQUEST, error.message, error.stack));
   else if (error instanceof ErrorHandler) next(error);
   else
-    next(
-      new ErrorHandler(
-        INTERNAL_SERVER_ERROR,
-        'Error Perfoming Action',
-        error.stack
-      )
-    );
+    next(new ErrorHandler(INTERNAL_SERVER_ERROR, 'Error Perfoming Action', error.stack));
 };
 
 export const handlerExceptionRoute = (fn: Handler): any => (
@@ -60,7 +45,8 @@ export const handlerExceptionRoute = (fn: Handler): any => (
   next: NextFunction
 ) => {
   try {
-    const route = fn(req, res);
+    const route = fn(req, res, next);
+
     if (route instanceof Promise) {
       route?.catch((error: Error) => {
         errorParse(error, next);

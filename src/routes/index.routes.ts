@@ -1,9 +1,10 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Router } from "express";
+
+import { Router } from 'express';
+import * as indexCtrl from '../controllers/index.controller';
+
 const router = Router();
 
-import * as indexCtrl from "../controllers/index.controller";
-
-router.get("/", indexCtrl.welcomeMessage);
+router.get('/', indexCtrl.welcomeMessage);
 
 export default router;

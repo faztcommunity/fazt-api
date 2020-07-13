@@ -1,5 +1,5 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Handler } from '../types';
+
 import Project from '../models/Project';
 import { ErrorHandler } from '../error';
 import { NOT_FOUND, UNPROCESSABLE_ENTITY } from 'http-status-codes';

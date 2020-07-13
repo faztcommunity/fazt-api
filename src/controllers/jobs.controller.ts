@@ -1,5 +1,5 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Handler } from '../types';
+
 import Jobs from '../models/Jobs';
 import { NOT_FOUND } from 'http-status-codes';
 import { ErrorHandler } from '../error';

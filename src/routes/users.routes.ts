@@ -1,8 +1,9 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
+
 import { Router } from 'express';
-import * as userCtrl from '../controllers/user.controller';
 import { handlerExceptionRoute } from '../error';
-import { authMiddleware } from '../middlewares/auth.middleware';
+import * as userCtrl from '../controllers/user.controller';
+import authMiddleware from '../middlewares/auth.middleware';
 
 const router = Router();
 
