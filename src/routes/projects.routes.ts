@@ -9,42 +9,72 @@ import * as projectValidators from "../validators/projects.validator";
 const router = Router();
 
 /**
+ * @apiDefine ErrorResponse
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "message": "dataMessage",
+ *     }
+ */
+
+ /**
+ * @apiDefine OneSuccessResponse
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *      {
+ *       "_id": "dataId",
+ *       "name": " dataName",
+ *       "description": "dataDescription",
+ *       "status": "dataStatus",
+ *       "tags": ["dataTag"],
+ *       "projectType": "dataProjectType",
+ *       "url": "dataUrl",
+ *       "githubURL": "dataGitHubUrl"
+ *      }
+ */
+
+ /**
+ * @apiDefine PostPut
+ * @apiParam (Request body) {String} name Nombre del proyecto
+ * @apiParam (Request body) {String} description Descripción del proyecto
+ * @apiParam (Request body) {String} status Estado del proyecto
+ * @apiParam (Request body) {[String]} tags Etiquetas del proyecto
+ * @apiParam (Request body) {String} projectType Tipo de proyecto.
+ * @apiParam (Request body) {String} url URL del proyecto.
+ * @apiParam (Request body) {String} githubURL Repositorio del proyecto.
+ */
+
+/**
  * @api {get} /projects Obtiene todas los Proyectos
- * @apiDescription Obtiene todas los proyectos guardados en la base de datos
+ * @apiDescription Obtiene un arreglo todos los proyectos almacenados en la base de datos.
  * @apiName GetProject
  * @apiGroup Projects
- *
- * @apiSuccess {String} name Name of the project.
- * @apiSuccess {String} description Description of the Project.
- * @apiSuccess {String} status Status of the Project.
- * @apiSuccess {String} tags of the Project.
- * @apiSuccess {String} projectType Type of the Project.
- * @apiSuccess {String} url URL of the Project.
- * @apiSuccess {String} githubURL githubURL of the Project.
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     [
+ *      {
+ *       "_id": "dataId",
+ *       "name": " dataName",
+ *       "description": "dataDescription",
+ *       "status": "dataStatus",
+ *       "tags": ["dataTag"],
+ *       "projectType": "dataProjectType",
+ *       "url": "dataUrl",
+ *       "githubURL": "dataGitHubUrl"
+ *      }
+ *     ]
+ * @apiUse ErrorResponse
  */
 router.get("/", handlerExceptionRoute(projectCtrl.getProjects));
 
 /**
  * @api {post} /projects Crea un nuevo proyecto
- * @apiDescription Crea un nuevo proyecto y lo guardada en la base de datos
+ * @apiDescription Crea un nuevo proyecto y lo almacena en la base de datos.
  * @apiName PostProject
  * @apiGroup Projects
- *
- * @apiParam (Request body) {String} name Titulo deol proyecto
- * @apiParam (Request body) {String} description Descripción del proyecto
- * @apiParam (Request body) {String} status Estado del proyecto
- * @apiParam (Request body) {String} tags Etiquetas del proyecto
- * @apiParam (Request body) {String} projectType Tipo de proyecto.
- * @apiParam (Request body) {String} url URL del proyecto.
- * @apiParam (Request body) {String} githubURL Repositorio del proyecto.
- *
- * @apiSuccess {String} name Nombre del proyecto
- * @apiSuccess {String} description Descripcion del proyecto
- * @apiSuccess {String} status Estado del proyecto
- * @apiSuccess {String} tags Tags utilizados en el proyecto
- * @apiSuccess {String} projectType Tipo de proyecto (Code, Design)
- * @apiSuccess {String} url Url del proyecto
- * @apiSuccess {String} githubURL Repositorio del proyecto
+ * @apiUse PostPut
+ * @apiUse OneSuccessResponse
+ * @apiUse ErrorResponse
  */
 router.post(
   "/",
@@ -54,68 +84,41 @@ router.post(
 
 /**
  * @api {get} /projects/:id Obtiene un proyecto en especifico.
- * @apiDescription Obtiene un proyecto en especifico de los guardados en la base de datos
+ * @apiDescription Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id.
  * @apiName GetProjectID
  * @apiGroup Projects
- *
- * @apiParam id
- *
- * @apiSuccess {String} name Name of the project.
- * @apiSuccess {String} description Description of the Project.
- * @apiSuccess {String} status Status of the Project.
- * @apiSuccess {String} tags of the Project.
- * @apiSuccess {String} projectType Type of the Project.
- * @apiSuccess {String} url URL of the Project.
- * @apiSuccess {String} githubURL githubURL of the Project.
- * 
- * @apiError Project not found.
+ * @apiParam {String} _id Identificador del objeto almacenado.
+ * @apiUse OneSuccessResponse
+ * @apiUse ErrorResponse
  */
 router.get("/:id", handlerExceptionRoute(projectCtrl.getProject));
 
 /**
  * @api {put} /projects/:id Actualiza un proyecto en especifico.
- * @apiDescription Obtiene un proyecto en especifico de los guardados en la base de datos y lo actualiza.
+ * @apiDescription Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id
+ *  y lo actualiza con el contenido del cuerpo.
  * @apiName GetProjectID
  * @apiGroup Projects
- *
- * @apiParam id
- * @apiParam (Request body) {String} name Titulo del proyecto
- * @apiParam (Request body) {String} description Descripción del proyecto
- * @apiParam (Request body) {String} status Estado del proyecto
- * @apiParam (Request body) {String} tags Etiquetas del proyecto
- * @apiParam (Request body) {String} projectType Tipo de proyecto.
- * @apiParam (Request body) {String} url URL del proyecto.
- * @apiParam (Request body) {String} githubURL Repositorio del proyecto.
- *
- * @apiSuccess {String} name Titulo del proyecto
- * @apiSuccess {String} description Descripción del proyecto
- * @apiSuccess {String} status Estado del proyecto
- * @apiSuccess {String} tags Etiquetas del proyecto
- * @apiSuccess {String} projectType Tipo de proyecto.
- * @apiSuccess {String} url URL del proyecto.
- * @apiSuccess {String} githubURL Repositorio del proyecto.
- * 
- * @apiError Project not found.
+ * @apiParam {String} _id Identificador del objeto almacenado.
+ * @apiUse PostPut
+ * @apiUse OneSuccessResponse
+ * @apiUse ErrorResponse
  */
 router.put("/:id", handlerExceptionRoute(projectCtrl.updateProject));
 
 /**
- * @api {delete} /projects/:id Elimina un proyecto en especifico.
- * @apiDescription Obtiene un proyecto en especifico de los guardados en la base de datos y lo elimina.
+ * @api {delete} /projects/:id Elimina un proyecto en especifico
+ * @apiDescription Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id
+ *  y lo elimina.
  * @apiName DeleteProjectID
  * @apiGroup Projects
- *
- * @apiParam id
- *
- * @apiSuccess {String} name Titulo del proyecto.
- * @apiSuccess {String} description Descripción del proyecto.
- * @apiSuccess {String} status Estado del proyecto.
- * @apiSuccess {String} tags Etiquetas del proyecto.
- * @apiSuccess {String} projectType Tipo de proyecto.
- * @apiSuccess {String} url URL del proyecto.
- * @apiSuccess {String} githubURL Repositorio del proyecto.
- * 
- * @apiError Project not found.
+ * @apiParam {String} _id Identificador del objeto almacenado.
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "message": "dataMessage",
+ *     }
+ * @apiUse ErrorResponse
  */
 router.delete("/:id", handlerExceptionRoute(projectCtrl.deleteProject));
 
