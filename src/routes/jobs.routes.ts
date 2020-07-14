@@ -92,7 +92,7 @@ router.route('/:id').get(handlerExceptionRoute(jobCtrl.getJob));
 router.route('/:id').put(handlerExceptionRoute(jobCtrl.updateJob));
 
 /**
- * @api {delete} /jobs/:id Elimina un trabajo en especifico
+ * @api {delete} /jobs/:id Elimina un trabajo en especifico.
  * @apiDescription Obtiene un trabajo en especifico de los guardados en la base de datos a traves de su _id
  * y lo elimina.
  * @apiName DeleteJobID

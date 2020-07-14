@@ -7,17 +7,52 @@ import { authMiddleware } from '../middlewares/auth.middleware';
 const router = Router();
 
 /**
+ * @apiDefine ErrorResponse
+ * @apiErrorExample {json} Error-Response:
+ *     HTTP/1.1 404 Not Found
+ *     {
+ *       "message": "dataMessage",
+ *     }
+ */
+/**
+ * @apiDefine OneSuccessResponse
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "_id": "dataId",
+ *       "nickname": " dataNickname",
+ *       "firstname": "dataFirstname",
+ *       "lastname": "dataLastname",
+ *       "email": "dataEmail",
+ *       "password": "dataPassword",
+ *     }
+ */
+/**
+ * @apiDefine PostPut
+ * @apiParam (Request body) {String} nickname Nombre de Usuario.
+ * @apiParam (Request body) {String} firstname Nombre del Usuario.
+ * @apiParam (Request body) {String} lastname Apellido del Usuario.
+ * @apiParam (Request body) {String} email Correo electrónico del Usuario.
+ * @apiParam (Request body) {String} password Contraseña del Usuario.
+ */
+
+/**
  * @api {get} /users Obtiene todos los usuarios
- * @apiDescription Obtiene todos los usuarios registrados en la base de datos
+ * @apiDescription Obtiene un arreglo de todos los usuarios almacenados en la base de datos.
  * @apiName GetUsers
  * @apiGroup Users
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
- *
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *    [
+ *     {
+ *       "_id": "dataId",
+ *       "nickname": " dataNickname",
+ *       "firstname": "dataFirstname",
+ *       "lastname": "dataLastname",
+ *       "email": "dataEmail",
+ *       "password": "dataPassword",
+ *     }
+ *      ]
  */
 router.get('/', handlerExceptionRoute(userCtrl.getUsers));
 
@@ -26,64 +61,67 @@ router.get('/', handlerExceptionRoute(userCtrl.getUsers));
  * @apiDescription Registra un usuario nuevo
  * @apiName PostUser
  * @apiGroup Users
- *
- * @apiParam (Request body) {String} nickname Nombre de Usuario
- * @apiParam (Request body) {String} firstname Primer nombre del Usuario
- * @apiParam (Request body) {String} lastname Apellido del Usuario
- * @apiParam (Request body) {String} email Correo electrónico del Usuario
- * @apiParam (Request body) {String} password Contraseña del Usuario
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
+ * @apiUse PostPut
+ * @apiUse OneSuccessResponse
+ * @apiUse ErrorResponse
  */
 
 router.post('/signin', handlerExceptionRoute(userCtrl.createUser));
-export default router;
 
 /**
  * @api {get} /users/:id Obtiene un usuario en especifico.
- * @apiDescription Obtiene un usuario en especifico de los guardados en la base de datos
+ * @apiDescription Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id.
  * @apiName GetUserID
  * @apiGroup Users
- *
- * @apiParam id
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
- *
- * @apiError User not found.
+ * @apiParam {String} _id Identificador del objeto almacenado.
+ * @apiUse OneSuccessResponse
+ * @apiUse ErrorResponse
  */
 router.get('/:id', handlerExceptionRoute(userCtrl.getUser));
 
 /**
  * @api {put} /users/:id Actualiza un usuario en especifico.
- * @apiDescription Obtiene un usuario en especifico de los guardados en la base de datos y lo actualiza.
- * @apiName GetUserID
+ * @apiDescription Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id
+ * y lo actualiza.
+ * @apiName PutUserID
  * @apiGroup Users
- *
- * @apiParam id
- * @apiParam (Request body) {String} nickname Nombre de Usuario
- * @apiParam (Request body) {String} firstname Primer nombre del Usuario
- * @apiParam (Request body) {String} lastname Apellido del Usuario
- * @apiParam (Request body) {String} email Correo electrónico del Usuario
- * @apiParam (Request body) {String} password Contraseña del Usuario
- *
- * @apiSuccess {String} nickname Nombre de Usuario
- * @apiSuccess {String} firstname Primer nombre del Usuario
- * @apiSuccess {String} lastname Apellido del Usuario
- * @apiSuccess {String} email Correo electrónico del Usuario
- * @apiSuccess {String} password Contraseña del Usuario
- *
- * @apiError User not found.
+ * @apiParam {String} _id Identificador del objeto almacenado.
+ * @apiUse PostPut
+ * @apiUse OneSuccessResponse
+ * @apiUse ErrorResponse
  */
 router.put('/', authMiddleware, handlerExceptionRoute(userCtrl.updateUser));
 
+/**
+ * @api {delete} /users/ Elimina una usuario en especifico.
+ * @apiDescription Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id
+ * y lo elimina.
+ * @apiName DeleteUserID
+ * @apiGroup Users
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "message": "dataMessage",
+ *     }
+ * @apiUse ErrorResponse
+ */
 router.delete('/', authMiddleware, handlerExceptionRoute(userCtrl.deleteUser));
 
+/**
+ * @api {post} /users/login Valida campos
+ * @apiDescription Valida que los campos email y password hayan sido completados.
+ * @apiName PostUserSingIn
+ * @apiGroup Users
+ * @apiParam (Request body) {String} email Correo electrónico del Usuario.
+ * @apiParam (Request body) {String} password Contraseña del Usuario.
+ * @apiSuccessExample {json} Success-Response:
+ *     HTTP/1.1 200 OK
+ *     {
+ *       "message": "dataMessage",
+ *     }
+ * @apiUse ErrorResponse
+ */
+
 router.post('/login', handlerExceptionRoute(userCtrl.loginUser));
+
+export default router;
