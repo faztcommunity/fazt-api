@@ -3,6 +3,7 @@
 import User from '../models/User';
 import { generateAndSignToken } from '../utils/auth';
 import bcrypt from 'bcryptjs';
+import { validationResult } from 'express-validator';
 import { ErrorHandler } from '../error';
 import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED } from 'http-status-codes';
 
@@ -27,6 +28,9 @@ export const getUser: Handler = async (req, res) => {
 };
 
 export const createUser: Handler = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) throw new ErrorHandler(BAD_REQUEST, errors.array());
+
   const { nickname, email, password, firstName, lastName } = req.body;
 
   const user = new User({ nickname, email, firstName, password, lastName });
@@ -73,15 +77,13 @@ export const updateUser: Handler = async (req, res) => {
 };
 
 export const loginUser: Handler = async (req, res) => {
-  const { email, password } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) throw new ErrorHandler(BAD_REQUEST, errors.array());
 
-  if (!(email && password)) {
-    throw new ErrorHandler(BAD_REQUEST, 'Complete Fields');
-  }
+  const { email, password } = req.body;
 
   //validate credentials
   const user = await User.findOne({ email }).exec();
-  console.log(user, email);
   if (!user) {
     throw new ErrorHandler(UNAUTHORIZED, 'Invalid Credentials');
   }

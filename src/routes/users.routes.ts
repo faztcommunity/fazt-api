@@ -5,6 +5,8 @@ import { handlerExceptionRoute } from '../error';
 import * as userCtrl from '../controllers/user.controller';
 import authMiddleware from '../middlewares/auth.middleware';
 
+import * as usersValidator from '../validators/users.validator';
+
 const router = Router();
 
 /**
@@ -67,7 +69,11 @@ router.get('/', handlerExceptionRoute(userCtrl.getUsers));
  * @apiUse ErrorResponse
  */
 
-router.post('/signin', handlerExceptionRoute(userCtrl.createUser));
+router.post(
+  '/signin',
+  usersValidator.signUpValidator,
+  handlerExceptionRoute(userCtrl.createUser)
+);
 
 /**
  * @api {get} /users/:id Obtiene un usuario en especifico.
@@ -123,6 +129,10 @@ router.delete('/', authMiddleware, handlerExceptionRoute(userCtrl.deleteUser));
  * @apiUse ErrorResponse
  */
 
-router.post('/login', handlerExceptionRoute(userCtrl.loginUser));
+router.post(
+  '/login',
+  usersValidator.logInValidator,
+  handlerExceptionRoute(userCtrl.loginUser)
+);
 
 export default router;
