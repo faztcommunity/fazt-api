@@ -15,7 +15,7 @@ const router = Router();
  *     }
  */
 /**
- * @apiDefine OneSuccessResponse
+ * @apiDefine OneSuccessR
  * @apiSuccessExample {json} Success-Response:
  *     HTTP/1.1 200 OK
  *     {
@@ -28,7 +28,7 @@ const router = Router();
  *     }
  */
 /**
- * @apiDefine PostPut
+ * @apiDefine PP
  * @apiParam (Request body) {String} title Titulo del trabajo.
  * @apiParam (Request body) {String} description Descripción del trabajo.
  * @apiParam (Request body) {String} employer Empleador.
@@ -62,8 +62,8 @@ router.get('/', handlerExceptionRoute(jobCtrl.getJobs));
  * @apiDescription Crea un nuevo Trabajo y lo almacena en la base de datos.
  * @apiName PostJob
  * @apiGroup Jobs
- * @apiUse PostPut
- * @apiUse OneSuccessResponse
+ * @apiUse PP
+ * @apiUse OneSuccessR
  * @apiUse ErrorResponse
  */
 router.post('/', handlerExceptionRoute(jobCtrl.createJob));
@@ -74,7 +74,7 @@ router.post('/', handlerExceptionRoute(jobCtrl.createJob));
  * @apiName GetJobID
  * @apiGroup Jobs
  * @apiParam {String} _id Identificador del objeto almacenado.
- * @apiUse OneSuccessResponse
+ * @apiUse OneSuccessR
  * @apiUse ErrorResponse
  */
 router.route('/:id').get(handlerExceptionRoute(jobCtrl.getJob));
@@ -83,17 +83,17 @@ router.route('/:id').get(handlerExceptionRoute(jobCtrl.getJob));
  * @api {put} /jobs/:id Actualiza un trabajo en especifico
  * @apiDescription Obtiene un trabajo en especifico de los guardados en la base de datos y lo actualiza con el
  * contenido del cuerpo.
- * @apiName GetJobID
+ * @apiName PutJob
  * @apiGroup Jobs
  * @apiParam {String} _id Identificador del objeto almacenado.
- * @apiUse PostPut
+ * @apiUse PP
  * @apiUse OneSuccessResponse
  * @apiUse ErrorResponse
  */
 router.route('/:id').put(handlerExceptionRoute(jobCtrl.updateJob));
 
 /**
- * @api {delete} /jobs/:id Elimina un trabajo en especifico.
+ * @api {delete} /jobs/:id Elimina un trabajo en especifico
  * @apiDescription Obtiene un trabajo en especifico de los guardados en la base de datos a traves de su _id
  * y lo elimina.
  * @apiName DeleteJobID

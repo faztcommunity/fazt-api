@@ -70,7 +70,7 @@ router.get('/', handlerExceptionRoute(userCtrl.getUsers));
 router.post('/signin', handlerExceptionRoute(userCtrl.createUser));
 
 /**
- * @api {get} /users/:id Obtiene un usuario en especifico.
+ * @api {get} /users/:id Obtiene un usuario en especifico
  * @apiDescription Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id.
  * @apiName GetUserID
  * @apiGroup Users
@@ -81,10 +81,10 @@ router.post('/signin', handlerExceptionRoute(userCtrl.createUser));
 router.get('/:id', handlerExceptionRoute(userCtrl.getUser));
 
 /**
- * @api {put} /users/:id Actualiza un usuario en especifico.
+ * @api {put} /users/:id Actualiza un usuario en especifico
  * @apiDescription Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id
  * y lo actualiza.
- * @apiName PutUserID
+ * @apiName PutUser
  * @apiGroup Users
  * @apiParam {String} _id Identificador del objeto almacenado.
  * @apiUse PostPut
@@ -94,7 +94,7 @@ router.get('/:id', handlerExceptionRoute(userCtrl.getUser));
 router.put('/', authMiddleware, handlerExceptionRoute(userCtrl.updateUser));
 
 /**
- * @api {delete} /users/ Elimina una usuario en especifico.
+ * @api {delete} /users/ Elimina una usuario en especifico
  * @apiDescription Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id
  * y lo elimina.
  * @apiName DeleteUserID
@@ -122,7 +122,6 @@ router.delete('/', authMiddleware, handlerExceptionRoute(userCtrl.deleteUser));
  *     }
  * @apiUse ErrorResponse
  */
-
 router.post('/login', handlerExceptionRoute(userCtrl.loginUser));
 
 export default router;
