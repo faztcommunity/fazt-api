@@ -22,8 +22,8 @@ const router = Router();
 router.get('/', handlerExceptionRoute(userCtrl.getUsers));
 
 /**
- * @api {post} /usuers Crea una nueva Usuario
- * @apiDescription Crea un Usuario nuevo
+ * @api {post} /users/signin Crea una nueva Usuario
+ * @apiDescription Registra un usuario nuevo
  * @apiName PostUser
  * @apiGroup Users
  *
@@ -39,7 +39,9 @@ router.get('/', handlerExceptionRoute(userCtrl.getUsers));
  * @apiSuccess {String} email Correo electrónico del Usuario
  * @apiSuccess {String} password Contraseña del Usuario
  */
-router.post('/', handlerExceptionRoute(userCtrl.createUser));
+
+router.post('/signin', handlerExceptionRoute(userCtrl.createUser));
+export default router;
 
 /**
  * @api {get} /users/:id Obtiene un usuario en especifico.
@@ -88,5 +90,6 @@ router.delete(
   handlerExceptionRoute(userCtrl.deleteUser)
 );
 
-router.post('/signin', handlerExceptionRoute(userCtrl.signinUser));
-export default router;
+
+
+router.post('/login', handlerExceptionRoute(userCtrl.loginUser));
