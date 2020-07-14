@@ -1,4 +1,5 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
+
 import { Router } from 'express';
 import { handlerExceptionRoute } from '../error';
 import * as taskCtrl from '../controllers/task.controllers';

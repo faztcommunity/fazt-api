@@ -34,4 +34,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // global variables
 
+// middlewares not found
+app.use(function (req, res, next) {
+    res.status(404).send('Not Found');
+});
+
 export default app;

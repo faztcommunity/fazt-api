@@ -1,6 +1,6 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Router } from 'express';
 
+import { Router } from 'express';
 import { handlerExceptionRoute } from '../error';
 import * as discord from '../controllers/discord.controller';
 import * as discordValidator from '../validators/discord.validator';
