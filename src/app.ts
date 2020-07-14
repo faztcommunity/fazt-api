@@ -5,6 +5,8 @@ import helmet from 'helmet';
 import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
+import * as swaggerDocument from './swagger.json';
+import * as swaggerUi from 'swagger-ui-express';
 import handleErrorMiddleware from './middlewares/error.middleware';
 import routes from './routes';
 
@@ -22,6 +24,7 @@ app.use(express.urlencoded({ extended: false }));
 
 // routes
 app.use('/', routes);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // middlewares output
 app.use(handleErrorMiddleware);
