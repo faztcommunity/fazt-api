@@ -2,3 +2,5 @@ package.json
 node_modules
 docs
 dist
+CHANGELOG.md
+package-lock.json
