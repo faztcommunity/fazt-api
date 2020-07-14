@@ -57,6 +57,7 @@ router.get('/', handlerExceptionRoute(miscCtrl.getMiscs));
  * @apiUse OneSuccessRes
  * @apiUse ErrorResponse
  */
+
 router.get('/:id', handlerExceptionRoute(miscCtrl.getMisc));
 
 /**
@@ -80,6 +81,7 @@ router.post('/', handlerExceptionRoute(miscCtrl.createMisc));
  * @apiUse OneSuccessRes
  * @apiUse ErrorResponse
  */
+
 router.put('/:id', handlerExceptionRoute(miscCtrl.updateMisc));
 
 /**
@@ -96,6 +98,7 @@ router.put('/:id', handlerExceptionRoute(miscCtrl.updateMisc));
  *     }
  * @apiUse ErrorResponse
  */
+
 router.delete('/:id',handlerExceptionRoute(miscCtrl.deleteMisc));
 
 export default router;
