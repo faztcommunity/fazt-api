@@ -1,7 +1,9 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 
-import { NOT_FOUND } from 'http-status-codes';
+import { NOT_FOUND, BAD_REQUEST } from 'http-status-codes';
 import { Setting, Moderation } from '../models/Discord';
+import { validationResult } from 'express-validator';
+import { ErrorHandler } from '../error';
 
 export const getSetting: Handler = async (req, res) => {
   const setting = await Setting.findOne({ name: req.params.name }).exec();
@@ -13,6 +15,9 @@ export const getSetting: Handler = async (req, res) => {
 };
 
 export const updateOrCreateSetting: Handler = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) throw new ErrorHandler(BAD_REQUEST, errors.array());
+
   const existSetting = await Setting.findOneAndUpdate(
     { name: req.params.name },
     { value: req.body.value },
@@ -50,6 +55,9 @@ export const getUserModerationsWithType: Handler = async (req, res) => {
 };
 
 export const createModerationUser: Handler = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) throw new ErrorHandler(BAD_REQUEST, errors.array());
+
   const user = new Moderation({
     ...req.body,
     user_id: req.params.user_id
@@ -61,6 +69,9 @@ export const createModerationUser: Handler = async (req, res) => {
 };
 
 export const revokeModeration: Handler = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) throw new ErrorHandler(BAD_REQUEST, errors.array());
+
   const moderation = await Moderation.findByIdAndUpdate(
     req.params.id,
     { revoked: true },
