@@ -79,7 +79,7 @@ router.post('/', handlerExceptionRoute(jobCtrl.createJob));
 router.route('/:id').get(handlerExceptionRoute(jobCtrl.getJob));
 
 /**
- * @api {put} /jobs/:id Actualiza un trabajo en especifico.
+ * @api {put} /jobs/:id Actualiza un trabajo en especifico
  * @apiDescription Obtiene un trabajo en especifico de los guardados en la base de datos y lo actualiza con el
  * contenido del cuerpo.
  * @apiName GetJobID
