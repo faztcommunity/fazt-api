@@ -28,10 +28,22 @@ export const createMisc: Handler = async (req, res) => {
 
 export const deleteMisc: Handler = async (req, res) => {
   const result = await Misc.findByIdAndRemove(req.params.id).exec();
-  return res.status(200).json(result);
+  return res.status(200).json({
+    code: 200,
+    message: 'Ok!'
+  });
 };
 
-//Falta esto
 export const updateMisc: Handler = async (req, res) => {
-  return res.json();
+  const misc = await Misc.findByIdAndUpdate(req.params.id, req.body, {
+    new: true
+  }).exec();
+
+  if (!misc) throw new ErrorHandler(NOT_FOUND, 'Misc not found');
+
+  return res.status(200).json({
+    code: 200,
+    message: 'Ok!',
+    data: misc
+  });
 };
