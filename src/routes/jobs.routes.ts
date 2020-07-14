@@ -3,6 +3,7 @@
 import { Router } from 'express';
 import { handlerExceptionRoute } from '../error';
 import * as jobCtrl from '../controllers/jobs.controller';
+import * as jobsValidator from '../validators/jobs.validator';
 
 const router = Router();
 
@@ -66,7 +67,11 @@ router.get('/', handlerExceptionRoute(jobCtrl.getJobs));
  * @apiUse OneSuccessResponse
  * @apiUse ErrorResponse
  */
-router.post('/', handlerExceptionRoute(jobCtrl.createJob));
+router.post(
+  '/',
+  jobsValidator.createJobValidator,
+  handlerExceptionRoute(jobCtrl.createJob)
+);
 
 /**
  * @api {get} /jobs/:id Obtiene un trabajo en específico
