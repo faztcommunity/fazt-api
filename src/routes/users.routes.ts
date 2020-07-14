@@ -84,12 +84,6 @@ router.get('/:id', handlerExceptionRoute(userCtrl.getUser));
  */
 router.put('/', handlerExceptionRoute(userCtrl.updateUser));
 
-router.delete(
-  '/:id',
-  authMiddleware,
-  handlerExceptionRoute(userCtrl.deleteUser)
-);
-
-
+router.delete('/', authMiddleware, handlerExceptionRoute(userCtrl.deleteUser));
 
 router.post('/login', handlerExceptionRoute(userCtrl.loginUser));

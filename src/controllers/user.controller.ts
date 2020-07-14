@@ -32,7 +32,7 @@ export const createUser: Handler = async (req, res) => {
   await user.setPassword(password);
 
   const newUser = await user.save();
-  const token = await generateAndSignToken({ user: newUser.id });
+  const token = await generateAndSignToken({ user: { id: newUser.id } });
 
   return res.status(201).json({
     code: 201,
@@ -42,10 +42,11 @@ export const createUser: Handler = async (req, res) => {
 };
 
 export const deleteUser: Handler = async (req, res) => {
-  const user = await User.findById(req.params.id).exec();
+  const user = await User.findByIdAndRemove(req.user.id).exec();
+  console.log(req.user.id);
+  console.log(user);
   if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
 
-  await User.findByIdAndRemove(req.params.id).exec();
   return res.status(200).json({
     code: 200,
     message: 'Ok!'
@@ -75,7 +76,7 @@ export const loginUser: Handler = async (req, res) => {
   if (!passwordCorrect) {
     throw new ErrorHandler(UNAUTHORIZED, 'Invalid Credentials');
   }
-  const token = await generateAndSignToken({ user: user.id });
+  const token = await generateAndSignToken({ user: { id: user.id } });
   return res.status(200).json({
     code: 200,
     data: token
