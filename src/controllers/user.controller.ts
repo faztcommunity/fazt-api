@@ -2,6 +2,7 @@
 import { Handler } from '../types';
 import User from '../models/User';
 import { generateAndSignToken } from '../utils/auth';
+import bcrypt from 'bcryptjs';
 import { ErrorHandler } from '../error';
 import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED } from 'http-status-codes';
 
@@ -54,7 +55,21 @@ export const deleteUser: Handler = async (req, res) => {
 };
 
 export const updateUser: Handler = async (req, res) => {
-  return res.json({ message: 'User Updated' });
+  if (req.body.password) {
+    const salt = await bcrypt.genSalt(10);
+    req.body.password = await bcrypt.hash(req.body.password, salt);
+  }
+
+  const user = await User.findByIdAndUpdate(req.user.id, req.body, {
+    new: true
+  }).exec();
+  if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
+
+  return res.status(200).json({
+    code: 200,
+    message: 'User Updated!',
+    data: user
+  });
 };
 
 export const loginUser: Handler = async (req, res) => {

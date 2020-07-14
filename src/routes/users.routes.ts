@@ -82,7 +82,7 @@ router.get('/:id', handlerExceptionRoute(userCtrl.getUser));
  *
  * @apiError User not found.
  */
-router.put('/', handlerExceptionRoute(userCtrl.updateUser));
+router.put('/', authMiddleware, handlerExceptionRoute(userCtrl.updateUser));
 
 router.delete('/', authMiddleware, handlerExceptionRoute(userCtrl.deleteUser));
 
