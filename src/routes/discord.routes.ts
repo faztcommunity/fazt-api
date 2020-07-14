@@ -3,6 +3,7 @@ import { Router } from 'express';
 
 import { handlerExceptionRoute } from '../error';
 import * as discord from '../controllers/discord.controller';
+import * as discordValidator from '../validators/discord.validator';
 
 const router = Router();
 
@@ -90,7 +91,10 @@ router
    * @apiUse SettingSuccess
    */
 
-  .put(handlerExceptionRoute(discord.updateOrCreateSetting));
+  .put(
+    discordValidator.updateOrCreateSettingValidator,
+    handlerExceptionRoute(discord.updateOrCreateSetting)
+  );
 
 router
   .route('/moderation/:user_id')
@@ -121,7 +125,10 @@ router
    * @apiUse ExampleReturnOnlyModeration
    *
    */
-  .post(handlerExceptionRoute(discord.createModerationUser));
+  .post(
+    discordValidator.createModerationValidator,
+    handlerExceptionRoute(discord.createModerationUser)
+  );
 
 router
   .route('/moderation/:user_id/:type')
@@ -160,6 +167,9 @@ router
    *  "user_id": "123"
    * }
    */
-  .patch(handlerExceptionRoute(discord.revokeModeration));
+  .patch(
+    discordValidator.revokeModerationValidator,
+    handlerExceptionRoute(discord.revokeModeration)
+  );
 
 export default router;

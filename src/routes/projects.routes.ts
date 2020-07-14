@@ -4,7 +4,6 @@ import { Router } from 'express';
 import { handlerExceptionRoute } from '../error';
 import * as projectCtrl from '../controllers/project.controller';
 import * as projectValidators from '../validators/projects.validator';
-
 const router = Router();
 
 /**
@@ -73,7 +72,11 @@ router.get('/', handlerExceptionRoute(projectCtrl.getProjects));
  * @apiUse OneSuccessRe
  * @apiUse ErrorResponse
  */
-router.post('/',projectValidators.createProjectValidator,handlerExceptionRoute(projectCtrl.createProject));
+router.post(
+  '/',
+  projectValidators.createProjectValidator,
+  handlerExceptionRoute(projectCtrl.createProject)
+);
 
 /**
  * @api {get} /projects/:id Obtiene un proyecto en especifico

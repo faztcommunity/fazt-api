@@ -2,7 +2,8 @@
 
 import Task from '../models/Task';
 import { ErrorHandler } from '../error';
-import { NOT_FOUND } from 'http-status-codes';
+import { NOT_FOUND, BAD_REQUEST } from 'http-status-codes';
+import { validationResult } from 'express-validator';
 
 export const getTasks: Handler = async (req, res) => {
   const tasks = await Task.find().exec();
@@ -25,6 +26,9 @@ export const getTask: Handler = async (req, res) => {
 };
 
 export const createTask: Handler = async (req, res) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) throw new ErrorHandler(BAD_REQUEST, errors.array());
+
   const { title, description, date, postingUser } = req.body;
   const task = new Task({ title, description, date, postingUser });
   await task.save();

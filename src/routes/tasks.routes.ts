@@ -1,9 +1,8 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-
 import { Router } from 'express';
 import { handlerExceptionRoute } from '../error';
 import * as taskCtrl from '../controllers/task.controllers';
-
+import * as tasksValidator from '../validators/tasks.validator';
 const router = Router();
 
 /**
@@ -63,7 +62,11 @@ router.get('/', handlerExceptionRoute(taskCtrl.getTasks));
  * @apiUse OneSuccessResp
  * @apiUse ErrorResponse
  */
-router.post('/', handlerExceptionRoute(taskCtrl.createTask));
+router.post(
+  '/',
+  tasksValidator.createTaskValidator,
+  handlerExceptionRoute(taskCtrl.createTask)
+);
 
 /**
  * @api {get} /tasks/:id Obtiene una tarea en especifico

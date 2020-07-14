@@ -3,6 +3,6 @@
 import { check } from 'express-validator';
 
 export const createTaskValidator = [
-  check('title').isString().not().isEmpty().withMessage('Title is required'),
-  check('description').isString().not().isEmpty().withMessage('description is required')
+  check('title').not().isEmpty().withMessage('title is required'),
+  check('description').not().isEmpty().withMessage('description is required')
 ];

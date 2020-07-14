@@ -1,9 +1,8 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-
 import { Router } from 'express';
 import { handlerExceptionRoute } from '../error';
 import * as jobCtrl from '../controllers/jobs.controller';
-
+import * as jobsValidator from '../validators/jobs.validator';
 const router = Router();
 
 /**
@@ -36,7 +35,7 @@ const router = Router();
  * @apiParam (Request body) {[ObjectId]} proposals Propuesta/s del empleador.
  */
 
-/**
+ /**
  * @api {get} /jobs Obtiene todos los trabajos
  * @apiDescription Obtiene un arreglo todos los trabajos almacenados en la base de datos.
  * @apiName GetJobs
@@ -66,7 +65,11 @@ router.get('/', handlerExceptionRoute(jobCtrl.getJobs));
  * @apiUse OneSuccessR
  * @apiUse ErrorResponse
  */
-router.post('/', handlerExceptionRoute(jobCtrl.createJob));
+router.post(
+  '/',
+  jobsValidator.createJobValidator,
+  handlerExceptionRoute(jobCtrl.createJob)
+);
 
 /**
  * @api {get} /jobs/:id Obtiene un trabajo en específico

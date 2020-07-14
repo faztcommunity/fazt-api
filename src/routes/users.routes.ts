@@ -1,10 +1,9 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-
 import { Router } from 'express';
 import { handlerExceptionRoute } from '../error';
 import * as userCtrl from '../controllers/user.controller';
 import authMiddleware from '../middlewares/auth.middleware';
-
+import * as usersValidator from '../validators/users.validator';
 const router = Router();
 
 /**
@@ -58,7 +57,7 @@ const router = Router();
 router.get('/', handlerExceptionRoute(userCtrl.getUsers));
 
 /**
- * @api {post} /users/signin Crea una nueva Usuario
+ * @api {post} /users/signin Crea un nuevo Usuario
  * @apiDescription Registra un usuario nuevo
  * @apiName PostUser
  * @apiGroup Users
@@ -66,13 +65,16 @@ router.get('/', handlerExceptionRoute(userCtrl.getUsers));
  * @apiUse OneSuccessResponse
  * @apiUse ErrorResponse
  */
-
-router.post('/signin', handlerExceptionRoute(userCtrl.createUser));
+router.post(
+  '/signin',
+  usersValidator.signUpValidator,
+  handlerExceptionRoute(userCtrl.createUser)
+);
 
 /**
  * @api {get} /users/:id Obtiene un usuario en especifico
  * @apiDescription Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id.
- * @apiName GetUserID
+ * @apiName GetUserId
  * @apiGroup Users
  * @apiParam {String} _id Identificador del objeto almacenado.
  * @apiUse OneSuccessResponse
@@ -122,6 +124,10 @@ router.delete('/', authMiddleware, handlerExceptionRoute(userCtrl.deleteUser));
  *     }
  * @apiUse ErrorResponse
  */
-router.post('/login', handlerExceptionRoute(userCtrl.loginUser));
+router.post(
+  '/login',
+  usersValidator.logInValidator,
+  handlerExceptionRoute(userCtrl.loginUser)
+);
 
 export default router;
