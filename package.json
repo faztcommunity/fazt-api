@@ -14,7 +14,7 @@
   "private": false,
   "main": "./dist/index.js",
   "scripts": {
-    "lint:prettier": "prettier --write ./src/**/*.{js,ts,json,md}",
+    "lint:prettier": "prettier --write \"**/*.{js,ts,json,md}\"",
     "build": "tsc",
     "dev": "ts-node-dev --respawn --transpileOnly src/index.ts",
     "start": "node dist/index.js",
