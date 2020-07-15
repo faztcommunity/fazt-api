@@ -31,20 +31,11 @@ const redisMiddleware: Handler = async (req, res, next) => {
   return res.json(JSONdata).status(JSONdata.statusCode || 200);
 };
 
-enum routes {
-  projects,
-  users,
-  tasks,
-  bot,
-  misc,
-  jobs
-}
-
 async function selectDB(url: string) {
   url = url.split('/')[1];
-  if (Object.keys(routes).includes(url)) {
+  if (Object.keys(ERoutes).includes(url)) {
     try {
-      return await redis.select(routes[url as keyof typeof routes]);
+      return await redis.select(ERoutes[url as keyof typeof ERoutes]);
     } catch (err) {
       return null;
     }
