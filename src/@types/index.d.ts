@@ -2,4 +2,3 @@
 
 import './types';
 import './interfaces';
-import './enums';

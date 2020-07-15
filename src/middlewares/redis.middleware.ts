@@ -1,3 +1,5 @@
+// Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
+
 import redis from '../config/redis';
 
 const redisMiddleware: Handler = async (req, res, next) => {
@@ -30,6 +32,16 @@ const redisMiddleware: Handler = async (req, res, next) => {
   const JSONdata = JSON.parse(data);
   return res.json(JSONdata).status(JSONdata.statusCode || 200);
 };
+
+enum ERoutes {
+  projects,
+  users,
+  tasks,
+  bot,
+  misc,
+  jobs,
+  github
+}
 
 async function selectDB(url: string) {
   url = url.split('/')[1];
