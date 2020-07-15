@@ -1,0 +1,9 @@
+{
+  "name": "Testing Fazt Community",
+  "description": "This is a test to Fazt API from the Fazt API Connector",
+  "status": "active",
+  "tags": ["FaztAPI", "NPM"],
+  "type": "code",
+  "url": "",
+  "githubURL": "https://github.com/faztcommunity/fazt-api-connector"
+}
