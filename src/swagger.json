@@ -16,7 +16,7 @@
   "tags": [
     {
       "name": "Projects",
-      "description": "Ingresé descripción",
+      "description": "",
       "externalDocs": {
         "description": "Find out more",
         "url": "https://faztcommunity.dev"
@@ -24,7 +24,7 @@
     },
     {
       "name": "Users",
-      "description": "Access to users"
+      "description": ""
     },
     {
       "name": "Tasks"
@@ -51,22 +51,37 @@
       "name": "Github"
     }
   ],
-  "schemes": ["https", "http"],
+  "schemes": ["http", "https"],
   "produces": ["application/json"],
   "basePath": "/",
   "paths": {
     "/projects": {
       "get": {
-        "summary": "",
-        "description": "",
-        "x-swagger-router-controller": "",
+        "summary": "Obtiene todos los Proyectos",
+        "description": "Obtiene un arreglo de todos los proyectos almacenados en la base de datos.",
+        "x-swagger-router-controller": "getProject",
         "operationId": "get",
         "tags": ["Projects"],
         "responses": {
           "200": {
             "description": "Operación exitosa",
+            "examples": {
+              "application/json": [
+                {
+                  "status": "active",
+                  "tags": [],
+                  "projectType": "code",
+                  "_id": "5f0767fa8d4b2327bb8f63f5",
+                  "name": "Fede",
+                  "description": "asd",
+                  "createdAt": "2020-07-09T18:54:50.185Z",
+                  "updatedAt": "2020-07-09T18:54:50.185Z",
+                  "__v": 0
+                }
+              ]
+            },
             "schema": {
-              "ref": ""
+              "ref": "#/definitions/ProjectsResponse"
             }
           },
           "404": {
@@ -78,8 +93,8 @@
         }
       },
       "post": {
-        "summary": "",
-        "description": "",
+        "summary": "Crea un nuevo proyecto",
+        "description": "Crea un nuevo proyecto y lo almacena en la base de datos.",
         "x-swagger-router-controller": "",
         "operationId": "post",
         "tags": ["Projects"],
@@ -100,27 +115,54 @@
       }
     },
     "/projects/{:id}": {
-      "put": {
+      "get": {
         "tags": ["Projects"],
-        "summary": "",
-        "description": "",
+        "summary": "Obtiene un proyecto en especifico",
+        "description": "Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id.",
         "operationId": "",
         "produces": ["application/json"],
-        "parameters": [
-          {
-            "name": "status",
-            "in": "query",
-            "description": "Status values that need to be considered for filter",
-            "required": true,
-            "type": "array",
-            "items": {
-              "type": "string",
-              "enum": ["available", "pending", "sold"],
-              "default": "available"
-            },
-            "collectionFormat": "multi"
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": ""
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
           }
-        ],
+        }
+      },
+      "put": {
+        "tags": ["Projects"],
+        "summary": "Actualiza un proyecto en especifico",
+        "description": "Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id y lo actualiza con el contenido del cuerp",
+        "operationId": "",
+        "produces": ["application/json"],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": ""
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid status value"
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Projects"],
+        "summary": "Elimina un proyecto en especifico",
+        "description": "Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id y lo elimina.",
+        "operationId": "",
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "successful operation",
@@ -341,6 +383,25 @@
           "500": {
             "description": "Error interno del servidor"
           }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ProjectsResponse": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string",
+          "example": "doggie"
+        },
+        "status": {
+          "type": "string",
+          "description": "Alguna descripción"
         }
       }
     }
