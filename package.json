@@ -16,7 +16,7 @@
   "scripts": {
     "lint:prettier": "prettier --write \"**/*.{js,ts,json,md}\"",
     "build": "tsc",
-    "dev": "ts-node-dev --respawn --transpileOnly src/index.ts",
+    "dev": "ts-node-dev src/scripts/projects/project.seed.ts && ts-node-dev --respawn --transpileOnly src/index.ts",
     "start": "node dist/index.js",
     "clean": "rimraf dist docs",
     "release": "standard-version",
