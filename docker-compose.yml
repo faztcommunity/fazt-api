@@ -1,25 +1,36 @@
-version: "3.1"
+version: '3.1'
 
-services: 
+services:
   api:
     image: node
     container_name: faztapi
     build: .
-    ports: 
-      - "3000:3000"
-    volumes: 
+    ports:
+      - '3000:3000'
+    volumes:
       - .:/usr/src/app
-    links: 
-      - mongo 
-    environment: 
+    links:
+      - mongo
+      - redis
+    environment:
       - MONGODB_URI=mongodb://mongo/faztdb
+      - REDIS_URI=redis://redis:6379
   mongo:
     container_name: mydatabase
     image: mongo
     command: mongod
     volumes:
       - /data/db
-    ports: 
-      - "27017:27017"
+    ports:
+      - '27017:27017'
+    logging:
+      driver: none
+  redis:
+    container_name: fazt-redis
+    image: redis
+    ports:
+      - '6379:6379'
+    expose:
+      - 6379
     logging:
       driver: none
