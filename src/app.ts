@@ -8,6 +8,7 @@ import path from 'path';
 import * as swaggerDocument from './swagger.json';
 import * as swaggerUi from 'swagger-ui-express';
 import handleErrorMiddleware from './middlewares/error.middleware';
+import redisMiddleware from './middlewares/redis.middleware';
 import routes from './routes';
 
 const app = express();
@@ -21,6 +22,7 @@ app.use(helmet());
 app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(redisMiddleware);
 
 // routes
 app.use('/', routes);
@@ -36,7 +38,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // middlewares not found
 app.use(function (req, res, next) {
-    res.status(404).send('Not Found');
+  res.status(404).json({
+    message: 'Not Found',
+    path: req.url,
+    statusCode: 404
+  });
 });
 
 export default app;
