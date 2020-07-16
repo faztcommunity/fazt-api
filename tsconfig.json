@@ -44,6 +44,7 @@
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
     "types": [
       "node",
+      "jest",
       "./src/@types"
     ] /* Type declaration files to be included in compilation. */,
     // "allowSyntheticDefaultImports": true,  /* Allow default imports from modules with no default export. This does not affect code emit, just typechecking. */
@@ -64,5 +65,5 @@
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
   "include": ["src/**/*.ts"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "__tests__/**/*.test.ts"]
 }
