@@ -4,8 +4,11 @@ import { ErrorHandler } from '../error';
 import { UNAUTHORIZED } from 'http-status-codes';
 import { API_KEY } from '../config';
 
-const ApiKeyMiddleware: Handler = (req, res, next) => {
+const apiKeyMiddleware: Handler = (req, res, next) => {
   const apiKey = req.headers['api-key'];
+  const url = req.url.split('/')[1];
+  if (url === 'api-docs') return next();
+
   if (!apiKey || apiKey !== API_KEY)
     throw new ErrorHandler(UNAUTHORIZED, 'api key is required');
 
@@ -14,4 +17,4 @@ const ApiKeyMiddleware: Handler = (req, res, next) => {
   }
 };
 
-export default ApiKeyMiddleware;
+export default apiKeyMiddleware;
