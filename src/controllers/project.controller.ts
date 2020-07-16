@@ -2,13 +2,25 @@
 
 import Project from '../models/Project';
 import { ErrorHandler } from '../error';
-import { NOT_FOUND, UNPROCESSABLE_ENTITY } from 'http-status-codes';
+import { NOT_FOUND, UNPROCESSABLE_ENTITY, OK } from 'http-status-codes';
 
 import { validationResult } from 'express-validator';
+import { getPages } from '../utils/pages';
 
 export const getProjects: Handler = async (req, res) => {
-  let projects = await Project.find().where('status').ne('deleted').exec();
-  return res.status(200).json(projects);
+  const { limit, skip } = getPages(req.query.page as string, Number(req.query.limit));
+
+  let projects = await Project.find()
+    .where('status')
+    .ne('deleted')
+    .limit(limit)
+    .skip(skip)
+    .exec();
+  return res.status(OK).json({
+    statusCode: OK,
+    data: projects,
+    message: 'Ok!'
+  });
 };
 
 export const getProject: Handler = async (req, res) => {
@@ -16,7 +28,11 @@ export const getProject: Handler = async (req, res) => {
   if (!project || project.status === 'deleted')
     throw new ErrorHandler(NOT_FOUND, 'Project not found');
 
-  return res.status(200).json(project);
+  return res.status(OK).json({
+    statusCode: OK,
+    data: project,
+    message: 'Ok!'
+  });
 };
 
 export const createProject: Handler = async (req, res) => {
@@ -27,19 +43,26 @@ export const createProject: Handler = async (req, res) => {
 
   const project = new Project(req.body);
   await project.save();
-  return res.status(200).json(project);
+  return res.status(OK).json({
+    statusCode: OK,
+    data: project,
+    message: 'Project Created!'
+  });
 };
 
 export const deleteProject: Handler = async (req, res) => {
-  const projectDeleted = await Project.findByIdAndUpdate(
+  const project = await Project.findByIdAndUpdate(
     req.params.id,
     { status: 'deleted' },
     { new: true }
   ).exec();
 
-  if (!projectDeleted) throw new ErrorHandler(NOT_FOUND, 'Project not found');
+  if (!project) throw new ErrorHandler(NOT_FOUND, 'Project not found');
 
-  return res.status(200).json(projectDeleted);
+  return res.status(OK).json({
+    statusCode: OK,
+    message: 'Project Deleted!'
+  });
 };
 
 export const updateProject: Handler = async (req, res) => {
@@ -51,5 +74,9 @@ export const updateProject: Handler = async (req, res) => {
     new: true
   }).exec();
 
-  return res.status(200).json(project);
+  return res.status(OK).json({
+    statusCode: OK,
+    data: project,
+    message: 'Project Updated!'
+  });
 };
