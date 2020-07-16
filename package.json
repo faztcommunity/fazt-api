@@ -34,7 +34,7 @@
   "homepage": "https://github.com/faztdevelopers/fazt-api#readme",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build",
+      "pre-commit": "npm run test && npm run build",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   },
@@ -88,6 +88,9 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "testPathIgnorePatterns": ["/node_modules/", "/__tests__/utils/"]
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/__tests__/utils/"
+    ]
   }
 }
