@@ -8,14 +8,18 @@ import { validationResult } from 'express-validator';
 import { getPages } from '../utils/pages';
 
 export const getProjects: Handler = async (req, res) => {
-  const { limit, skip } = getPages(req.query.page as string, Number(req.query.limit));
+  const { page, limit: limitQuery, tags } = req.query;
+  const { limit, skip } = getPages(page as string, Number(limitQuery));
 
-  let projects = await Project.find()
+  const tagsQuery = tags ? { tags: { $in: tags as string[] } } : {};
+
+  const projects = await Project.find(tagsQuery)
     .where('status')
     .ne('deleted')
     .limit(limit)
     .skip(skip)
     .exec();
+
   return res.status(OK).json({
     statusCode: OK,
     data: projects,
