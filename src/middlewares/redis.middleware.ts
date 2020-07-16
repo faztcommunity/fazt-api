@@ -45,6 +45,9 @@ enum ERoutes {
 
 async function selectDB(url: string) {
   url = url.split('/')[1];
+  if (url.includes('?')) {
+    url = url.split('?')[0];
+  }
   if (Object.keys(ERoutes).includes(url)) {
     try {
       return await redis.select(ERoutes[url as keyof typeof ERoutes]);

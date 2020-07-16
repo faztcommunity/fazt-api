@@ -15,14 +15,14 @@ const ProjectSchema = new Schema(
     status: {
       type: String,
       default: 'active',
-      enum: ['active', 'deleted', 'csanceled', 'deprecated']
+      enum: ['active', 'deleted', 'canceled', 'deprecated']
     },
     tags: [
       {
         type: String
       }
     ],
-    projectType: {
+    type: {
       type: String,
       default: 'code',
       enum: ['code', 'design']
@@ -30,7 +30,7 @@ const ProjectSchema = new Schema(
     url: {
       type: String
     },
-    githubURL: {
+    github_url: {
       type: String
     }
   },

@@ -5,13 +5,17 @@ import { generateAndSignToken } from '../utils/auth';
 import bcrypt from 'bcryptjs';
 import { validationResult } from 'express-validator';
 import { ErrorHandler } from '../error';
-import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED } from 'http-status-codes';
+import { NOT_FOUND, BAD_REQUEST, UNAUTHORIZED, OK } from 'http-status-codes';
+import { getPages } from '../utils/pages';
 
 export const getUsers: Handler = async (req, res) => {
-  const Users = await User.find().exec();
-  return res.status(200).json({
-    code: 200,
-    data: Users,
+  const { limit, skip } = getPages(req.query.page as string, Number(req.query.limit));
+
+  const users = await User.find().limit(limit).skip(skip).exec();
+
+  return res.status(OK).json({
+    statusCode: OK,
+    data: users,
     message: 'Ok!'
   });
 };
@@ -20,8 +24,8 @@ export const getUser: Handler = async (req, res) => {
   const user = await User.findById(req.params.id).exec();
   if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
 
-  return res.status(200).json({
-    code: 200,
+  return res.status(OK).json({
+    statusCode: OK,
     data: user,
     message: 'Ok!'
   });
@@ -39,10 +43,10 @@ export const createUser: Handler = async (req, res) => {
   const newUser = await user.save();
   const token = await generateAndSignToken({ user: { id: newUser.id } });
 
-  return res.status(201).json({
-    code: 201,
+  return res.status(OK).json({
+    statusCode: OK,
     data: token,
-    message: 'Created!'
+    message: 'User Created!'
   });
 };
 
@@ -52,9 +56,9 @@ export const deleteUser: Handler = async (req, res) => {
   console.log(user);
   if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
 
-  return res.status(200).json({
-    code: 200,
-    message: 'Ok!'
+  return res.status(OK).json({
+    statusCode: OK,
+    message: 'User Deleted!'
   });
 };
 
@@ -69,10 +73,10 @@ export const updateUser: Handler = async (req, res) => {
   }).exec();
   if (!user) throw new ErrorHandler(NOT_FOUND, 'User not found');
 
-  return res.status(200).json({
-    code: 200,
-    message: 'User Updated!',
-    data: user
+  return res.status(OK).json({
+    statusCode: OK,
+    data: user,
+    message: 'User Updated!'
   });
 };
 
@@ -94,8 +98,10 @@ export const loginUser: Handler = async (req, res) => {
     throw new ErrorHandler(UNAUTHORIZED, 'Invalid Credentials');
   }
   const token = await generateAndSignToken({ user: { id: user.id } });
-  return res.status(200).json({
-    code: 200,
-    data: token
+
+  return res.status(OK).json({
+    statusCode: OK,
+    data: token,
+    message: 'User Connected!'
   });
 };

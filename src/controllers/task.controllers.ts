@@ -2,13 +2,17 @@
 
 import Task from '../models/Task';
 import { ErrorHandler } from '../error';
-import { NOT_FOUND, BAD_REQUEST } from 'http-status-codes';
+import { NOT_FOUND, BAD_REQUEST, OK } from 'http-status-codes';
 import { validationResult } from 'express-validator';
+import { getPages } from '../utils/pages';
 
 export const getTasks: Handler = async (req, res) => {
-  const tasks = await Task.find().exec();
-  return res.status(200).json({
-    code: 200,
+  const { limit, skip } = getPages(req.query.page as string, Number(req.query.limit));
+
+  const tasks = await Task.find().limit(limit).skip(skip).exec();
+
+  return res.status(OK).json({
+    statusCode: OK,
     data: tasks,
     message: 'Ok!'
   });
@@ -18,8 +22,8 @@ export const getTask: Handler = async (req, res) => {
   const task = await Task.findById(req.params.id).exec();
   if (!task) throw new ErrorHandler(NOT_FOUND, 'Task not found');
 
-  return res.status(200).json({
-    code: 200,
+  return res.status(OK).json({
+    statusCode: OK,
     data: task,
     message: 'Ok!'
   });
@@ -32,10 +36,11 @@ export const createTask: Handler = async (req, res) => {
   const { title, description, date, postingUser } = req.body;
   const task = new Task({ title, description, date, postingUser });
   await task.save();
-  return res.status(201).json({
-    code: 201,
+
+  return res.status(OK).json({
+    statusCode: OK,
     data: task,
-    message: 'Created!'
+    message: 'Task Created!'
   });
 };
 
@@ -44,10 +49,9 @@ export const deleteTask: Handler = async (req, res) => {
 
   if (!taskDeleted) throw new ErrorHandler(NOT_FOUND, 'Task not found');
 
-  return res.status(200).json({
-    code: 200,
-    data: taskDeleted,
-    message: 'Ok!'
+  return res.status(OK).json({
+    statusCode: OK,
+    message: 'Task Deleted!'
   });
 };
 
@@ -58,8 +62,9 @@ export const updateTask: Handler = async (req, res) => {
 
   if (!task) throw new ErrorHandler(NOT_FOUND, 'Task not found');
 
-  return res.status(200).json({
-    code: 200,
-    message: 'Ok!'
+  return res.status(OK).json({
+    statusCode: OK,
+    data: task,
+    message: 'Task Updated!'
   });
 };
