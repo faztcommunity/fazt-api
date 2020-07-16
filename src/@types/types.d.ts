@@ -12,7 +12,7 @@ type Handler = (
   req: import('express').Request,
   res: TResponse,
   next: import('express').NextFunction
-) => Promise<TResponse | void> | TResponse;
+) => Promise<TResponse | void> | TResponse | void;
 
 /************************************* DECLARATIONS *************************************/
 

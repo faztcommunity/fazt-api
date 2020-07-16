@@ -10,6 +10,7 @@ import * as swaggerUi from 'swagger-ui-express';
 import handleErrorMiddleware from './middlewares/error.middleware';
 import redisMiddleware from './middlewares/redis.middleware';
 import routes from './routes';
+import apiKeyMiddleware from './middlewares/api-key.middleware';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(helmet());
 app.use(morgan(process.env.LOG_MODE || 'dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(apiKeyMiddleware);
 app.use(redisMiddleware);
 
 // routes
