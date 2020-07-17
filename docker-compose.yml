@@ -4,11 +4,15 @@ services:
   api:
     image: node
     container_name: faztapi
+    depends_on:
+      - mongo
+      - redis
     build: .
     ports:
       - '3000:3000'
     volumes:
       - .:/usr/src/app
+      - /usr/src/app/node_modules
     links:
       - mongo
       - redis
