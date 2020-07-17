@@ -4,6 +4,7 @@ import { Router } from 'express';
 import { handlerExceptionRoute } from '../error';
 import * as projectCtrl from '../controllers/project.controller';
 import * as projectValidators from '../validators/projects.validator';
+import multer from '../config/multer';
 const router = Router();
 
 /**
@@ -75,6 +76,7 @@ router.get('/', handlerExceptionRoute(projectCtrl.getProjects));
 router.post(
   '/',
   projectValidators.createProjectValidator,
+  multer.single('image'),
   handlerExceptionRoute(projectCtrl.createProject)
 );
 

@@ -37,6 +37,7 @@ interface IProject extends TMongoDocument {
   description: string;
   status: TStatus;
   tags: string[];
+  image_path: string;
 }
 
 interface IUser extends TMongoDocument {

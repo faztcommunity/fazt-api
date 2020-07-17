@@ -7,6 +7,9 @@ import { NOT_FOUND, UNPROCESSABLE_ENTITY, OK } from 'http-status-codes';
 import { validationResult } from 'express-validator';
 import { getPages } from '../utils/pages';
 
+import path from 'path';
+import fs from 'fs-extra';
+
 export const getProjects: Handler = async (req, res) => {
   const { page, limit: limitQuery, tags } = req.query;
   const { limit, skip } = getPages(page as string, Number(limitQuery));
@@ -44,7 +47,7 @@ export const createProject: Handler = async (req, res) => {
   if (!errors.isEmpty()) {
     throw new ErrorHandler(UNPROCESSABLE_ENTITY, { errors: errors.array() });
   }
-
+  req.body.image_path = req.file.path; //This is so as not to modify the previous structure. A newProject object could be created.
   const project = new Project(req.body);
   await project.save();
   return res.status(OK).json({
@@ -62,6 +65,8 @@ export const deleteProject: Handler = async (req, res) => {
   ).exec();
 
   if (!project) throw new ErrorHandler(NOT_FOUND, 'Project not found');
+
+  fs.unlink(path.resolve(project.image_path));
 
   return res.status(OK).json({
     statusCode: OK,
