@@ -82,3 +82,4 @@ docker-compose up
 - CejasClaudio [About me](https://github.com/CejasClaudioA)
 - Paolinsky (Paolo Torregroza) [About me](https://github.com/PaoloTorregroza)
 - Keneth Sandoval [GitHub](https://github.com/keneth3000)
+- Daniel Antonio Reyes (Dano in Discord)[GitHub](https://github.com/DanoRysJan)

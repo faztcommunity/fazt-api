@@ -86,6 +86,8 @@ export const updateProject: Handler = async (req, res) => {
     new: true
   }).exec();
 
+  //Ask if cloudinary is going to be used
+
   return res.status(OK).json({
     statusCode: OK,
     data: project,
