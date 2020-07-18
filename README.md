@@ -68,6 +68,12 @@ to run with docker compose, create file .env with
 docker-compose up
 ```
 
+to install/unistall modules you can use:
+
+```bash
+docker-compose run api npm install <package>
+```
+
 # [How to contribute](https://github.com/faztcommunity/docs/blob/dev/contribute.md)
 
 ## Contributors
@@ -83,3 +89,4 @@ docker-compose up
 - Paolinsky (Paolo Torregroza) [About me](https://github.com/PaoloTorregroza)
 - Keneth Sandoval [GitHub](https://github.com/keneth3000)
 - Daniel Antonio Reyes (Dano in Discord)[GitHub](https://github.com/DanoRysJan)
+- Jkauze (Jesus Kauze) [About me](https://github.com/jkauze)
