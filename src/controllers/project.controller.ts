@@ -44,12 +44,15 @@ export const getProject: Handler = async (req, res) => {
 
 export const createProject: Handler = async (req, res) => {
   const errors = validationResult(req);
+
   if (!errors.isEmpty()) {
     throw new ErrorHandler(UNPROCESSABLE_ENTITY, { errors: errors.array() });
   }
-  req.body.image_path = req.file.path; //This is so as not to modify the previous structure. A newProject object could be created.
+
+  req.body.image_path = req.file.path;
   const project = new Project(req.body);
   await project.save();
+
   return res.status(OK).json({
     statusCode: OK,
     data: project,

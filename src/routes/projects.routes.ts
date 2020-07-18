@@ -75,8 +75,8 @@ router.get('/', handlerExceptionRoute(projectCtrl.getProjects));
  */
 router.post(
   '/',
-  projectValidators.createProjectValidator,
   multer.single('image'),
+  projectValidators.createProjectValidator,
   handlerExceptionRoute(projectCtrl.createProject)
 );
 
