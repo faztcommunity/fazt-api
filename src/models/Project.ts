@@ -32,6 +32,10 @@ const ProjectSchema = new Schema(
     },
     github_url: {
       type: String
+    },
+    image_path: {
+      type: String,
+      required: true
     }
   },
   {
