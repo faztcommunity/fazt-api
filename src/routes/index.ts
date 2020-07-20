@@ -9,6 +9,7 @@ import jobRoutes from './jobs.routes';
 import discordRoutes from './discord.routes';
 import indexRoutes from './index.routes';
 import miscRoutes from './misc.routes';
+import newsRoutes from './new.routes';
 
 const routes = Router();
 
@@ -21,5 +22,6 @@ routes.use('/tasks', taskRoutes);
 routes.use('/projects', projectsRoutes);
 routes.use('/users', userRoutes);
 routes.use('/jobs', jobRoutes);
+routes.use('/news', newsRoutes);
 
 export default routes;

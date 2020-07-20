@@ -1,5 +1,4 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-
 import Misc from '../models/Misc';
 import { ErrorHandler } from '../error';
 import { NOT_FOUND } from 'http-status-codes';
