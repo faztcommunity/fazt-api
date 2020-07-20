@@ -75,7 +75,7 @@ router.get('/', handlerExceptionRoute(projectCtrl.getProjects));
  */
 router.post(
   '/',
-  multer.single('image'),
+  multer,
   projectValidators.createProjectValidator,
   handlerExceptionRoute(projectCtrl.createProject)
 );
@@ -102,7 +102,7 @@ router.get('/:id', handlerExceptionRoute(projectCtrl.getProject));
  * @apiUse OneSuccessRe
  * @apiUse ErrorResponse
  */
-router.put('/:id', handlerExceptionRoute(projectCtrl.updateProject));
+router.put('/:id', multer, handlerExceptionRoute(projectCtrl.updateProject));
 
 /**
  * @api {delete} /projects/:id Elimina un proyecto en especifico
