@@ -43,16 +43,16 @@ export const getProject: Handler = async (req, res) => {
 };
 
 export const createProject: Handler = async (req, res) => {
+  req.body.image_path = req.file.path;
+  const project = new Project(req.body);
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
+    fs.unlink(path.resolve(project.image_path));
     throw new ErrorHandler(UNPROCESSABLE_ENTITY, { errors: errors.array() });
   }
 
-  req.body.image_path = req.file.path;
-  const project = new Project(req.body);
   await project.save();
-
   return res.status(OK).json({
     statusCode: OK,
     data: project,
@@ -82,11 +82,14 @@ export const updateProject: Handler = async (req, res) => {
 
   if (!project) throw new ErrorHandler(NOT_FOUND, 'Project not found');
 
+  if (typeof req.file !== 'undefined') {
+    fs.unlink(path.resolve(project.image_path));
+    req.body.image_path = req.file.path;
+  }
+
   project = await Project.findByIdAndUpdate(req.params.id, req.body, {
     new: true
   }).exec();
-
-  //Ask if cloudinary is going to be used
 
   return res.status(OK).json({
     statusCode: OK,

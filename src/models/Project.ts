@@ -34,8 +34,7 @@ const ProjectSchema = new Schema(
       type: String
     },
     image_path: {
-      type: String,
-      required: true
+      type: String
     }
   },
   {
