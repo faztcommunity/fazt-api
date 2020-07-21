@@ -35,6 +35,7 @@ app.use(handleErrorMiddleware);
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads/'))); //Deliverate where this route stays.
 
 // global variables
 

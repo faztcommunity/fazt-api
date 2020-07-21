@@ -4,6 +4,7 @@ import { Router } from 'express';
 import { handlerExceptionRoute } from '../error';
 import * as projectCtrl from '../controllers/project.controller';
 import * as projectValidators from '../validators/projects.validator';
+import multer from '../config/multer';
 const router = Router();
 
 /**
@@ -74,6 +75,7 @@ router.get('/', handlerExceptionRoute(projectCtrl.getProjects));
  */
 router.post(
   '/',
+  multer,
   projectValidators.createProjectValidator,
   handlerExceptionRoute(projectCtrl.createProject)
 );
@@ -100,7 +102,7 @@ router.get('/:id', handlerExceptionRoute(projectCtrl.getProject));
  * @apiUse OneSuccessRe
  * @apiUse ErrorResponse
  */
-router.put('/:id', handlerExceptionRoute(projectCtrl.updateProject));
+router.put('/:id', multer, handlerExceptionRoute(projectCtrl.updateProject));
 
 /**
  * @api {delete} /projects/:id Elimina un proyecto en especifico
