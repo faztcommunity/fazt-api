@@ -4,7 +4,7 @@ import { ErrorHandler } from '../error';
 import { NOT_FOUND, OK } from 'http-status-codes';
 
 export const getNews: Handler = async (req, res) => {
-    const News = await New.find();
+    const News = await New.find().exec();
     return res.status(OK).json({
         statusCode: OK,
         message: 'Ok!',
