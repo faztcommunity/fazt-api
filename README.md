@@ -90,3 +90,4 @@ docker-compose run api npm install <package>
 - Keneth Sandoval [GitHub](https://github.com/keneth3000)
 - Daniel Antonio Reyes (Dano in Discord)[GitHub](https://github.com/DanoRysJan)
 - Jkauze (Jesus Kauze) [About me](https://github.com/jkauze)
+- antonygiomarx (Antony Giomar) [About me](https://github.com/antonygiomarx)

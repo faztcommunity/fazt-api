@@ -1,12 +1,13 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 
+import { Request, Response } from 'express';
 import Jobs from '../models/Jobs';
 import { NOT_FOUND, BAD_REQUEST, OK } from 'http-status-codes';
 import { ErrorHandler } from '../error';
 import { validationResult } from 'express-validator';
 import { getPages } from '../utils/pages';
 
-export const getJobs: Handler = async (req, res) => {
+export const getJobs: Handler = async (req: Request, res: Response) => {
   const { limit, skip } = getPages(req.query.page as string, Number(req.query.limit));
 
   const jobs = await Jobs.find().limit(limit).skip(skip).exec();
@@ -18,7 +19,7 @@ export const getJobs: Handler = async (req, res) => {
   });
 };
 
-export const getJob: Handler = async (req, res) => {
+export const getJob: Handler = async (req: Request, res: Response) => {
   const job = await Jobs.findById(req.params.id).exec();
   if (!job) throw new ErrorHandler(NOT_FOUND, 'Job Not Found');
   return res.json({
@@ -28,7 +29,7 @@ export const getJob: Handler = async (req, res) => {
   });
 };
 
-export const createJob: Handler = async (req, res) => {
+export const createJob: Handler = async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) throw new ErrorHandler(BAD_REQUEST, errors.array());
 
@@ -42,7 +43,7 @@ export const createJob: Handler = async (req, res) => {
   });
 };
 
-export const deleteJob: Handler = async (req, res) => {
+export const deleteJob: Handler = async (req: Request, res: Response) => {
   const job = await Jobs.findByIdAndRemove(req.params.id).exec();
   if (!job) throw new ErrorHandler(NOT_FOUND, 'Job not Found');
 
@@ -52,7 +53,7 @@ export const deleteJob: Handler = async (req, res) => {
   });
 };
 
-export const updateJob: Handler = async (req, res) => {
+export const updateJob: Handler = async (req: Request, res: Response) => {
   const job = await Jobs.findByIdAndUpdate(req.params.id, req.body, {
     new: true
   }).exec();

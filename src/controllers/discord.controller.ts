@@ -3,9 +3,10 @@
 import { NOT_FOUND, BAD_REQUEST } from 'http-status-codes';
 import { Setting, Moderation } from '../models/Discord';
 import { validationResult } from 'express-validator';
+import { Request, Response } from 'express';
 import { ErrorHandler } from '../error';
 
-export const getSetting: Handler = async (req, res) => {
+export const getSetting: Handler = async (req: Request, res: Response) => {
   const setting = await Setting.findOne({ name: req.params.name }).exec();
   if (!setting) {
     return res.status(NOT_FOUND).json({ value: null });
@@ -14,7 +15,7 @@ export const getSetting: Handler = async (req, res) => {
   return res.status(200).json(setting);
 };
 
-export const updateOrCreateSetting: Handler = async (req, res) => {
+export const updateOrCreateSetting: Handler = async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) throw new ErrorHandler(BAD_REQUEST, errors.array());
 
@@ -37,13 +38,16 @@ export const updateOrCreateSetting: Handler = async (req, res) => {
   return res.json(existSetting);
 };
 
-export const getUserModerations: Handler = async (req, res) => {
+export const getUserModerations: Handler = async (req: Request, res: Response) => {
   const user = await Moderation.find({ user_id: req.params.user_id }).exec();
 
   return res.status(200).json(user);
 };
 
-export const getUserModerationsWithType: Handler = async (req, res) => {
+export const getUserModerationsWithType: Handler = async (
+  req: Request,
+  res: Response
+) => {
   const user = await Moderation.find({ user_id: req.params.user_id })
     .where('type')
     .equals(req.params.type)
@@ -54,7 +58,7 @@ export const getUserModerationsWithType: Handler = async (req, res) => {
   return res.status(200).json(user);
 };
 
-export const createModerationUser: Handler = async (req, res) => {
+export const createModerationUser: Handler = async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) throw new ErrorHandler(BAD_REQUEST, errors.array());
 
@@ -68,7 +72,7 @@ export const createModerationUser: Handler = async (req, res) => {
   return res.status(200).json(user);
 };
 
-export const revokeModeration: Handler = async (req, res) => {
+export const revokeModeration: Handler = async (req: Request, res: Response) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) throw new ErrorHandler(BAD_REQUEST, errors.array());
 

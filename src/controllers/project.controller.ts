@@ -1,5 +1,6 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 
+import { Request, Response } from 'express';
 import Project from '../models/Project';
 import { ErrorHandler } from '../error';
 import { NOT_FOUND, UNPROCESSABLE_ENTITY, OK } from 'http-status-codes';
@@ -10,7 +11,7 @@ import { getPages } from '../utils/pages';
 import path from 'path';
 import fs from 'fs-extra';
 
-export const getProjects: Handler = async (req, res) => {
+export const getProjects: Handler = async (req: Request, res: Response) => {
   const { page, limit: limitQuery, tags } = req.query;
   const { limit, skip } = getPages(page as string, Number(limitQuery));
 
@@ -30,7 +31,7 @@ export const getProjects: Handler = async (req, res) => {
   });
 };
 
-export const getProject: Handler = async (req, res) => {
+export const getProject: Handler = async (req: Request, res: Response) => {
   const project = await Project.findById(req.params.id).exec();
   if (!project || project.status === 'deleted')
     throw new ErrorHandler(NOT_FOUND, 'Project not found');
@@ -42,7 +43,7 @@ export const getProject: Handler = async (req, res) => {
   });
 };
 
-export const createProject: Handler = async (req, res) => {
+export const createProject: Handler = async (req: Request, res: Response) => {
   req.body.image_path = req.file.path;
   const project = new Project(req.body);
   const errors = validationResult(req);
@@ -60,7 +61,7 @@ export const createProject: Handler = async (req, res) => {
   });
 };
 
-export const deleteProject: Handler = async (req, res) => {
+export const deleteProject: Handler = async (req: Request, res: Response) => {
   const project = await Project.findByIdAndUpdate(
     req.params.id,
     { status: 'deleted' },
@@ -77,7 +78,7 @@ export const deleteProject: Handler = async (req, res) => {
   });
 };
 
-export const updateProject: Handler = async (req, res) => {
+export const updateProject: Handler = async (req: Request, res: Response) => {
   let project = await Project.findById(req.params.id).exec();
 
   if (!project) throw new ErrorHandler(NOT_FOUND, 'Project not found');
