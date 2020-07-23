@@ -12,17 +12,16 @@ import miscRoutes from './misc.routes';
 import newsRoutes from './news.routes';
 import githubRoutes from './github.routes';
 
-
 const routes = Router();
 
 routes.use('/', indexRoutes);
-routes.use('/bot', discordRoutes);
-routes.use('/misc', miscRoutes);
-routes.use('/tasks', taskRoutes);
 routes.use('/projects', projectsRoutes);
 routes.use('/users', userRoutes);
+routes.use('/tasks', taskRoutes);
 routes.use('/jobs', jobRoutes);
+routes.use('/bot', discordRoutes);
 routes.use('/news', newsRoutes);
+routes.use('/misc', miscRoutes);
 routes.use('/github', githubRoutes);
 
 export default routes;

@@ -11,7 +11,11 @@ export const getMiscs: Handler = async (req, res) => {
 export const getMisc: Handler = async (req, res) => {
   const result = await Misc.findById(req.params.id).exec();
   if (!result) throw new ErrorHandler(NOT_FOUND, 'Misc not found');
-  return res.status(200).json(result);
+  return res.status(200).json({
+    code: 200,
+    message: 'Ok!',
+    data: result
+  });
 };
 
 export const createMisc: Handler = async (req, res) => {
@@ -22,7 +26,11 @@ export const createMisc: Handler = async (req, res) => {
     misc
   });
   await newMisc.save();
-  return res.status(201).json(newMisc);
+  return res.status(200).json({
+    code: 200,
+    message: 'Ok!',
+    data: newMisc
+  });
 };
 
 export const deleteMisc: Handler = async (req, res) => {

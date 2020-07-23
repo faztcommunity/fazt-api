@@ -8,10 +8,18 @@ import { ErrorHandler } from '../error';
 export const getSetting: Handler = async (req, res) => {
   const setting = await Setting.findOne({ name: req.params.name }).exec();
   if (!setting) {
-    return res.status(NOT_FOUND).json({ value: null });
+    return res.status(NOT_FOUND).json({
+      statusCode: NOT_FOUND,
+      data: null,
+      message: 'Ok!'
+    });
   }
 
-  return res.status(200).json(setting);
+  return res.status(200).json({
+    statusCode: 200,
+    data: setting,
+    message: 'Ok!'
+  });
 };
 
 export const updateOrCreateSetting: Handler = async (req, res) => {
@@ -31,16 +39,28 @@ export const updateOrCreateSetting: Handler = async (req, res) => {
     });
 
     await setting.save();
-    return res.json(setting);
+    return res.status(200).json({
+      statusCode: 200,
+      data: setting,
+      message: 'Setting Created!'
+    });
   }
 
-  return res.json(existSetting);
+  return res.status(200).json({
+    statusCode: 200,
+    data: existSetting,
+    message: 'Setting Updated!'
+  });
 };
 
 export const getUserModerations: Handler = async (req, res) => {
   const user = await Moderation.find({ user_id: req.params.user_id }).exec();
 
-  return res.status(200).json(user);
+  return res.status(200).json({
+    statusCode: 200,
+    data: user,
+    message: 'Ok!'
+  });
 };
 
 export const getUserModerationsWithType: Handler = async (req, res) => {
@@ -51,7 +71,11 @@ export const getUserModerationsWithType: Handler = async (req, res) => {
 
   console.log(req.params.type);
 
-  return res.status(200).json(user);
+  return res.status(200).json({
+    statusCode: 200,
+    data: user,
+    message: 'Ok!'
+  });
 };
 
 export const createModerationUser: Handler = async (req, res) => {
@@ -65,7 +89,11 @@ export const createModerationUser: Handler = async (req, res) => {
 
   await user.save();
 
-  return res.status(200).json(user);
+  return res.status(200).json({
+    statusCode: 200,
+    data: user,
+    message: 'Ok!'
+  });
 };
 
 export const revokeModeration: Handler = async (req, res) => {
@@ -78,5 +106,9 @@ export const revokeModeration: Handler = async (req, res) => {
     { new: true }
   ).exec();
 
-  return res.status(200).json(moderation);
+  return res.status(200).json({
+    statusCode: 200,
+    data: moderation,
+    message: 'Ok!'
+  });
 };

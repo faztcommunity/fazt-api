@@ -89,5 +89,6 @@ docker-compose run api npm install <package>
 - Paolinsky (Paolo Torregroza) [About me](https://github.com/PaoloTorregroza)
 - Keneth Sandoval [GitHub](https://github.com/keneth3000)
 - Daniel Antonio Reyes (Dano in Discord)[GitHub](https://github.com/DanoRysJan)
+- Mateh Elismar [About me](https://github.com/MatehElismar)
 - Jkauze (Jesus Kauze) [About me](https://github.com/jkauze)
-- Christ (edenil1512 Discord) [About me](https://github.com/christian1512) 
+- Christ (edenil1512 Discord) [About me](https://github.com/christian1512)

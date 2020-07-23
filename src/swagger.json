@@ -1,407 +1,2688 @@
 {
-  "swagger": "2.0",
-  "info": {
-    "title": "Fazt Community API",
-    "description": "Servicios REST para la aplicación de Fazt Commnity",
-    "version": "1.0.0",
-    "termsOfService": "http://swagger.io/terms/",
-    "contact": {
-      "email": "api@faztcommunity.dev"
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "Fazt Community API",
+    "description" : "Servicios REST para la aplicación de Fazt Commnity",
+    "termsOfService" : "http://swagger.io/terms/",
+    "contact" : {
+      "email" : "api@faztcommunity.dev"
     },
-    "license": {
-      "name": "Apache 2.0",
-      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-    }
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version" : "1.0.0"
   },
-  "tags": [
-    {
-      "name": "Projects",
-      "description": "",
-      "externalDocs": {
-        "description": "Find out more",
-        "url": "https://faztcommunity.dev"
-      }
-    },
-    {
-      "name": "Users",
-      "description": ""
-    },
-    {
-      "name": "Tasks"
-    },
-    {
-      "name": "Discord"
-    },
-    {
-      "name": "Workshop"
-    },
-    {
-      "name": "Job"
-    },
-    {
-      "name": "Suggestion"
-    },
-    {
-      "name": "News"
-    },
-    {
-      "name": "Misc"
-    },
-    {
-      "name": "Github"
+  "servers" : [ {
+    "description" : "Dev Server",
+    "url" : "http://localhost:3000"
+  }, {
+    "description" : "Prod Server",
+    "url" : "api.faztcommunity.dev"
+  }, {
+    "url" : "mateh-desktop:3000"
+  }, {
+    "description" : "SwaggerHub API Auto Mocking",
+    "url" : "https://virtserver.swaggerhub.com/MatehElismar/fazt-api/1.0.0"
+  } ],
+  "tags" : [ {
+    "name" : "Projects",
+    "description" : "",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "https://faztcommunity.dev"
     }
-  ],
-  "schemes": ["http", "https"],
-  "produces": ["application/json"],
-  "basePath": "/",
-  "paths": {
-    "/projects": {
-      "get": {
-        "summary": "Obtiene todos los Proyectos",
-        "description": "Obtiene un arreglo de todos los proyectos almacenados en la base de datos.",
-        "x-swagger-router-controller": "getProject",
-        "operationId": "get",
-        "tags": ["Projects"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "examples": {
-              "application/json": [
-                {
-                  "status": "active",
-                  "tags": [],
-                  "projectType": "code",
-                  "_id": "5f0767fa8d4b2327bb8f63f5",
-                  "name": "Fede",
-                  "description": "asd",
-                  "createdAt": "2020-07-09T18:54:50.185Z",
-                  "updatedAt": "2020-07-09T18:54:50.185Z",
-                  "__v": 0
+  }, {
+    "name" : "Users",
+    "description" : ""
+  }, {
+    "name" : "Tasks"
+  }, {
+    "name" : "Discord"
+  }, {
+    "name" : "Workshop"
+  }, {
+    "name" : "Jobs"
+  }, {
+    "name" : "Suggestion"
+  }, {
+    "name" : "News"
+  }, {
+    "name" : "Misc"
+  }, {
+    "name" : "Github"
+  } ],
+  "paths" : {
+    "/projects" : {
+      "get" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Obtiene todos los Proyectos",
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "description" : "Obtiene un arreglo de todos los proyectos almacenados en la base de datos.",
+        "responses" : {
+          "200" : {
+            "description" : "Operación exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Project"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
                 }
-              ]
-            },
-            "schema": {
-              "ref": "#/definitions/ProjectsResponse"
-            }
-          },
-          "404": {
-            "description": "No encontrado"
-          },
-          "500": {
-            "description": "Error interno del servidor"
-          }
-        }
-      },
-      "post": {
-        "summary": "Crea un nuevo proyecto",
-        "description": "Crea un nuevo proyecto y lo almacena en la base de datos.",
-        "x-swagger-router-controller": "",
-        "operationId": "post",
-        "tags": ["Projects"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "schema": {
-              "ref": ""
-            }
-          },
-          "404": {
-            "description": "No encontrado"
-          },
-          "500": {
-            "description": "Error interno del servidor"
-          }
-        }
-      }
-    },
-    "/projects/{:id}": {
-      "get": {
-        "tags": ["Projects"],
-        "summary": "Obtiene un proyecto en especifico",
-        "description": "Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id.",
-        "operationId": "",
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": ""
               }
             }
           },
-          "400": {
-            "description": "Invalid status value"
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       },
-      "put": {
-        "tags": ["Projects"],
-        "summary": "Actualiza un proyecto en especifico",
-        "description": "Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id y lo actualiza con el contenido del cuerp",
-        "operationId": "",
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": ""
+      "post" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Crea un nuevo proyecto",
+        "description" : "Crea un nuevo proyecto y lo almacena en la base de datos.",
+        "operationId" : "post",
+        "responses" : {
+          "200" : {
+            "description" : "Operación exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object"
+                }
               }
             }
           },
-          "400": {
-            "description": "Invalid status value"
+          "404" : {
+            "description" : "No encontrado",
+            "content" : { }
+          },
+          "500" : {
+            "description" : "Error interno del servidor",
+            "content" : { }
+          }
+        },
+        "x-swagger-router-controller" : ""
+      }
+    },
+    "/projects/{id}" : {
+      "get" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Obtiene un proyecto en especifico",
+        "description" : "Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id.",
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operacion Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Project"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       },
-      "delete": {
-        "tags": ["Projects"],
-        "summary": "Elimina un proyecto en especifico",
-        "description": "Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id y lo elimina.",
-        "operationId": "",
-        "produces": ["application/json"],
-        "responses": {
-          "200": {
-            "description": "successful operation",
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": ""
+      "put" : {
+        "tags" : [ "Projects" ],
+        "summary" : "Actualiza un proyecto en especifico",
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "description" : "Obtiene un proyecto en especifico de los almacenados en la base de datos a traves de su _id y lo actualiza con el contenido del requestBody",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Project"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Proyecto Actualizado Exitosamente.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Project"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
               }
             }
           },
-          "400": {
-            "description": "Invalid status value"
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Elimina un proyecto en especifico",
+        "description" : "Elimina un proyecto en especifico de los almacenados en la base de datos a traves de su _id y lo retorna.",
+        "tags" : [ "Projects" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Projecto Eliminado!",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Project"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       }
     },
-    "/users": {
-      "get": {
-        "summary": "",
-        "description": "",
-        "operationId": "get",
-        "produces": ["application/json"],
-        "tags": ["Users"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "schema": {
-              "ref": "#/"
+    "/users" : {
+      "get" : {
+        "summary" : "Gets the list of users",
+        "tags" : [ "Users" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/User"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
             }
           },
-          "404": {
-            "description": "No encontrado"
+          "400" : {
+            "$ref" : "#/components/responses/400"
           },
-          "500": {
-            "description": "Error interno del servidor"
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Actualiza un usuario en especifico",
+        "description" : "Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id * y lo actualiza.",
+        "tags" : [ "Users" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Usuario Actualizado Exitosamente",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "allOf" : [ {
+                        "$ref" : "#/components/schemas/User"
+                      }, {
+                        "description" : "The updated user's information."
+                      } ]
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Elimina una usuario en especifico",
+        "description" : "Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id y lo elimina.",
+        "tags" : [ "Users" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "User Deleted",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       }
     },
-    "/tasks": {
-      "get": {
-        "summary": "",
-        "description": "",
-        "operationId": "get",
-        "produces": ["application/json"],
-        "tags": ["Tasks"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "schema": {
-              "ref": "#/"
+    "/users/{id}" : {
+      "get" : {
+        "summary" : "Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id.",
+        "tags" : [ "Users" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/User"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
             }
           },
-          "404": {
-            "description": "No encontrado"
+          "400" : {
+            "$ref" : "#/components/responses/400"
           },
-          "500": {
-            "description": "Error interno del servidor"
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       }
     },
-    "/discord": {
-      "get": {
-        "summary": "",
-        "description": "",
-        "operationId": "get",
-        "produces": ["application/json"],
-        "tags": ["Discord"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "schema": {
-              "ref": "#/"
+    "/users/signin" : {
+      "post" : {
+        "summary" : "Registra un usuario nuevo",
+        "tags" : [ "Users" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Usuario Creado Exitosamente",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "string",
+                      "description" : "Authorization Token"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
             }
           },
-          "404": {
-            "description": "No encontrado"
+          "400" : {
+            "$ref" : "#/components/responses/400"
           },
-          "500": {
-            "description": "Error interno del servidor"
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       }
     },
-    "/workshop": {
-      "get": {
-        "summary": "",
-        "description": "",
-        "operationId": "get",
-        "produces": ["application/json"],
-        "tags": ["Workshop"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "schema": {
-              "ref": "#/"
+    "/users/login" : {
+      "post" : {
+        "summary" : "Login User",
+        "description" : "Valida que los campos email y password hayan sido completados.",
+        "tags" : [ "Users" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "email" : {
+                    "type" : "string"
+                  },
+                  "password" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "User Connected",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "string",
+                      "description" : "Authorization Token"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
             }
           },
-          "404": {
-            "description": "No encontrado"
+          "400" : {
+            "$ref" : "#/components/responses/400"
           },
-          "500": {
-            "description": "Error interno del servidor"
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       }
     },
-    "/job": {
-      "get": {
-        "summary": "",
-        "description": "",
-        "operationId": "get",
-        "produces": ["application/json"],
-        "tags": ["Job"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "schema": {
-              "ref": "#/"
+    "/tasks" : {
+      "get" : {
+        "summary" : "Gets a list of tasks",
+        "tags" : [ "Tasks" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Task"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
             }
           },
-          "404": {
-            "description": "No encontrado"
+          "400" : {
+            "$ref" : "#/components/responses/400"
           },
-          "500": {
-            "description": "Error interno del servidor"
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Crea una nueva tarea",
+        "description" : "Crea una tarea nueva y la almacena en la base de datos.",
+        "tags" : [ "Tasks" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Task"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Task Creada Exitosamente",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Task"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       }
     },
-    "/suggestion": {
-      "get": {
-        "summary": "",
-        "description": "",
-        "operationId": "get",
-        "produces": ["application/json"],
-        "tags": ["Suggestion"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "schema": {
-              "ref": "#/"
+    "/tasks/{id}" : {
+      "get" : {
+        "summary" : "Obtiene una tarea en especifico",
+        "description" : "Obtiene una tarea en especifico de los almacenados en la base de datos a traves de su _id.",
+        "tags" : [ "Tasks" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Task"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
             }
           },
-          "404": {
-            "description": "No encontrado"
+          "400" : {
+            "$ref" : "#/components/responses/400"
           },
-          "500": {
-            "description": "Error interno del servidor"
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Actualiza una tarea en especifico",
+        "description" : "Obtiene una tarea en especifico de los guardados en la base de datos y lo actualiza con el contenido del cuerpo.",
+        "tags" : [ "Tasks" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "allOf" : [ {
+                  "$ref" : "#/components/schemas/Task"
+                }, {
+                  "description" : "Only pass in the fields you want to update"
+                } ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Task Updated!",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "allOf" : [ {
+                        "$ref" : "#/components/schemas/Task"
+                      }, {
+                        "description" : "The updated task's information."
+                      } ]
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Elimina una tarea en especifico description:Obtiene una tarea en especifico de los guardados en la base de datos a traves de su _id y lo elimina.",
+        "tags" : [ "Tasks" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Task Updated!",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       }
     },
-    "/news": {
-      "get": {
-        "summary": "",
-        "description": "",
-        "operationId": "get",
-        "produces": ["application/json"],
-        "tags": ["News"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "schema": {
-              "ref": "#/"
+    "/job" : {
+      "get" : {
+        "summary" : "Gets the list of Jobs",
+        "tags" : [ "Jobs" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Job"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
             }
           },
-          "404": {
-            "description": "No encontrado"
+          "400" : {
+            "$ref" : "#/components/responses/400"
           },
-          "500": {
-            "description": "Error interno del servidor"
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Crea un nuevo Trabajo",
+        "description" : "Crea un nuevo Trabajo y lo almacena en la base de datos.",
+        "tags" : [ "Jobs" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Job"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Trabajo Creado Exitosamente",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Job"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       }
     },
-    "/misc": {
-      "get": {
-        "summary": "",
-        "description": "",
-        "operationId": "get",
-        "produces": ["application/json"],
-        "tags": ["Misc"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "schema": {
-              "ref": "#/"
+    "/jobs/{id}" : {
+      "get" : {
+        "summary" : "Obtiene un trabajo en específico",
+        "description" : "Obtiene un trabajo en especifico de los almacenados en la base de datos a traves de su _id.",
+        "tags" : [ "Jobs" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Job"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
             }
           },
-          "404": {
-            "description": "No encontrado"
+          "400" : {
+            "$ref" : "#/components/responses/400"
           },
-          "500": {
-            "description": "Error interno del servidor"
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Actualiza un trabajo en especifico",
+        "description" : "Obtiene un trabajo en especifico de los guardados en la base de datos y lo actualiza con el contenido del cuerpo.",
+        "tags" : [ "Jobs" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "allOf" : [ {
+                  "$ref" : "#/components/schemas/Job"
+                }, {
+                  "description" : "Only pass in the fields you want to update"
+                } ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Job Updated!",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "allOf" : [ {
+                        "$ref" : "#/components/schemas/Job"
+                      }, {
+                        "description" : "The updated task's information."
+                      } ]
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Elimina una trabajo en especifico",
+        "description" : "Obtiene un trabajo en especifico de los guardados en la base de datos a traves de su _id y lo elimina.",
+        "tags" : [ "Jobs" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Job Deleted",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       }
     },
-    "/github": {
-      "get": {
-        "summary": "",
-        "description": "",
-        "operationId": "get",
-        "produces": ["application/json"],
-        "tags": ["Github"],
-        "responses": {
-          "200": {
-            "description": "Operación exitosa",
-            "schema": {
-              "ref": "#/"
+    "/bots/moderation/{user_id}" : {
+      "get" : {
+        "summary" : "Get User Moderations",
+        "tags" : [ "Discord" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/userID"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Moderation"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
             }
           },
-          "404": {
-            "description": "No encontrado"
+          "400" : {
+            "$ref" : "#/components/responses/400"
           },
-          "500": {
-            "description": "Error interno del servidor"
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Creates Moderation",
+        "tags" : [ "Discord" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/userID"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "allOf" : [ {
+                  "$ref" : "#/components/schemas/Moderation"
+                } ]
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Moderation Created!",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "allOf" : [ {
+                        "$ref" : "#/components/schemas/Job"
+                      }, {
+                        "description" : "The Moderation's information."
+                      } ]
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/bots/moderation/{user_id}/{type}" : {
+      "get" : {
+        "summary" : "Get User Moderations",
+        "tags" : [ "Discord" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/userID"
+        }, {
+          "name" : "type",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Moderation"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/bots/moderation/{id}" : {
+      "patch" : {
+        "summary" : "Revokes Moderation",
+        "tags" : [ "Discord" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operacion Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Moderation"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/bots/settings/{name}" : {
+      "get" : {
+        "summary" : "Get Setting by Name",
+        "tags" : [ "Discord" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "name" : "name",
+          "description" : "the name of the setting",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "moderation_channel_id"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Setting"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Update or Create Setting",
+        "tags" : [ "Discord" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "name" : "name",
+          "description" : "the name of the setting",
+          "in" : "path",
+          "required" : true,
+          "schema" : {
+            "type" : "string",
+            "example" : "moderation_channel_id"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "type" : "object",
+                "properties" : {
+                  "value" : {
+                    "type" : "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Setting Updated or Created!",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "allOf" : [ {
+                        "$ref" : "#/components/schemas/Setting"
+                      }, {
+                        "description" : "The Setting's information."
+                      } ]
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/workshop" : {
+      "get" : {
+        "summary" : "Gets the list of workshops.",
+        "tags" : [ "Workshop" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Workshop"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/suggestion" : {
+      "get" : {
+        "summary" : "Gets a list of suggestions.",
+        "tags" : [ "Suggestion" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Suggestion"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/news" : {
+      "get" : {
+        "summary" : "Gets a list of News records",
+        "tags" : [ "News" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/News"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Agrega nueva noticia",
+        "tags" : [ "News" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/News"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Noticia Creada Exitosamente",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/News"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/news/{id}" : {
+      "get" : {
+        "tags" : [ "News" ],
+        "summary" : "Obtiene una noticia en especifico",
+        "description" : "Obtiene un noticia en especifico de los almacenados en la base de datos a traves de su _id.",
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operacion Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/News"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "News" ],
+        "summary" : "Actualiza una noticia en especifico",
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "description" : "Obtiene un noticia en especifico de los almacenados en la base de datos a traves de su _id y lo actualiza con el contenido del requestBody",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/News"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Noticia Actualizada Exitosamente.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/News"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Elimina un noticia en especifico",
+        "description" : "Elimina un noticia en especifico de los almacenados en la base de datos a traves de su _id y lo retorna.",
+        "tags" : [ "News" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Noticia Eliminada!",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/misc" : {
+      "get" : {
+        "summary" : "Obtiene todos los enlaces de interes",
+        "description" : "Obtiene un arreglo de todos los enlaces de interes almacenados en la base de datos.",
+        "tags" : [ "Misc" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Misc"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Crea un nuevo enlace",
+        "description" : "Crea un nuevo enlace de interes y lo almacena en la base de datos.",
+        "tags" : [ "Misc" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Misc"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Misc Creado Exitosamente",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Misc"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/misc/{id}" : {
+      "get" : {
+        "summary" : "Obtiene un enlace en especifico",
+        "description" : "Obtiene un enlace en especifico de los almacenados en la base de datos a traves de su _id.",
+        "tags" : [ "Misc" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operacion Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Misc"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Misc" ],
+        "summary" : "Actualiza un enlace",
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "description" : "Obtiene un enlace de interes en especifico de los almacenados en la base de datos a traves de su _id y lo actualiza.",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Misc"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Misc Actualizado Exitosamente.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Misc"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Elimina un enlace en especifico",
+        "description" : "Obtiene un enlace de interes en especifico de los almacenados en la base de datos a traves de su _id y lo elimina.",
+        "tags" : [ "Misc" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Misc Eliminado!",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Misc"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/github" : {
+      "get" : {
+        "summary" : "Gets a list of githubs",
+        "tags" : [ "Github" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operación exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "type" : "array",
+                      "items" : {
+                        "$ref" : "#/components/schemas/Github"
+                      }
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "post" : {
+        "summary" : "Adds a new github.",
+        "tags" : [ "Github" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Github"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Github Creado Exitosamente",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Github"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/github/{id}" : {
+      "get" : {
+        "description" : "Obtiene un Github en especifico de los almacenados en la base de datos a traves de su _id.",
+        "tags" : [ "Github" ],
+        "summary" : "Obtiene un Github en especifico",
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Operacion Exitosa",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Github"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "put" : {
+        "summary" : "Actualiza un Github en especifico",
+        "description" : "Obtiene un Github en especifico de los almacenados en la base de datos a traves de su _id y lo actualiza con el contenido del requestBody",
+        "tags" : [ "Github" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/Github"
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Github Actualizado Exitosamente.",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "data" : {
+                      "$ref" : "#/components/schemas/Github"
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
+          }
+        }
+      },
+      "delete" : {
+        "summary" : "Elimina un Github en especifico",
+        "description" : "Elimina un Github en especifico de los almacenados en la base de datos a traves de su _id y lo retorna.",
+        "tags" : [ "Github" ],
+        "parameters" : [ {
+          "$ref" : "#/components/parameters/apiKey"
+        }, {
+          "$ref" : "#/components/parameters/id"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Github Eliminado!",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "object",
+                  "properties" : {
+                    "statusCode" : {
+                      "type" : "string",
+                      "minLength" : 3,
+                      "maxLength" : 3
+                    },
+                    "message" : {
+                      "type" : "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "$ref" : "#/components/responses/400"
+          },
+          "401" : {
+            "$ref" : "#/components/responses/401"
+          },
+          "404" : {
+            "$ref" : "#/components/responses/404"
+          },
+          "500" : {
+            "$ref" : "#/components/responses/500"
           }
         }
       }
     }
   },
-  "definitions": {
-    "ProjectsResponse": {
-      "type": "object",
-      "properties": {
-        "id": {
-          "type": "integer",
-          "format": "int64"
+  "components" : {
+    "parameters" : {
+      "apiKey" : {
+        "name" : "api-key",
+        "in" : "header",
+        "description" : "Authorization key to use the api. If this key is not provided you will not be able to access the api.",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        }
+      },
+      "id" : {
+        "name" : "id",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "example" : "<item-id>"
+        }
+      },
+      "userID" : {
+        "name" : "user_id",
+        "in" : "path",
+        "required" : true,
+        "schema" : {
+          "type" : "string",
+          "example" : "<user_id>"
+        }
+      }
+    },
+    "responses" : {
+      "401" : {
+        "description" : "Unauthorized",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "code" : {
+                  "type" : "integer",
+                  "example" : 401
+                },
+                "title" : {
+                  "type" : "string",
+                  "description" : "Error title"
+                },
+                "message" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400" : {
+        "description" : "Unauthorized",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "code" : {
+                  "type" : "integer",
+                  "example" : 400
+                },
+                "title" : {
+                  "type" : "string",
+                  "description" : "Error title"
+                },
+                "message" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404" : {
+        "description" : "Unauthorized",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "code" : {
+                  "type" : "integer",
+                  "example" : 404
+                },
+                "title" : {
+                  "type" : "string",
+                  "description" : "Error title"
+                },
+                "message" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500" : {
+        "description" : "Internal Server Error",
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "type" : "object",
+              "properties" : {
+                "code" : {
+                  "type" : "integer",
+                  "example" : 500
+                },
+                "title" : {
+                  "type" : "string",
+                  "description" : "Error title"
+                },
+                "message" : {
+                  "type" : "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "schemas" : {
+      "Project" : {
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "status" : {
+            "type" : "string"
+          },
+          "tags" : {
+            "type" : "string"
+          },
+          "image_path" : {
+            "type" : "string"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica hora de creacion del objecto"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica la ultima vez que se actualizo el objecto"
+          }
         },
-        "name": {
-          "type": "string",
-          "example": "doggie"
-        },
-        "status": {
-          "type": "string",
-          "description": "Alguna descripción"
+        "example" : {
+          "status" : "active",
+          "tags" : [ ],
+          "projectType" : "code",
+          "_id" : "5f0767fa8d4b2327bb8f63f5",
+          "name" : "Fede",
+          "description" : "asd",
+          "createdAt" : "2020-07-09T18:54:50.185Z",
+          "updatedAt" : "2020-07-09T18:54:50.185Z",
+          "__v" : 0
+        }
+      },
+      "User" : {
+        "properties" : {
+          "nickname" : {
+            "type" : "string"
+          },
+          "firstName" : {
+            "type" : "string"
+          },
+          "lastName" : {
+            "type" : "string"
+          },
+          "email" : {
+            "type" : "string",
+            "format" : "email"
+          },
+          "password" : {
+            "type" : "array",
+            "items" : {
+              "type" : "string"
+            }
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica hora de creacion del objecto"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica la ultima vez que se actualizo el objecto"
+          }
+        }
+      },
+      "Task" : {
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "date" : {
+            "type" : "string"
+          },
+          "postingUser" : {
+            "description" : "The user that posted the task. It can return only the ID or the user record itself.",
+            "$ref" : "#/components/schemas/User"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica hora de creacion del objecto"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica la ultima vez que se actualizo el objecto"
+          }
+        }
+      },
+      "Workshop" : {
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "date" : {
+            "type" : "string"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica hora de creacion del objecto"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica la ultima vez que se actualizo el objecto"
+          }
+        }
+      },
+      "Job" : {
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "description" : {
+            "type" : "string"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "employer" : {
+            "type" : "string"
+          },
+          "employerEmail" : {
+            "type" : "string"
+          },
+          "proposals" : {
+            "type" : "string"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica hora de creacion del objecto"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica la ultima vez que se actualizo el objecto"
+          }
+        }
+      },
+      "News" : {
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "body" : {
+            "type" : "string"
+          },
+          "date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "createdAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica hora de creacion del objecto"
+          },
+          "updatedAt" : {
+            "type" : "string",
+            "format" : "date-time",
+            "description" : "Indica la ultima vez que se actualizo el objecto"
+          }
+        }
+      },
+      "Misc" : {
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "url" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Github" : {
+        "properties" : {
+          "title" : {
+            "type" : "string"
+          },
+          "url" : {
+            "type" : "string"
+          }
+        }
+      },
+      "Suggestion" : {
+        "type" : "object"
+      },
+      "Moderation" : {
+        "properties" : {
+          "type" : {
+            "type" : "string"
+          },
+          "user_id" : {
+            "type" : "string"
+          },
+          "reason" : {
+            "type" : "string"
+          },
+          "moderator_id" : {
+            "type" : "string"
+          },
+          "expiration_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "creation_date" : {
+            "type" : "string",
+            "format" : "date-time"
+          },
+          "revoked" : {
+            "type" : "boolean"
+          }
+        }
+      },
+      "Setting" : {
+        "properties" : {
+          "name" : {
+            "type" : "string"
+          },
+          "value" : {
+            "type" : "string"
+          }
         }
       }
     }

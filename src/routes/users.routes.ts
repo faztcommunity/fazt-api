@@ -58,21 +58,6 @@ const router = Router();
 router.get('/', handlerExceptionRoute(userCtrl.getUsers));
 
 /**
- * @api {post} /users/signin Crea un nuevo Usuario
- * @apiDescription Registra un usuario nuevo
- * @apiName PostUser
- * @apiGroup Users
- * @apiUse PostPut
- * @apiUse OneSuccessResponse
- * @apiUse ErrorResponse
- */
-router.post(
-  '/signin',
-  usersValidator.signUpValidator,
-  handlerExceptionRoute(userCtrl.createUser)
-);
-
-/**
  * @api {get} /users/:id Obtiene un usuario en especifico
  * @apiDescription Obtiene un usuario en especifico de los almacenados en la base de datos a traves de su _id.
  * @apiName GetUserId
@@ -110,6 +95,21 @@ router.put('/', authMiddleware, handlerExceptionRoute(userCtrl.updateUser));
  * @apiUse ErrorResponse
  */
 router.delete('/', authMiddleware, handlerExceptionRoute(userCtrl.deleteUser));
+
+/**
+ * @api {post} /users/signin Crea un nuevo Usuario
+ * @apiDescription Registra un usuario nuevo
+ * @apiName PostUser
+ * @apiGroup Users
+ * @apiUse PostPut
+ * @apiUse OneSuccessResponse
+ * @apiUse ErrorResponse
+ */
+router.post(
+  '/signin',
+  usersValidator.signUpValidator,
+  handlerExceptionRoute(userCtrl.createUser)
+);
 
 /**
  * @api {post} /users/login Valida campos

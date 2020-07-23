@@ -6,11 +6,12 @@ import * as NewsValidator from '../validators/news.validator';
 const router = Router();
 
 router.get('/', handlerExceptionRoute(NewsCtrl.getNews));
-router.get('/:id', handlerExceptionRoute(NewsCtrl.getNew));
 router.post(
-  '/', 
+  '/',
   NewsValidator.createNewValidator,
-  handlerExceptionRoute(NewsCtrl.createNew));
+  handlerExceptionRoute(NewsCtrl.createNew)
+);
+router.get('/:id', handlerExceptionRoute(NewsCtrl.getNew));
 router.put('/:id', handlerExceptionRoute(NewsCtrl.updateNew));
 router.delete('/:id', handlerExceptionRoute(NewsCtrl.deleteNew));
 

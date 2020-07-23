@@ -97,6 +97,8 @@
       "/__tests__/utils/",
       "/__tests__/setupTests.ts"
     ],
-    "setupFilesAfterEnv": ["<rootDir>/__tests__/setupTests.ts"]
+    "setupFilesAfterEnv": [
+      "<rootDir>/__tests__/setupTests.ts"
+    ]
   }
 }
