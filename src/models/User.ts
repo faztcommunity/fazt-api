@@ -29,6 +29,12 @@ const UserSchema: Schema<IUser> = new Schema<IUser>(
       {
         type: String
       }
+    ],
+    projects: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Project'
+      }
     ]
   },
   {

@@ -23,7 +23,7 @@ export const getProjects: Handler = async (req, res) => {
     .ne('deleted')
     .limit(limit)
     .skip(skip)
-    .populate('contributors', ['nickname', 'email', 'firstName', 'lastName'])
+    .populate('contributors', '-password -projects')
     .exec();
 
   return res.status(OK).json({
@@ -37,6 +37,7 @@ export const getProject: Handler = async (req, res) => {
   const project = await Project.findById(req.params.id)
     .where('status')
     .ne('deleted')
+    .populate('contributors', '-password -projects')
     .exec();
 
   if (!project) throw new ErrorHandler(NOT_FOUND, 'Project not found');
@@ -80,6 +81,11 @@ export const deleteProject: Handler = async (req, res) => {
 
   await fs.unlink(path.resolve(project.image_path));
 
+  await User.updateMany(
+    { _id: { $in: project.contributors } },
+    { $pull: { projects: project._id } }
+  ).exec();
+
   return res.status(OK).json({
     statusCode: OK,
     message: 'Project Deleted!'
@@ -90,6 +96,7 @@ export const updateProject: Handler = async (req, res) => {
   let project = await Project.findById(req.params.id)
     .where('status')
     .ne('deleted')
+    .populate('contributors', '-password -projects')
     .exec();
 
   delete req.body.contributors;
@@ -139,10 +146,15 @@ export const addProjectContributor: Handler = async (req, res) => {
     .ne('deleted')
     .where('contributors')
     .nin(contributors)
-    .populate('contributors', ['nickname', 'email', 'firstName', 'lastName'])
+    .populate('contributors', '-password -projects')
     .exec();
 
   if (!updatedProject) throw new ErrorHandler(NOT_FOUND, 'Project not found');
+
+  await User.updateMany(
+    { _id: { $in: contributors } },
+    { $push: { projects: updatedProject._id } }
+  ).exec();
 
   return res.status(OK).json({
     statusCode: OK,

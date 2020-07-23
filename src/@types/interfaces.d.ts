@@ -48,6 +48,7 @@ interface IUser extends TMongoDocument {
   email: string;
   password: string;
   skills: string[];
+  projects: TMongoId[];
   createdAt: Date;
 
   setPassword(password: string): Promise<void>;
