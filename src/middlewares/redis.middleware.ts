@@ -21,7 +21,7 @@ const redisMiddleware: Handler = async (req, res, next) => {
     res.send = (body: any) => {
       (async () => {
         await redis.set(url, body);
-        await redis.expire(url, 300);
+        await redis.expire(url, 60);
       })();
       return send(body);
     };
