@@ -1,6 +1,6 @@
 import router from '../../src/routes/tasks.routes';
 import server from '../utils/server';
-import { OK, NOT_FOUND, UNAUTHORIZED } from 'http-status-codes';
+import { OK } from 'http-status-codes';
 
 import { createTask } from '../utils/tasks';
 
