@@ -38,6 +38,7 @@ interface IProject extends TMongoDocument {
   status: TStatus;
   tags: string[];
   image_path: string;
+  contributors: TMongoID[];
 }
 
 interface IUser extends TMongoDocument {
@@ -46,6 +47,7 @@ interface IUser extends TMongoDocument {
   lastName?: string;
   email: string;
   password: string;
+  skills: string[];
   createdAt: Date;
 
   setPassword(password: string): Promise<void>;

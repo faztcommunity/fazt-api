@@ -35,7 +35,13 @@ const ProjectSchema = new Schema(
     },
     image_path: {
       type: String
-    }
+    },
+    contributors: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'User'
+      }
+    ]
   },
   {
     timestamps: true

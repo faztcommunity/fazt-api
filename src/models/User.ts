@@ -24,7 +24,12 @@ const UserSchema: Schema<IUser> = new Schema<IUser>(
     password: {
       type: String,
       required: true
-    }
+    },
+    skills: [
+      {
+        type: String
+      }
+    ]
   },
   {
     timestamps: true

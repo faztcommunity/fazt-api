@@ -1,6 +1,8 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
 
 import Project from '../models/Project';
+import User from '../models/User';
+
 import { ErrorHandler } from '../error';
 import { NOT_FOUND, BAD_REQUEST, OK } from 'http-status-codes';
 
@@ -21,6 +23,7 @@ export const getProjects: Handler = async (req, res) => {
     .ne('deleted')
     .limit(limit)
     .skip(skip)
+    .populate('contributors', ['nickname', 'email', 'firstName', 'lastName'])
     .exec();
 
   return res.status(OK).json({
@@ -31,9 +34,12 @@ export const getProjects: Handler = async (req, res) => {
 };
 
 export const getProject: Handler = async (req, res) => {
-  const project = await Project.findById(req.params.id).exec();
-  if (!project || project.status === 'deleted')
-    throw new ErrorHandler(NOT_FOUND, 'Project not found');
+  const project = await Project.findById(req.params.id)
+    .where('status')
+    .ne('deleted')
+    .exec();
+
+  if (!project) throw new ErrorHandler(NOT_FOUND, 'Project not found');
 
   return res.status(OK).json({
     statusCode: OK,
@@ -65,7 +71,10 @@ export const deleteProject: Handler = async (req, res) => {
     req.params.id,
     { status: 'deleted' },
     { new: true }
-  ).exec();
+  )
+    .where('status')
+    .ne('deleted')
+    .exec();
 
   if (!project) throw new ErrorHandler(NOT_FOUND, 'Project not found');
 
@@ -78,7 +87,12 @@ export const deleteProject: Handler = async (req, res) => {
 };
 
 export const updateProject: Handler = async (req, res) => {
-  let project = await Project.findById(req.params.id).exec();
+  let project = await Project.findById(req.params.id)
+    .where('status')
+    .ne('deleted')
+    .exec();
+
+  delete req.body.contributors;
 
   if (!project) throw new ErrorHandler(NOT_FOUND, 'Project not found');
 
@@ -95,5 +109,44 @@ export const updateProject: Handler = async (req, res) => {
     statusCode: OK,
     data: project,
     message: 'Project Updated!'
+  });
+};
+
+export const addProjectContributor: Handler = async (req, res) => {
+  let { contributors } = req.body;
+  if (Array.isArray(contributors)) {
+    contributors = Array.from(new Set(contributors));
+  }
+
+  const project = await Project.findById(req.params.id)
+    .where('status')
+    .ne('deleted')
+    .where('contributors')
+    .in(contributors)
+    .exec();
+
+  if (project)
+    throw new ErrorHandler(BAD_REQUEST, 'the project already has those contributors');
+
+  const updatedProject = await Project.findByIdAndUpdate(
+    req.params.id,
+    {
+      $push: { contributors }
+    },
+    { new: true }
+  )
+    .where('status')
+    .ne('deleted')
+    .where('contributors')
+    .nin(contributors)
+    .populate('contributors', ['nickname', 'email', 'firstName', 'lastName'])
+    .exec();
+
+  if (!updatedProject) throw new ErrorHandler(NOT_FOUND, 'Project not found');
+
+  return res.status(OK).json({
+    statusCode: OK,
+    data: updatedProject,
+    message: 'Contributor Added!'
   });
 };

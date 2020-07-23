@@ -120,4 +120,9 @@ router.put('/:id', multer, handlerExceptionRoute(projectCtrl.updateProject));
  */
 router.delete('/:id', handlerExceptionRoute(projectCtrl.deleteProject));
 
+router.patch(
+  '/contributors/:id',
+  handlerExceptionRoute(projectCtrl.addProjectContributor)
+);
+
 export default router;
