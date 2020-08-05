@@ -6,14 +6,14 @@ import { Rol } from './rol.entity';
 @Entity('rol_user')
 export class RolUser {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
-  id!: number;
+  id: number;
 
   @Column('integer', { name: 'state_rol' })
-  stateRol!: string;
+  stateRol: string;
 
   @ManyToOne(() => Rol, rol => rol.id)
-  id_rol!: Rol;
+  id_rol: Rol;
 
   @ManyToOne(() => UserEntity, user => user.id)
-  id_user!: UserEntity;
+  id_user: UserEntity;
 }
