@@ -6,41 +6,41 @@ import { SkillUserEntity } from './skill-user.entity';
 @Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
-  id!: number;
+  id: number;
 
   @Column('character varying', { name: 'name', length: 45 })
-  name!: string;
+  name: string;
 
   @Column('character varying', { name: 'username', length: 45 })
-  username!: string;
+  username: string;
 
   @Column('character varying', { name: 'email', length: 60 })
-  email!: string;
+  email: string;
 
   @Column('character varying', { name: 'password', length: 80 })
-  password!: string;
+  password: string;
 
   @Column('text', { name: 'image_path' })
-  imagePath!: string;
+  imagePath: string;
 
   @Column('character varying', { name: 'state_user', length: 20 })
-  stateUser!: string;
+  stateUser: string;
 
   @Column('integer', { name: 'active' })
-  active!: number;
+  active: number;
 
   @Column('text', { name: 'user_description', nullable: true })
-  userDescription!: string | null;
+  userDescription: string | null;
 
   @Column('integer', { name: 'activation_key', nullable: true })
-  activationKey!: number | null;
+  activationKey: number | null;
 
   @Column('integer', { name: 'reset_key', nullable: true })
-  resetKey!: number | null;
+  resetKey: number | null;
 
   @Column('integer', { name: 'reset_date', nullable: true })
-  resetDate!: number | null;
+  resetDate: number | null;
 
   @OneToMany(() => SkillUserEntity, skillUser => skillUser.user)
-  skillUser!: SkillUserEntity[];
+  skillUser: SkillUserEntity[];
 }

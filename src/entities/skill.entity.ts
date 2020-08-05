@@ -5,14 +5,14 @@ import { SkillUserEntity } from './skill-user.entity';
 @Entity('skill')
 export class SkillEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
-  id!: number;
+  id: number;
 
   @Column('character varying', { name: 'name_skill', length: 45 })
-  nameSkill!: string;
+  nameSkill: string;
 
   @Column('character varying', { name: 'state_skill', length: 20 })
-  stateSkill!: string;
+  stateSkill: string;
 
   @OneToMany(() => SkillUserEntity, skillUser => skillUser.skill)
-  skillUser!: SkillUserEntity[];
+  skillUser: SkillUserEntity[];
 }
