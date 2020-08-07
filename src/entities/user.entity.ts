@@ -1,5 +1,7 @@
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { SkillUserEntity } from './skill-user.entity';
+import { RolUserEntity } from './rol-user.entity';
+import { SocialMediaUserEntity } from './social-media-user.entity';
 
 @Index('uk_email', ['email'], { unique: true })
 @Index('uk_username', ['username'], { unique: true })
@@ -43,4 +45,10 @@ export class UserEntity {
 
   @OneToMany(() => SkillUserEntity, skillUser => skillUser.user)
   skillUser: SkillUserEntity[];
+
+  @OneToMany(() => RolUserEntity, rolUser => rolUser.user)
+  rolUser: RolUserEntity[];
+
+  @OneToMany(() => SocialMediaUserEntity, socialMediaUserEntity => socialMediaUserEntity.user)
+  socialMediaUser: SocialMediaUserEntity[];
 }
