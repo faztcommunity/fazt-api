@@ -1,19 +1,28 @@
-import { Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn
+} from 'typeorm';
 import { UserEntity } from './user.entity';
-import { Rol } from './rol.entity';
+import { RolEntity } from './rol.entity';
 
-@Index('uk_rol_user', ['id_rol', 'id_user'], { unique: true })
+@Index('uk_rol_user', ['rol', 'user'], { unique: true })
 @Entity('rol_user')
-export class RolUser {
+export class RolUserEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
 
   @Column('integer', { name: 'state_rol' })
   stateRol: string;
 
-  @ManyToOne(() => Rol, rol => rol.id)
-  id_rol: Rol;
+  @ManyToOne(() => RolEntity, rol => rol.rolUser)
+  @JoinColumn([{ name: 'id_rol', referencedColumnName: 'id' }])
+  rol: RolEntity;
 
-  @ManyToOne(() => UserEntity, user => user.id)
-  id_user: UserEntity;
+  @ManyToOne(() => UserEntity, user => user.rolUser)
+  @JoinColumn([{ name: 'id_user', referencedColumnName: 'id' }])
+  user: UserEntity;
 }
