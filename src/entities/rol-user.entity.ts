@@ -1,8 +1,15 @@
-import { Column, Entity, Index, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn
+} from 'typeorm';
 import { UserEntity } from './user.entity';
 import { RolEntity } from './rol.entity';
 
-@Index('uk_rol_user', ['id_rol', 'id_user'], { unique: true })
+@Index('uk_rol_user', ['rol', 'user'], { unique: true })
 @Entity('rol_user')
 export class RolUserEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
