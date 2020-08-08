@@ -12,7 +12,7 @@ export class SocialMediaUserEntity {
   @JoinColumn([{ name: 'id_social_media', referencedColumnName: 'id' }])
   socialMedia: SocialMediaEntity;
 
-  @ManyToOne(() => UserEntity, userEntity => userEntity.socialMediaUser)
+  @ManyToOne(() => UserEntity, user => user.socialMediaUser)
   @JoinColumn([{ name: 'id_user', referencedColumnName: 'id' }])
   user: UserEntity;
 }

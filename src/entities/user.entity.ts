@@ -1,4 +1,11 @@
-import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  ManyToOne
+} from 'typeorm';
 import { SkillUserEntity } from './skill-user.entity';
 import { RolUserEntity } from './rol-user.entity';
 import { SocialMediaUserEntity } from './social-media-user.entity';
@@ -49,6 +56,6 @@ export class UserEntity {
   @OneToMany(() => RolUserEntity, rolUser => rolUser.user)
   rolUser: RolUserEntity[];
 
-  @OneToMany(() => SocialMediaUserEntity, socialMediaUserEntity => socialMediaUserEntity.user)
+  @OneToMany(() => SocialMediaUserEntity, socialMediaUser => socialMediaUser.user)
   socialMediaUser: SocialMediaUserEntity[];
 }
