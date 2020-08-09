@@ -3,7 +3,6 @@ import { Column, Entity, PrimaryGeneratedColumn, Index } from 'typeorm';
 
 @Index("uk_name_team", ["nameTeam"], { unique: true })
 @Entity('team')
-
 export class TeamEntity {
     @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
     id: number;

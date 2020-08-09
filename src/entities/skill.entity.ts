@@ -1,5 +1,6 @@
 import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SkillUserEntity } from './skill-user.entity';
+import { SkillCategoryEntity } from './skill-category.entity';
 
 @Index('uk_name_skill', ['nameSkill'], { unique: true })
 @Entity('skill')
@@ -15,4 +16,7 @@ export class SkillEntity {
 
   @OneToMany(() => SkillUserEntity, skillUser => skillUser.skill)
   skillUser: SkillUserEntity[];
+
+  @OneToMany(() => SkillCategoryEntity, skillCategory => skillCategory.skill)
+  skillCategory: SkillCategoryEntity[];
 }
