@@ -7,6 +7,7 @@ import {
   JoinColumn
 } from 'typeorm';
 import { SkillEntity } from './skill.entity';
+import { CategoryEntity } from './category.entity';
 
 @Index('uk_skill_category', ['idSkill', 'idCategory'], { unique: true })
 @Entity('skill_category')
@@ -26,4 +27,11 @@ export class SkillCategoryEntity {
   })
   @JoinColumn([{ name: 'id_skill', referencedColumnName: 'id' }])
   skill: SkillEntity;
+
+  @ManyToOne(() => CategoryEntity, category => category.SkillCategory, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT'
+  })
+  @JoinColumn([{ name: 'id_category', referencedColumnName: 'id' }])
+  category: CategoryEntity;
 }
