@@ -14,16 +14,13 @@ export class CategoryProjectEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
 
-  @Column('integer', { name: 'id_category' })
-  idCategory: number;
-
   @Column('integer', { name: 'id_project' })
   idProject: number;
 
-  @ManyToOne(() => CategoryEntity, category => category.CategoryProject, {
+  @ManyToOne(() => CategoryEntity, idCategory => idCategory.CategoryProject, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT'
   })
   @JoinColumn([{ name: 'id_category', referencedColumnName: 'id' }])
-  category: CategoryEntity;
+  idCategory: CategoryEntity;
 }

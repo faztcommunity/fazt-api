@@ -17,6 +17,6 @@ export class SkillEntity {
   @OneToMany(() => SkillUserEntity, skillUser => skillUser.skill)
   skillUser: SkillUserEntity[];
 
-  @OneToMany(() => SkillCategoryEntity, skillCategory => skillCategory.skill)
+  @OneToMany(() => SkillCategoryEntity, skillCategory => skillCategory.idSkill)
   skillCategory: SkillCategoryEntity[];
 }

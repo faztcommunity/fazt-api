@@ -14,9 +14,9 @@ export class CategoryEntity {
   @Column('character varying', { name: 'state_category', length: 20 })
   stateCategory: string;
 
-  @OneToMany(() => SkillCategoryEntity, skillCategory => skillCategory.category)
+  @OneToMany(() => SkillCategoryEntity, skillCategory => skillCategory.idSkill)
   SkillCategory: SkillCategoryEntity[];
 
-  @OneToMany(() => CategoryProjectEntity, categoryProject => categoryProject.category)
+  @OneToMany(() => CategoryProjectEntity, categoryProject => categoryProject.idCategory)
   CategoryProject: CategoryProjectEntity[];
 }
