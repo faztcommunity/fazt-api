@@ -2,23 +2,23 @@ import { Entity, PrimaryGeneratedColumn, Index, ManyToOne, JoinColumn } from 'ty
 import { SkillEntity } from './skill.entity';
 import { CategoryEntity } from './category.entity';
 
-@Index('uk_skill_category', ['idSkill', 'idCategory'], { unique: true })
+@Index('uk_skill_category', ['skill', 'category'], { unique: true })
 @Entity('skill_category')
 export class SkillCategoryEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
 
-  @ManyToOne(() => SkillEntity, idSkill => idSkill.skillCategory, {
+  @ManyToOne(() => SkillEntity, skill => skill.skillCategory, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT'
   })
   @JoinColumn([{ name: 'id_skill', referencedColumnName: 'id' }])
-  idSkill: SkillEntity;
+  skill: SkillEntity;
 
-  @ManyToOne(() => CategoryEntity, idCategory => idCategory.SkillCategory, {
+  @ManyToOne(() => CategoryEntity, category => category.SkillCategory, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT'
   })
   @JoinColumn([{ name: 'id_category', referencedColumnName: 'id' }])
-  idCategory: CategoryEntity;
+  category: CategoryEntity;
 }
