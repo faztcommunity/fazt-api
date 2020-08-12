@@ -1,24 +1,12 @@
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  Index,
-  ManyToOne,
-  JoinColumn
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Index, ManyToOne, JoinColumn } from 'typeorm';
 import { SkillEntity } from './skill.entity';
+import { CategoryEntity } from './category.entity';
 
-@Index('uk_skill_category', ['idSkill', 'idCategory'], { unique: true })
+@Index('uk_skill_category', ['skill', 'category'], { unique: true })
 @Entity('skill_category')
 export class SkillCategoryEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
-
-  @Column('integer', { name: 'id_skill' })
-  idSkill: number;
-
-  @Column('integer', { name: 'id_category' })
-  idCategory: number;
 
   @ManyToOne(() => SkillEntity, skill => skill.skillCategory, {
     onDelete: 'RESTRICT',
@@ -26,4 +14,11 @@ export class SkillCategoryEntity {
   })
   @JoinColumn([{ name: 'id_skill', referencedColumnName: 'id' }])
   skill: SkillEntity;
+
+  @ManyToOne(() => CategoryEntity, category => category.SkillCategory, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT'
+  })
+  @JoinColumn([{ name: 'id_category', referencedColumnName: 'id' }])
+  category: CategoryEntity;
 }
