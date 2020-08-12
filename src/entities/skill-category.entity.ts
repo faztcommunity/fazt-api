@@ -15,7 +15,7 @@ export class SkillCategoryEntity {
   @JoinColumn([{ name: 'id_skill', referencedColumnName: 'id' }])
   skill: SkillEntity;
 
-  @ManyToOne(() => CategoryEntity, category => category.SkillCategory, {
+  @ManyToOne(() => CategoryEntity, category => category.skillCategory, {
     onDelete: 'RESTRICT',
     onUpdate: 'RESTRICT'
   })
