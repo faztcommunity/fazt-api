@@ -1,4 +1,4 @@
-import { Index, Entity, PrimaryGeneratedColumn, Column, OneToMany, In } from 'typeorm';
+import { Index, Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { CategoryProjectEntity } from './category-project.entity';
 import { SkillProjectEntity } from './skill-project.entity';
 
