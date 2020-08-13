@@ -15,8 +15,8 @@ export class CategoryEntity {
   stateCategory: string;
 
   @OneToMany(() => SkillCategoryEntity, skillCategory => skillCategory.category)
-  SkillCategory: SkillCategoryEntity[];
+  skillCategory: SkillCategoryEntity[];
 
   @OneToMany(() => CategoryProjectEntity, categoryProject => categoryProject.category)
-  CategoryProject: CategoryProjectEntity[];
+  categoryProject: CategoryProjectEntity[];
 }
