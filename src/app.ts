@@ -1,9 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
-import * as swaggerDocument from './swagger.json';
 import * as swaggerUi from 'swagger-ui-express';
 import { PORT } from './config';
+import { swaggerSpec } from './config/swagger';
 
 import routes from './routes';
 import { handleError } from './middlewares/error.middleware';
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use('/', routes);
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(handleError);
 
 export default app;

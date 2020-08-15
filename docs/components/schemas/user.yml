@@ -1,0 +1,21 @@
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: Example Minaya
+        username:
+          type: string
+          example: example
+        email:
+          type: string
+          example: example@gmail.com
+        imagePath:
+          type: string
+        userDescription:
+          type: string

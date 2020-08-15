@@ -1,0 +1,140 @@
+
+paths:
+  /users:                
+    get:                 
+      tags:               
+        - User            
+      summary: Obtener todos los Usuarios
+      produces:
+      - application/json 
+      responses:
+        200:
+          description: Respuesta Exitosa
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  message:
+                    type: string
+                    example: Ok!
+    post:
+      tags:
+        - User
+      summary: Crear un nuevo Usuario
+      produces:
+      - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/UserCreateForm'
+      responses:
+        200:
+          description: Usuario creado con Exito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: string
+                    example: token
+                  message:
+                    type: string
+                    example: User Created!
+    put:
+      tags:
+        - User
+      summary: Actualiza al Usuario Logeado
+      produces:
+      - application/json
+      security:
+        - JWTAuth: []
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              $ref: '#components/schemas/User'
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    $ref: '#/components/schemas/User'
+                  message:
+                    type: string
+                    example: 'User Updated!'
+        400:
+          $ref: '#components/responses/TokenErrors' 
+    delete:
+      tags:
+        - User
+      summary: Elimina el Usuario Logeado
+      produces:
+      - application/json
+      security:
+        - JWTAuth: []
+      responses:
+        200:
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  message:
+                    type: string
+                    example: 'User Deleted!'
+        400:
+          $ref: '#/components/responses/TokenErrors'
+  /users/login:
+    post:
+      tags:
+        - User
+      summary: Iniciar Sesion
+      produces:
+      - application/json
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/requestBodies/UserLoginForm'
+      responses:
+        200:
+          description: Sesion Iniciada con Exito
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    example: 200
+                  data:
+                    type: string
+                    example: token
+                  message:
+                    type: string
+                    example: User Logged!
