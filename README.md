@@ -20,7 +20,7 @@ npm install
 ### Run Development Server
 
 ```bash
-docker-compose start # if you have docker
+docker-compose up -d # if you have docker
 npm run dev
 ```
 

@@ -1,11 +1,4 @@
-import {
-  Column,
-  Entity,
-  Index,
-  OneToMany,
-  PrimaryGeneratedColumn,
-  ManyToOne
-} from 'typeorm';
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { SkillUserEntity } from './skill-user.entity';
 import { RolUserEntity } from './rol-user.entity';
 import { SocialMediaUserEntity } from './social-media-user.entity';
@@ -34,10 +27,7 @@ export class UserEntity {
   imagePath: string;
 
   @Column('character varying', { name: 'state_user', length: 20 })
-  stateUser: string;
-
-  @Column('integer', { name: 'active' })
-  active: number;
+  stateUser: 'active' | 'inactive' | 'banned';
 
   @Column('text', { name: 'user_description', nullable: true })
   userDescription: string | null;

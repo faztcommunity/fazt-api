@@ -3,6 +3,7 @@
     "lib": ["es5", "es6"],
     "target": "es6",
     "module": "commonjs",
+    "types": ["node", "./src/@types"],
     "moduleResolution": "node",
     "outDir": "./build",
     "rootDir": "./src",
