@@ -1,0 +1,27 @@
+components:
+  responses:
+    TokenErrors:
+      content:
+        application/json:
+          schema:
+            oneOf:
+              - type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  statusCode:
+                    type: integer
+              - type: object
+                properties:
+                  status:
+                    type: string
+                  message:
+                    type: string
+                  statusCode:
+                    type: integer
+            example:
+              status: error
+              message: 'Invalid Token'
+              statusCode: 400

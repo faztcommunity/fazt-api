@@ -1,0 +1,27 @@
+components:
+  requestBodies:
+    UserCreateForm:
+      type: object
+      properties:
+        name:
+          type: string
+          example: Example Minaya
+        username:
+          type: string
+          example: example
+        email:
+          type: string
+          example: example@example.com
+        password:
+          type: string
+          example: '123456'
+    UserLoginForm:
+      type: object
+      properties:
+        email:
+          type: string
+          example: example@example.com
+        password:
+          type: string
+          example: '123456'
+          
