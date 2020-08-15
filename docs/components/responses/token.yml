@@ -24,4 +24,4 @@ components:
             example:
               status: error
               message: 'Invalid Token'
-              stausCode: 400
+              statusCode: 400
