@@ -9,6 +9,7 @@ import {
 import { SkillUserEntity } from './skill-user.entity';
 import { RolUserEntity } from './rol-user.entity';
 import { SocialMediaUserEntity } from './social-media-user.entity';
+import { ProjectUserEntity } from './project-user.entity';
 
 @Index('uk_email', ['email'], { unique: true })
 @Index('uk_username', ['username'], { unique: true })
@@ -58,4 +59,7 @@ export class UserEntity {
 
   @OneToMany(() => SocialMediaUserEntity, socialMediaUser => socialMediaUser.user)
   socialMediaUser: SocialMediaUserEntity[];
+
+  @OneToMany(() => ProjectUserEntity, projectUser => projectUser.user)
+  projectUser: ProjectUserEntity[];
 }

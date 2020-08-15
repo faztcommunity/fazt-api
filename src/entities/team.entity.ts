@@ -1,5 +1,7 @@
 // Copyright 2020 Fazt Community ~ All rights reserved. MIT license.
-import { Column, Entity, PrimaryGeneratedColumn, Index } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, Index, OneToMany } from 'typeorm';
+import { TeamProjectEntity } from './team-project.entity';
+import { ProjectTeamEntity } from './project-team.entity';
 
 @Index('uk_name_team', ['nameTeam'], { unique: true })
 @Entity('team')
@@ -18,4 +20,10 @@ export class TeamEntity {
 
   @Column('character varying', { name: 'state_team', length: 20 })
   stateTeam: string;
+
+  @OneToMany(() => TeamProjectEntity, teamProject => teamProject.team)
+  teamProject: TeamProjectEntity[];
+
+  @OneToMany(() => ProjectTeamEntity, projectTeam => projectTeam.team)
+  projectTeam: ProjectTeamEntity[];
 }

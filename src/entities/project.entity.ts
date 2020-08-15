@@ -1,6 +1,8 @@
 import { Index, Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { CategoryProjectEntity } from './category-project.entity';
 import { SkillProjectEntity } from './skill-project.entity';
+import { ProjectUserEntity } from './project-user.entity';
+import { ProjectTeamEntity } from './project-team.entity';
 
 @Index('uk_name', ['nameProject'], { unique: true })
 @Entity('project')
@@ -43,4 +45,10 @@ export class ProjectEntity {
 
   @OneToMany(() => CategoryProjectEntity, categoryProject => categoryProject.project)
   categoryProject: CategoryProjectEntity[];
+
+  @OneToMany(() => ProjectUserEntity, projectUser => projectUser.project)
+  projectUser: ProjectUserEntity[];
+
+  @OneToMany(() => ProjectTeamEntity, projectTeam => projectTeam.project)
+  projectTeam: ProjectTeamEntity[];
 }
