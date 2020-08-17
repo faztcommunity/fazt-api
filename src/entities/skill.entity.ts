@@ -2,6 +2,7 @@ import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeor
 import { SkillUserEntity } from './skill-user.entity';
 import { SkillCategoryEntity } from './skill-category.entity';
 import { SkillProjectEntity } from './skill-project.entity';
+import { State } from '../common/enumerations/state';
 
 @Index('uk_name_skill', ['nameSkill'], { unique: true })
 @Entity('skill')
@@ -13,7 +14,7 @@ export class SkillEntity {
   nameSkill: string;
 
   @Column('character varying', { name: 'state_skill', length: 20 })
-  stateSkill: string;
+  stateSkill: State.ACTIVE | State.INACTIVE;
 
   @OneToMany(() => SkillUserEntity, skillUser => skillUser.skill)
   skillUser: SkillUserEntity[];
