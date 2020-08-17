@@ -2,7 +2,7 @@ import { Repository } from 'typeorm';
 import { SkillEntity } from '../entities/skill.entity';
 import { InjectRepo } from '../decorators';
 import { ErrorHandler } from '../error';
-import { NOT_FOUND, BAD_REQUEST} from 'http-status-codes';
+import { NOT_FOUND, BAD_REQUEST } from 'http-status-codes';
 import { State } from '../common/enumerations/state';
 
 export class SkillService {
@@ -12,7 +12,7 @@ export class SkillService {
   static async getAll() {
     return await this.skillRepository.find({
       where: { stateSkill: State.ACTIVE },
-      select: ['id','nameSkill']
+      select: ['id', 'nameSkill']
     });
   }
 
@@ -22,31 +22,28 @@ export class SkillService {
         id,
         stateSkill: State.ACTIVE
       },
-      { select: ['id','nameSkill'] }
+      { select: ['id', 'nameSkill'] }
     );
     if (!skill) throw new ErrorHandler(NOT_FOUND, 'Skill not Found');
 
     return skill;
   }
 
-  static async create(skillData: SkillEntity) {
+  static async create(getNameSkill: string) {
     const skillExists = await this.skillRepository.findOne({
-      nameSkill: skillData.nameSkill
+      nameSkill: getNameSkill
     });
 
-    if (skillExists === undefined){
-      
+    if (!skillExists) {
       const skill = this.skillRepository.create({
-        ...skillData,
+        nameSkill: getNameSkill,
         stateSkill: State.ACTIVE
       });
 
       return await this.skillRepository.save(skill);
-
-    }else{
-      throw new ErrorHandler(BAD_REQUEST, 'nameSkill duplicate');
     }
 
+    throw new ErrorHandler(BAD_REQUEST, 'nameSkill duplicate');
   }
 
   static async delete(id: number) {
@@ -57,12 +54,12 @@ export class SkillService {
     );
   }
 
-  static async updateData(id: number, skillData: SkillEntity) {
+  static async updateData(id: number, getNameSkill: string) {
     const skill = await this.getOne(id);
-    const { nameSkill } = skillData;
+
     const updatedSkill = this.skillRepository.create({
       ...skill,
-      nameSkill: nameSkill || skill.nameSkill
+      nameSkill: getNameSkill || skill.nameSkill
     });
 
     await this.skillRepository.save(updatedSkill);

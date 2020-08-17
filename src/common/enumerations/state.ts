@@ -1,3 +1,4 @@
-export enum State{
-  ACTIVE = "active", INACTIVE = "inactive"
+export enum State {
+  ACTIVE = 'active',
+  INACTIVE = 'inactive'
 }

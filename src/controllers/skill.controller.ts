@@ -2,7 +2,6 @@ import { Handler } from 'express';
 import { OK } from 'http-status-codes';
 import { SkillService } from '../services/skill.service';
 
-
 export class SkillController {
   static getSkills: Handler = async (req, res) => {
     const skills = await SkillService.getAll();
@@ -15,7 +14,6 @@ export class SkillController {
   };
 
   static getSkill: Handler = async (req, res) => {
-
     const id = parseInt(req.params.id);
     const skill = await SkillService.getOne(id);
 
@@ -26,10 +24,10 @@ export class SkillController {
     });
   };
 
-
   static createSkill: Handler = async (req, res) => {
+    const dataReceived = req.body;
 
-    const skill = await SkillService.create(req.body);
+    const skill = await SkillService.create(dataReceived['nameSkill']);
 
     res.status(OK).json({
       statusCode: OK,
@@ -37,7 +35,6 @@ export class SkillController {
       message: 'Skill Created!'
     });
   };
-
 
   static deleteSkill: Handler = async (req, res) => {
     const id = parseInt(req.params.id);
@@ -53,7 +50,9 @@ export class SkillController {
   static updateSkillData: Handler = async (req, res) => {
     const id = parseInt(req.params.id);
 
-    const skill = await SkillService.updateData(id, req.body);
+    const dataReceived = req.body;
+
+    const skill = await SkillService.updateData(id, dataReceived['nameSkill']);
 
     res.status(200).json({
       statusCode: OK,
