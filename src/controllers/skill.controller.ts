@@ -25,9 +25,9 @@ export class SkillController {
   };
 
   static createSkill: Handler = async (req, res) => {
-    const dataReceived = req.body;
+    const { nameSkill } = req.body;
 
-    const skill = await SkillService.create(dataReceived['nameSkill']);
+    const skill = await SkillService.create(nameSkill);
 
     res.status(OK).json({
       statusCode: OK,
@@ -50,11 +50,11 @@ export class SkillController {
   static updateSkillData: Handler = async (req, res) => {
     const id = parseInt(req.params.id);
 
-    const dataReceived = req.body;
+    const { nameSkill } = req.body;
 
-    const skill = await SkillService.updateData(id, dataReceived['nameSkill']);
+    const skill = await SkillService.updateData(id, nameSkill);
 
-    res.status(200).json({
+    res.status(OK).json({
       statusCode: OK,
       data: skill,
       message: 'Skill Updated!'

@@ -14,7 +14,7 @@ export class SkillEntity {
   nameSkill: string;
 
   @Column('character varying', { name: 'state_skill', length: 20 })
-  stateSkill: State.ACTIVE | State.INACTIVE;
+  stateSkill: State;
 
   @OneToMany(() => SkillUserEntity, skillUser => skillUser.skill)
   skillUser: SkillUserEntity[];
