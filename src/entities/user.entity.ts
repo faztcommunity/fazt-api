@@ -3,6 +3,7 @@ import { SkillUserEntity } from './skill-user.entity';
 import { RolUserEntity } from './rol-user.entity';
 import { SocialMediaUserEntity } from './social-media-user.entity';
 import { ProjectUserEntity } from './project-user.entity';
+import { UserState } from '../common/enumerations/state';
 
 @Index('uk_email', ['email'], { unique: true })
 @Index('uk_username', ['username'], { unique: true })
@@ -27,7 +28,7 @@ export class UserEntity {
   imagePath: string;
 
   @Column('character varying', { name: 'state_user', length: 20 })
-  stateUser: 'active' | 'inactive' | 'banned';
+  stateUser: UserState;
 
   @Column('text', { name: 'user_description', nullable: true })
   userDescription: string | null;

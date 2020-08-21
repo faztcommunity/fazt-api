@@ -3,10 +3,7 @@ import { ErrorRouter } from '../error';
 
 const router = new ErrorRouter();
 
-router
-  .route('/')
-  .get(SkillController.getSkills)
-  .post(SkillController.createSkill);
+router.route('/').get(SkillController.getSkills).post(SkillController.createSkill);
 
 router
   .route('/:id')

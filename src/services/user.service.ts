@@ -1,9 +1,12 @@
 import { Repository } from 'typeorm';
 import bcrypt from 'bcrypt';
+import { NOT_FOUND, BAD_REQUEST } from 'http-status-codes';
+
 import { UserEntity } from '../entities/user.entity';
+
 import { InjectRepo } from '../decorators';
 import { ErrorHandler } from '../error';
-import { NOT_FOUND, BAD_REQUEST } from 'http-status-codes';
+import { UserState } from '../common/enumerations/state';
 
 export class UserService {
   @InjectRepo(UserEntity)
@@ -11,7 +14,7 @@ export class UserService {
 
   static async getAll() {
     return await this.userRepository.find({
-      where: { stateUser: 'active' },
+      where: { stateUser: UserState.ACTIVE },
       select: ['id', 'email', 'userDescription', 'username', 'name', 'imagePath']
     });
   }
@@ -20,7 +23,7 @@ export class UserService {
     const user = await this.userRepository.findOne(
       {
         id,
-        stateUser: 'active'
+        stateUser: UserState.ACTIVE
       },
       { select: ['id', 'email', 'userDescription', 'username', 'name', 'imagePath'] }
     );
@@ -30,12 +33,17 @@ export class UserService {
   }
 
   static async create(userData: UserEntity) {
+    const userExist = await this.userRepository.findOne({
+      where: [{ email: userData.email }, { username: userData.username }]
+    });
+    if (userExist) throw new ErrorHandler(BAD_REQUEST, 'User already exist');
+
     const salt = await bcrypt.genSalt(10);
     userData.password = await bcrypt.hash(userData.password, salt);
 
     const user = this.userRepository.create({
       ...userData,
-      stateUser: 'active',
+      stateUser: UserState.ACTIVE,
       imagePath: ''
     });
 
@@ -43,7 +51,10 @@ export class UserService {
   }
 
   static async logIn(email: string, password: string) {
-    const user = await this.userRepository.findOne({ email, stateUser: 'active' });
+    const user = await this.userRepository.findOne({
+      email,
+      stateUser: UserState.ACTIVE
+    });
 
     if (!user) throw new ErrorHandler(NOT_FOUND, 'Invalid Credentials');
 
@@ -57,8 +68,8 @@ export class UserService {
   static async delete(id: number) {
     const user = await this.getOne(id);
     await this.userRepository.update(
-      { id: user.id, stateUser: 'active' },
-      { stateUser: 'inactive' }
+      { id: user.id, stateUser: UserState.ACTIVE },
+      { stateUser: UserState.INACTIVE }
     );
   }
 
