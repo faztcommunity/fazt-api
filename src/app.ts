@@ -7,6 +7,7 @@ import { swaggerSpec } from './config/swagger';
 
 import routes from './routes';
 import { handleError } from './middlewares/error.middleware';
+import { handleNotFound } from './middlewares/not-found.middleware';
 
 const app = express();
 
@@ -20,5 +21,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/', routes);
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(handleError);
+app.use(handleNotFound);
 
 export default app;
