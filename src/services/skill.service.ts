@@ -29,21 +29,21 @@ export class SkillService {
     return skill;
   }
 
-  static async create(getNameSkill: string) {
+  static async create(nameSkill: string) {
     const skillExists = await this.skillRepository.findOne({
-      nameSkill: getNameSkill
+      nameSkill
     });
 
     if (!skillExists) {
       const skill = this.skillRepository.create({
-        nameSkill: getNameSkill,
+        nameSkill,
         stateSkill: State.ACTIVE
       });
 
       return await this.skillRepository.save(skill);
     }
 
-    throw new ErrorHandler(BAD_REQUEST, 'nameSkill duplicate');
+    throw new ErrorHandler(BAD_REQUEST, 'Already Exist Skill with the Same Name');
   }
 
   static async delete(id: number) {
@@ -54,12 +54,12 @@ export class SkillService {
     );
   }
 
-  static async updateData(id: number, getNameSkill: string) {
+  static async updateData(id: number, nameSkill: string) {
     const skill = await this.getOne(id);
 
     const updatedSkill = this.skillRepository.create({
       ...skill,
-      nameSkill: getNameSkill || skill.nameSkill
+      nameSkill: nameSkill || skill.nameSkill
     });
 
     await this.skillRepository.save(updatedSkill);

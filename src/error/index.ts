@@ -2,6 +2,14 @@ import { Request, Response, NextFunction, Router, Handler } from 'express';
 import { BAD_REQUEST, INTERNAL_SERVER_ERROR } from 'http-status-codes';
 import { QueryFailedError } from 'typeorm';
 
+interface IRoutes {
+  get(...handlers: Handler[]): IRoutes;
+  post(...handlers: Handler[]): IRoutes;
+  put(...handlers: Handler[]): IRoutes;
+  patch(...handlers: Handler[]): IRoutes;
+  delete(...handlers: Handler[]): IRoutes;
+}
+
 export class ErrorHandler extends Error {
   statusCode: number;
 
@@ -23,7 +31,7 @@ export class ErrorRouter {
     return this._router;
   }
 
-  route(path: string) {
+  route(path: string): IRoutes {
     const get = this.get.bind(this);
     const post = this.post.bind(this);
     const put = this.put.bind(this);
@@ -31,23 +39,23 @@ export class ErrorRouter {
     const deleteA = this.delete.bind(this);
 
     return {
-      get(...handlers: Handler[]) {
+      get(...handlers) {
         get(path, ...handlers);
         return this;
       },
-      post(...handlers: Handler[]) {
+      post(...handlers) {
         post(path, ...handlers);
         return this;
       },
-      put(...handlers: Handler[]) {
+      put(...handlers) {
         put(path, ...handlers);
         return this;
       },
-      patch(...handlers: Handler[]) {
+      patch(...handlers) {
         patch(path, ...handlers);
         return this;
       },
-      delete(...handlers: Handler[]) {
+      delete(...handlers) {
         deleteA(path, ...handlers);
         return this;
       }
@@ -62,7 +70,8 @@ export class ErrorRouter {
 
   post(path: string, ...handlers: Handler[]) {
     const handler = this.handlerExeception(handlers.pop());
-    return this.router.post(path, handlers, handler);
+    this.router.post(path, handlers, handler);
+    return this;
   }
 
   put(path: string, ...handlers: Handler[]) {
