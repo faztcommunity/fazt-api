@@ -1,14 +1,15 @@
 import { RolController } from '../controllers/rol.controller';
 import { ErrorRouter } from '../error';
+import { auth } from '../middlewares/auth.middleware';
 
 const router = new ErrorRouter();
 
-router.route('/').get(RolController.getRoles).post(RolController.createRol);
+router.route('/').get(RolController.getRoles).post(auth, RolController.createRol);
 
 router
   .route('/:id')
   .get(RolController.getRol)
-  .delete(RolController.deleteRol)
-  .put(RolController.updateRolData);
+  .delete(auth, RolController.deleteRol)
+  .put(auth, RolController.updateRolData);
 
 export default router.router;
