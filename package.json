@@ -41,7 +41,7 @@
     "@commitlint/config-lerna-scopes": "^9.1.2",
     "@types/bcrypt": "^3.0.0",
     "@types/cors": "^2.8.7",
-    "@types/express": "^4.17.8",
+    "@types/express": "^4.17.7",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/morgan": "^1.9.1",
     "@types/node": "^14.10.0",
