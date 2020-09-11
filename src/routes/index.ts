@@ -9,6 +9,7 @@ import teamRoutes from './team.routes'
 import socialMediaRoutes from './social-media.routes'
 import socialMediaUserRoutes from './social-media-user.routes'
 import RolUserRoutes from './rol-user.routes'
+import ProjectRoutes from './project.routes'
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/roles', rolRoutes);
 router.use('/collaborators', collaboratorsRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/teams', teamRoutes);
+router.use('/projects', ProjectRoutes);
 
 export default router;
