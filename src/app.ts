@@ -12,6 +12,7 @@ import { handleNotFound } from './middlewares/not-found.middleware';
 const app = express();
 
 app.set('port', PORT);
+app.set('json spaces', 4);
 
 app.use(morgan('dev'));
 app.use(cors());

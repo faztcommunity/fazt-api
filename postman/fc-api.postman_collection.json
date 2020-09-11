@@ -1,0 +1,56 @@
+{
+	"info": {
+		"_postman_id": "2c6eb34b-c0fa-4ece-9481-c264bc9eee0c",
+		"name": "fc-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "collaborators",
+			"item": [
+				{
+					"name": "/collaborators",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": ""
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/collaborators",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"dano\",\r\n    \"name\": \"daniel\",\r\n    \"email\": \"dano@email.com\",\r\n    \"password\": \"contraseña\",\r\n    \"imagePath\": \"https://avatars2.githubusercontent.com/u/20570499?s=460&u=b39729bb541ba45575833c16ce40240a62d3775b&v=4\",\r\n    \"stateUser\": \"active\"\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:4000/collaborators",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "4000",
+							"path": [
+								"collaborators"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
