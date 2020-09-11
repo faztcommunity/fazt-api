@@ -2,6 +2,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, Index, OneToMany } from 'typeorm';
 import { TeamProjectEntity } from './team-project.entity';
 import { ProjectTeamEntity } from './project-team.entity';
+import { State } from '../common/enumerations/state';
 
 @Index('uk_name_team', ['nameTeam'], { unique: true })
 @Entity('team')
@@ -19,7 +20,7 @@ export class TeamEntity {
   teamCapacity: number;
 
   @Column('character varying', { name: 'state_team', length: 20 })
-  stateTeam: string;
+  stateTeam: State;
 
   @OneToMany(() => TeamProjectEntity, teamProject => teamProject.team)
   teamProject: TeamProjectEntity[];

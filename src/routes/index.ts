@@ -5,6 +5,7 @@ import skillUserRoutes from './skill-user.routes';
 import collaboratorsRoutes from './collaborators.routes'
 import rolRoutes from './rol.routes'
 import categoryRoutes from './category.routes'
+import teamRoutes from './team.routes'
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use('/skills', skillRoutes);
 router.use('/collaborators', collaboratorsRoutes);
 router.use('/roles', rolRoutes);
 router.use('/categories', categoryRoutes);
+router.use('/teams', teamRoutes);
 
 export default router;
