@@ -4,7 +4,6 @@ import { UserEntity } from '../entities/user.entity';
 import { InjectRepo } from '../decorators';
 import { ErrorHandler } from '../error';
 import { NOT_FOUND, BAD_REQUEST } from 'http-status-codes';
-import { State, UserState } from '../common/enumerations/state';
 
 export class CollaboratorsService {
   @InjectRepo(UserEntity)
@@ -15,7 +14,7 @@ export class CollaboratorsService {
   }
 
   static async create(newUser: UserEntity) {
-    const userExist = await this.userRepository.findOne({email: newUser.email});
+    const userExist = await this.userRepository.findOne({ email: newUser.email });
 
     if (!userExist) {
       const user = this.userRepository.create(newUser);
@@ -25,41 +24,34 @@ export class CollaboratorsService {
     throw new ErrorHandler(BAD_REQUEST, 'Already Exist User with the Same Name');
   }
 
-  /*   static async getOne(id: number) {
-    const skill = await this.userRepository.findOne({
-      
-    })
-    const skill = await this.skillRepository.findOne(
-      {
-        id,
-        stateSkill: State.ACTIVE
-      },
-      { select: ['id', 'nameSkill'] }
-    );
-    if (!skill) throw new ErrorHandler(NOT_FOUND, 'Skill not Found');
+  static async getOne(id: number) {
+    const findUser = await this.userRepository.findOne(id);
 
-    return skill;
+    if (!findUser) throw new ErrorHandler(NOT_FOUND, 'User not Found');
+
+    return findUser;
   }
-
 
   static async delete(id: number) {
-    const skill = await this.getOne(id);
-    await this.skillRepository.update(
-      { id: skill.id, stateSkill: State.ACTIVE },
-      { stateSkill: State.INACTIVE }
-    );
+    const user = await this.getOne(id);
+
+    await this.userRepository.delete(user);
   }
 
-  static async updateData(id: number, nameSkill: string) {
-    const skill = await this.getOne(id);
-
-    const updatedSkill = this.skillRepository.create({
-      ...skill,
-      nameSkill: nameSkill || skill.nameSkill
+  static async update(id: number, userData: UserEntity) {
+    const user = await this.getOne(id);
+    const { name, email, imagePath, username, userDescription } = userData;
+    const updatedUser = this.userRepository.create({
+      ...user,
+      name: name || user.name,
+      email: email || user.email,
+      imagePath: imagePath || user.imagePath,
+      username: username || user.username,
+      userDescription: userDescription || user.userDescription
     });
 
-    await this.skillRepository.save(updatedSkill);
+    await this.userRepository.save(updatedUser);
 
-    return updatedSkill;
-  } */
+    return updatedUser;
+  }
 }
