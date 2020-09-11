@@ -7,7 +7,7 @@ export class RolEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
 
-  @Column('integer', { name: 'name_rol' })
+  @Column('character varying', { name: 'name_rol' })
   nameRol: string;
 
   @OneToMany(() => RolUserEntity, rolUser => rolUser.rol)
