@@ -14,15 +14,21 @@ import { RolEntity } from './rol.entity';
 export class RolUserEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
-
+  
   @Column('integer', { name: 'state_rol' })
-  stateRol: string;
+  stateRol: number;
 
-  @ManyToOne(() => RolEntity, rol => rol.rolUser)
+  @ManyToOne(() => RolEntity, rol => rol.rolUser, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT'
+  })
   @JoinColumn([{ name: 'id_rol', referencedColumnName: 'id' }])
   rol: RolEntity;
 
-  @ManyToOne(() => UserEntity, user => user.rolUser)
+  @ManyToOne(() => UserEntity, user => user.rolUser, {
+    onDelete: 'RESTRICT',
+    onUpdate: 'RESTRICT'
+  })
   @JoinColumn([{ name: 'id_user', referencedColumnName: 'id' }])
   user: UserEntity;
 }
