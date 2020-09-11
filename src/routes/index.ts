@@ -7,16 +7,18 @@ import rolRoutes from './rol.routes'
 import categoryRoutes from './category.routes'
 import teamRoutes from './team.routes'
 import socialMediaRoutes from './social-media.routes'
+import socialMediaUserRoutes from './social-media-user.routes'
 
 const router = Router();
 
 router.use('/users', userRoutes);
 router.use('/users/skills', skillUserRoutes);
+router.use('/users/social-medias', socialMediaUserRoutes);
+router.use('/social-medias', socialMediaRoutes);
 router.use('/skills', skillRoutes);
 router.use('/collaborators', collaboratorsRoutes);
 router.use('/roles', rolRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/teams', teamRoutes);
-router.use('/social-medias', socialMediaRoutes);
 
 export default router;
