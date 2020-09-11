@@ -1,6 +1,7 @@
 import { Column, Entity, PrimaryGeneratedColumn, Index, OneToMany } from 'typeorm';
 import { SkillCategoryEntity } from './skill-category.entity';
 import { CategoryProjectEntity } from './category-project.entity';
+import { State } from '../common/enumerations/state';
 
 @Index('uk_name_category', ['nameCategory'], { unique: true })
 @Entity('category')
@@ -12,7 +13,7 @@ export class CategoryEntity {
   nameCategory: string;
 
   @Column('character varying', { name: 'state_category', length: 20 })
-  stateCategory: string;
+  stateCategory: State;
 
   @OneToMany(() => SkillCategoryEntity, skillCategory => skillCategory.category)
   skillCategory: SkillCategoryEntity[];
