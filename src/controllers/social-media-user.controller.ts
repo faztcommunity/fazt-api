@@ -6,7 +6,6 @@ import { SocialMediaUserService } from '../services/social-media-user.service';
 export class SocialMediaUserController {
   static getUserSocialMedias: Handler = async (req, res) => {
     const userSocialMedias = await SocialMediaUserService.getSocialMedias(req.user.id);
-    console.log(userSocialMedias);
 
     res.status(OK).json({
       message: 'Ok!',
@@ -16,7 +15,10 @@ export class SocialMediaUserController {
   };
 
   static assingSocialMedia: Handler = async (req, res) => {
-    const userSocialMedias = await SocialMediaUserService.assignSocialMedia(req.user.id, req.body.socialMediaId);
+    const userSocialMedias = await SocialMediaUserService.assignSocialMedia(
+      req.user.id,
+      req.body.socialMediaId
+    );
 
     res.status(OK).json({
       message: 'SocialMedia Assigned!',

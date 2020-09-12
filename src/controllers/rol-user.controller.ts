@@ -6,7 +6,6 @@ import { RolUserService } from '../services/rol-user.service';
 export class RolUserController {
   static getUserRoles: Handler = async (req, res) => {
     const userRoles = await RolUserService.getRoles(req.user.id);
-    console.log(userRoles);
 
     res.status(OK).json({
       message: 'Ok!',
