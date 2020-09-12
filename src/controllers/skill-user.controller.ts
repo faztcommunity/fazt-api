@@ -6,7 +6,6 @@ import { SkillUserService } from '../services/skill-user.service';
 export class SkillUserController {
   static getUserSkills: Handler = async (req, res) => {
     const userSkills = await SkillUserService.getSkills(req.user.id);
-    console.log(userSkills);
 
     res.status(OK).json({
       message: 'Ok!',
