@@ -37,6 +37,7 @@ npm run build
 - fazt [About me](https://github.com/fazttech)
 - nfortiz (elfer in Discord) [About me](https://github.com/nfortiz)
 - LordBeor [About me](https://github.com/Beor18)
+- Carlos Montalvo (ZephiroRB in Discord)[GitHub](https://github.com/ZephiroRB)
 - Fede [About me](https://github.com/Fedeya)
 - Nova [About me](https://github.com/Michelyp)
 - Matt [About me](https://github.com/Matttweb)
