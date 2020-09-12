@@ -3,7 +3,7 @@ import { ProjectEntity } from '../entities/project.entity';
 import { InjectRepo } from '../decorators';
 import { ErrorHandler } from '../error';
 import { NOT_FOUND, BAD_REQUEST } from 'http-status-codes';
-import { State } from '../common/enumerations/state';
+import { ProjectStatus } from '../common/enumerations/state';
 
 export class ProjectService {
   @InjectRepo(ProjectEntity)
@@ -11,7 +11,6 @@ export class ProjectService {
 
   static async getAll() {
     return await this.projectRepository.find({
-      where: { statusProject: State.ACTIVE },
       select: [
         'id',
         'nameProject',
@@ -31,8 +30,7 @@ export class ProjectService {
   static async getOne(id: number) {
     const project = await this.projectRepository.findOne(
       {
-        id,
-        statusProject: State.ACTIVE
+        id
       },
       {
         select: [
@@ -55,15 +53,16 @@ export class ProjectService {
     return project;
   }
 
-  static async create(nameProject: string) {
+  static async create(projectData: ProjectEntity) {
     const projectExists = await this.projectRepository.findOne({
-      nameProject
+      where: [{ nameProject: projectData.nameProject }]
     });
 
     if (!projectExists) {
       const project = this.projectRepository.create({
-        nameProject,
-        statusProject: State.ACTIVE
+        ...projectData,
+        statusProject: ProjectStatus.HOLDING,
+        createdAt: new Date()
       });
 
       return await this.projectRepository.save(project);
@@ -75,17 +74,34 @@ export class ProjectService {
   static async delete(id: number) {
     const project = await this.getOne(id);
     await this.projectRepository.update(
-      { id: project.id, statusProject: State.ACTIVE },
-      { statusProject: State.INACTIVE }
+      { id: project.id },
+      { statusProject: ProjectStatus.INACTIVE }
     );
   }
 
-  static async updateData(id: number, nameProject: string) {
+  static async updateData(id: number, projectData: ProjectEntity) {
     const project = await this.getOne(id);
+    const {
+      nameProject,
+      projectDescription,
+      capacity,
+      imgProject,
+      statusProject,
+      urlDemo,
+      urlRepo,
+      observation
+    } = projectData;
 
     const updatedProject = this.projectRepository.create({
       ...project,
-      nameProject: nameProject || project.nameProject
+      nameProject: nameProject || project.nameProject,
+      projectDescription: projectDescription || project.projectDescription,
+      capacity: capacity || project.capacity,
+      imgProject: imgProject || project.imgProject,
+      statusProject: statusProject || project.statusProject,
+      urlDemo: urlDemo || project.urlDemo,
+      urlRepo: urlRepo || project.urlRepo,
+      observation: observation || project.observation
     });
 
     await this.projectRepository.save(updatedProject);

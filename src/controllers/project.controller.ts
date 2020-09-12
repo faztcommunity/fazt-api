@@ -25,9 +25,7 @@ export class ProjectController {
   };
 
   static createProject: Handler = async (req, res) => {
-    const { nameProject } = req.body;
-
-    const project = await ProjectService.create(nameProject);
+    const project = await ProjectService.create(req.body);
 
     res.status(OK).json({
       statusCode: OK,
@@ -50,9 +48,7 @@ export class ProjectController {
   static updateProjectData: Handler = async (req, res) => {
     const id = parseInt(req.params.id);
 
-    const { nameProject } = req.body;
-
-    const project = await ProjectService.updateData(id, nameProject);
+    const project = await ProjectService.updateData(id, req.body);
 
     res.status(OK).json({
       statusCode: OK,
