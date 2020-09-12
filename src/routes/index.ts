@@ -11,6 +11,7 @@ import socialMediaUserRoutes from './social-media-user.routes';
 import RolUserRoutes from './rol-user.routes';
 import ProjectRoutes from './project.routes';
 import ProjectUserRoutes from './project-user.routes';
+import ProjectTeamRoutes from './project-team.routes';
 
 const router = Router();
 
@@ -18,6 +19,7 @@ router.use('/users/skills', skillUserRoutes);
 router.use('/users/social-medias', socialMediaUserRoutes);
 router.use('/users/roles', RolUserRoutes);
 router.use('/projects/users', ProjectUserRoutes);
+router.use('/projects/teams', ProjectTeamRoutes);
 router.use('/users', userRoutes);
 router.use('/social-medias', socialMediaRoutes);
 router.use('/skills', skillRoutes);
