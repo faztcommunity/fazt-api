@@ -14,14 +14,15 @@ import ProjectUserRoutes from './project-user.routes';
 import ProjectTeamRoutes from './project-team.routes';
 import CategoryProjectRoutes from './category-project.routes';
 import SkillProjectRoutes from './skill-project.routes';
+import SkillCategoryRoutes from './skill-category.routes';
 
 const router = Router();
-
 
 router.use('/users/skills', skillUserRoutes);
 router.use('/users/social-medias', socialMediaUserRoutes);
 router.use('/users/roles', RolUserRoutes);
 router.use('/projects/users', ProjectUserRoutes);
+router.use('/categories/skills', SkillCategoryRoutes);
 router.use('/categories/projects', CategoryProjectRoutes);
 router.use('/skills/projects', SkillProjectRoutes);
 router.use('/projects/teams', ProjectTeamRoutes);
