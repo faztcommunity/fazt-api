@@ -26,7 +26,10 @@ export class SocialMediaUserService {
     const user = await UserService.getOne(userId);
     const socialMedia = await SocialMediaService.getOne(socialMediaId);
 
-    const socialMediaUserExist = await this.socialMediaUserRepository.findOne({ socialMedia, user });
+    const socialMediaUserExist = await this.socialMediaUserRepository.findOne({
+      socialMedia,
+      user
+    });
     if (socialMediaUserExist)
       throw new ErrorHandler(BAD_REQUEST, 'You already have this SocialMedia');
 
@@ -42,7 +45,10 @@ export class SocialMediaUserService {
     const user = await UserService.getOne(userId);
     const socialMedia = await SocialMediaService.getOne(socialMediaId);
 
-    const socialMediaUser = await this.socialMediaUserRepository.findOne({ socialMedia, user });
+    const socialMediaUser = await this.socialMediaUserRepository.findOne({
+      socialMedia,
+      user
+    });
 
     await this.socialMediaUserRepository.remove({
       id: socialMediaUser.id,

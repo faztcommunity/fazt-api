@@ -12,7 +12,7 @@ export class SkillService {
   static async getAll() {
     return await this.skillRepository.find({
       where: { stateSkill: State.ACTIVE },
-      select: ['id', 'nameSkill']
+      select: ['id', 'nameSkill', 'stateSkill']
     });
   }
 
@@ -22,7 +22,7 @@ export class SkillService {
         id,
         stateSkill: State.ACTIVE
       },
-      { select: ['id', 'nameSkill'] }
+      { select: ['id', 'nameSkill', 'stateSkill'] }
     );
     if (!skill) throw new ErrorHandler(NOT_FOUND, 'Skill not Found');
 

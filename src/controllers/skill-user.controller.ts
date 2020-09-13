@@ -15,7 +15,7 @@ export class SkillUserController {
   };
 
   static assingSkill: Handler = async (req, res) => {
-    const userSkills = await SkillUserService.assignSkill(req.user.id, req.body.skill);
+    const userSkills = await SkillUserService.assignSkill(req.user.id, req.body.skillId);
 
     res.status(OK).json({
       message: 'Skill Assigned!',

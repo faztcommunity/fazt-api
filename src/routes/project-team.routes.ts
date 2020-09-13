@@ -5,7 +5,7 @@ import { ProjectTeamController } from '../controllers/project-team.controller';
 const router = new ErrorRouter();
 
 router
-  .route('/')
+  .route('/:id')
   .get(auth, ProjectTeamController.getProjectTeam)
   .patch(auth, ProjectTeamController.assingProject)
   .delete(auth, ProjectTeamController.removeProject);

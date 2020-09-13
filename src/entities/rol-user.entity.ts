@@ -8,15 +8,16 @@ import {
 } from 'typeorm';
 import { UserEntity } from './user.entity';
 import { RolEntity } from './rol.entity';
+import { State } from '../common/enumerations/state';
 
 @Index('uk_rol_user', ['rol', 'user'], { unique: true })
 @Entity('rol_user')
 export class RolUserEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;
-  
-  @Column('integer', { name: 'state_rol' })
-  stateRol: number;
+
+  @Column('character varying', { name: 'state_rol' })
+  stateRol: State;
 
   @ManyToOne(() => RolEntity, rol => rol.rolUser, {
     onDelete: 'RESTRICT',

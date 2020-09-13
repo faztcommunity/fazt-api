@@ -5,7 +5,6 @@ import { SkillProjectService } from '../services/skill-project.service';
 
 export class SkillProjectController {
   static getProjectSkills: Handler = async (req, res) => {
-
     const id = parseInt(req.params.id);
 
     const projectSkills = await SkillProjectService.getSkills(id);

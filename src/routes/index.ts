@@ -22,8 +22,8 @@ router.use('/users/skills', skillUserRoutes);
 router.use('/users/social-medias', socialMediaUserRoutes);
 router.use('/users/roles', RolUserRoutes);
 router.use('/projects/users', ProjectUserRoutes);
-router.use('/categories/skills', SkillCategoryRoutes);
-router.use('/categories/projects', CategoryProjectRoutes);
+router.use('/skills/categories', SkillCategoryRoutes);
+router.use('/projects/categories', CategoryProjectRoutes);
 router.use('/skills/projects', SkillProjectRoutes);
 router.use('/projects/teams', ProjectTeamRoutes);
 router.use('/users', userRoutes);
@@ -34,6 +34,5 @@ router.use('/collaborators', collaboratorsRoutes);
 router.use('/projects', ProjectRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/teams', teamRoutes);
-
 
 export default router;
