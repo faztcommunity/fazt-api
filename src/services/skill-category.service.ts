@@ -24,10 +24,12 @@ export class SkillCategoryService {
 
   static async assignCategory(skillId: number, categoryId: number) {
     const category = await CategoryService.getOne(categoryId);
-    console.log(category)
     const skill = await SkillService.getOne(skillId);
 
-    const skillCategoryExist = await this.skillCategoryRepository.findOne({ category,skill });
+    const skillCategoryExist = await this.skillCategoryRepository.findOne({
+      category,
+      skill
+    });
 
     if (skillCategoryExist)
       throw new ErrorHandler(BAD_REQUEST, 'You already have this Category');
@@ -44,7 +46,7 @@ export class SkillCategoryService {
     const category = await CategoryService.getOne(categoryId);
     const skill = await SkillService.getOne(skillId);
 
-    const skillCategory = await this.skillCategoryRepository.findOne({skill, category });
+    const skillCategory = await this.skillCategoryRepository.findOne({ skill, category });
 
     await this.skillCategoryRepository.remove({
       id: skillCategory.id,

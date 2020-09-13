@@ -5,7 +5,6 @@ import { SkillCategoryService } from '../services/skill-category.service';
 
 export class SkillCategoryController {
   static getSkillCategories: Handler = async (req, res) => {
-
     const id = parseInt(req.params.id);
 
     const skillCategories = await SkillCategoryService.getCategories(id);

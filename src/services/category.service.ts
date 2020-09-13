@@ -11,8 +11,7 @@ export class CategoryService {
 
   static async getAll() {
     return await this.categoryReposity.find({
-      where: { stateCategory: State.ACTIVE },
-      select: ['id', 'nameCategory']
+      select: ['id', 'nameCategory', 'stateCategory']
     });
   }
 
@@ -22,7 +21,7 @@ export class CategoryService {
         id,
         stateCategory: State.ACTIVE
       },
-      { select: ['id', 'nameCategory'] }
+      { select: ['id', 'nameCategory', 'stateCategory'] }
     );
     if (!category) throw new ErrorHandler(NOT_FOUND, 'Category not Found');
 

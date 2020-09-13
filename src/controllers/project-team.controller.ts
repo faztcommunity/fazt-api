@@ -5,7 +5,7 @@ import { ProjectTeamService } from '../services/project-team.service';
 
 export class ProjectTeamController {
   static getProjectTeam: Handler = async (req, res) => {
-    const projectTeam = await ProjectTeamService.getProject(req.body.teamId);
+    const projectTeam = await ProjectTeamService.getProject(parseInt(req.params.id));
 
     res.status(OK).json({
       message: 'Ok!',
@@ -15,10 +15,10 @@ export class ProjectTeamController {
   };
 
   static assingProject: Handler = async (req, res) => {
-    const projectTeam = await ProjectTeamService.assingProject(
-      req.body.teamId,
-      req.body.projectId
-    );
+    const id = parseInt(req.params.id);
+    const projectId = parseInt(req.body.projectId);
+
+    const projectTeam = await ProjectTeamService.assingProject(id, projectId);
 
     res.status(OK).json({
       message: 'Project Assigned!',

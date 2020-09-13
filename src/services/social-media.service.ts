@@ -12,7 +12,7 @@ export class SocialMediaService {
   static async getAll() {
     return await this.socialMediaRepository.find({
       where: { stateSocialMedia: State.ACTIVE },
-      select: ['id', 'nameSocial', 'socialLogo']
+      select: ['id', 'nameSocial', 'socialLogo', 'stateSocialMedia']
     });
   }
 
@@ -22,7 +22,7 @@ export class SocialMediaService {
         id,
         stateSocialMedia: State.ACTIVE
       },
-      { select: ['id', 'nameSocial', 'socialLogo'] }
+      { select: ['id', 'nameSocial', 'socialLogo', 'stateSocialMedia'] }
     );
     if (!socialMedia) throw new ErrorHandler(NOT_FOUND, 'SocialMedia not Found');
 

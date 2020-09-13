@@ -11,18 +11,16 @@ export class TeamService {
 
   static async getAll() {
     return await this.teamRepository.find({
-      where: { stateTeam: State.ACTIVE },
-      select: ['id', 'nameTeam', 'teamDescription', 'teamCapacity']
+      select: ['id', 'nameTeam', 'teamDescription', 'teamCapacity', 'stateTeam']
     });
   }
 
   static async getOne(id: number) {
     const team = await this.teamRepository.findOne(
       {
-        id,
-        stateTeam: State.ACTIVE
+        id
       },
-      { select: ['id', 'nameTeam', 'teamDescription', 'teamCapacity'] }
+      { select: ['id', 'nameTeam', 'teamDescription', 'teamCapacity', 'stateTeam'] }
     );
     if (!team) throw new ErrorHandler(NOT_FOUND, 'Team not Found');
 

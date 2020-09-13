@@ -7,6 +7,7 @@ import { RolService } from './rol.service';
 import { RolUserEntity } from '../entities/rol-user.entity';
 import { InjectRepo } from '../decorators';
 import { ErrorHandler } from '../error';
+import { State } from '../common/enumerations/state';
 
 export class RolUserService {
   @InjectRepo(RolUserEntity)
@@ -27,14 +28,13 @@ export class RolUserService {
     const rol = await RolService.getOne(rolId);
 
     const rolUserExist = await this.rolUserRepository.findOne({ rol, user });
-    if (rolUserExist)
-      throw new ErrorHandler(BAD_REQUEST, 'You already have this Rol');
+    if (rolUserExist) throw new ErrorHandler(BAD_REQUEST, 'You already have this Rol');
 
     const rolUser = this.rolUserRepository.create({
       user,
-      rol
+      rol,
+      stateRol: State.ACTIVE
     });
-    rolUser.stateRol = 1
 
     return await this.rolUserRepository.save(rolUser);
   }

@@ -4,11 +4,14 @@ import { auth } from '../middlewares/auth.middleware';
 
 const router = new ErrorRouter();
 
-router.route('/').get(CategoryController.getCategories).post(auth, CategoryController.createCategory);
+router
+  .route('/')
+  .get(CategoryController.getCategories)
+  .post(auth, CategoryController.createCategory);
 
 router
   .route('/:id')
-  .get(CategoryController.getCategory)
+  .get(auth, CategoryController.getCategory)
   .delete(auth, CategoryController.deleteCategory)
   .put(auth, CategoryController.updateCategoryData);
 

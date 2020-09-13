@@ -5,10 +5,9 @@ import { CategoryProjectService } from '../services/category-project.service';
 
 export class CategoryProjectController {
   static getProjectCategories: Handler = async (req, res) => {
-
-    const id = parseInt(req.params.id);
-
-    const projectCategories = await CategoryProjectService.getCategories(id);
+    const projectCategories = await CategoryProjectService.getCategories(
+      parseInt(req.params.id)
+    );
 
     res.status(OK).json({
       message: 'Ok!',
