@@ -1,6 +1,6 @@
 import { Column, Entity, PrimaryGeneratedColumn, Index, OneToMany } from 'typeorm';
 import { SkillCategoryEntity } from './skill-category.entity';
-import { CategoryProjectEntity } from './category-project.entity';
+import { CategoryProjectEntity } from './project-category.entity';
 import { State } from '../common/enumerations/state';
 
 @Index('uk_name_category', ['nameCategory'], { unique: true })

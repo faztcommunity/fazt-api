@@ -3,7 +3,7 @@ import { CategoryEntity } from './category.entity';
 import { ProjectEntity } from './project.entity';
 
 @Index('uk_category_project', ['category', 'project'], { unique: true })
-@Entity('category_project')
+@Entity('project_category')
 export class CategoryProjectEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
   id: number;

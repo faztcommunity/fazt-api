@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { TeamEntity } from './team.entity';
 import { ProjectEntity } from './project.entity';
+import { State } from '../common/enumerations/state';
 
 @Index('uk_project_team', ['team', 'project'], { unique: true })
 @Entity('project_team')
@@ -16,7 +17,7 @@ export class ProjectTeamEntity {
   id: number;
 
   @Column({ name: 'state_project_team', type: 'varchar', length: 20 })
-  stateProjectTeam: string;
+  stateProjectTeam: State;
 
   @ManyToOne(() => TeamEntity, team => team.projectTeam, {
     onDelete: 'RESTRICT',

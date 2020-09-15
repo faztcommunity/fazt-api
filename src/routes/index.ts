@@ -12,7 +12,7 @@ import RolUserRoutes from './rol-user.routes';
 import ProjectRoutes from './project.routes';
 import ProjectUserRoutes from './project-user.routes';
 import ProjectTeamRoutes from './project-team.routes';
-import CategoryProjectRoutes from './category-project.routes';
+import CategoryProjectRoutes from './project-category.routes';
 import SkillProjectRoutes from './skill-project.routes';
 import SkillCategoryRoutes from './skill-category.routes';
 

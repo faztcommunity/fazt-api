@@ -7,7 +7,7 @@ const swaggerDefinition: SwaggerDefinition = {
     version: '1.0.0',
     description: 'Servicios REST para la aplicación de Fazt Community'
   },
-  host: 'localhost:3000',
+  host: 'localhost:4000',
   basePath: '/',
   openapi: '3.0.0'
 };
