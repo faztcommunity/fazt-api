@@ -1,7 +1,7 @@
 import { OK } from 'http-status-codes';
 import { Handler } from 'express';
 
-import { CategoryProjectService } from '../services/category-project.service';
+import { CategoryProjectService } from '../services/project-category.service';
 
 export class CategoryProjectController {
   static getProjectCategories: Handler = async (req, res) => {

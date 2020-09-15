@@ -1,5 +1,5 @@
 import { Index, Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
-import { CategoryProjectEntity } from './category-project.entity';
+import { CategoryProjectEntity } from './project-category.entity';
 import { SkillProjectEntity } from './skill-project.entity';
 import { ProjectUserEntity } from './project-user.entity';
 import { ProjectTeamEntity } from './project-team.entity';

@@ -4,7 +4,7 @@ import { BAD_REQUEST } from 'http-status-codes';
 import { ProjectService } from './project.service';
 import { CategoryService } from './category.service';
 
-import { CategoryProjectEntity } from '../entities/category-project.entity';
+import { CategoryProjectEntity } from '../entities/project-category.entity';
 import { InjectRepo } from '../decorators';
 import { ErrorHandler } from '../error';
 
@@ -26,7 +26,10 @@ export class CategoryProjectService {
     const project = await ProjectService.getOne(projectId);
     const category = await CategoryService.getOne(categoryId);
 
-    const categoryProjectExist = await this.categoryProjectRepository.findOne({ category, project });
+    const categoryProjectExist = await this.categoryProjectRepository.findOne({
+      category,
+      project
+    });
 
     if (categoryProjectExist)
       throw new ErrorHandler(BAD_REQUEST, 'You already have this Project');
@@ -43,7 +46,10 @@ export class CategoryProjectService {
     const project = await ProjectService.getOne(projectId);
     const category = await CategoryService.getOne(categoryId);
 
-    const categoryProject = await this.categoryProjectRepository.findOne({ category, project });
+    const categoryProject = await this.categoryProjectRepository.findOne({
+      category,
+      project
+    });
 
     await this.categoryProjectRepository.remove({
       id: categoryProject.id,

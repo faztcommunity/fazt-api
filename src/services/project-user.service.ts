@@ -1,5 +1,5 @@
 import { Repository } from 'typeorm';
-import { BAD_REQUEST } from 'http-status-codes';
+import { BAD_REQUEST, NOT_FOUND } from 'http-status-codes';
 
 import { UserService } from './user.service';
 import { ProjectService } from './project.service';
@@ -22,6 +22,19 @@ export class ProjectUserService {
       .select(['projectUser.id', 'project.id', 'project.nameProject'])
       .leftJoin('projectUser.project', 'project')
       .getMany();
+  }
+
+  static async getOne(id: number) {
+    const projectUser = await this.projectUserRepository.findOne(
+      {
+        id
+      },
+      { select: ['id'] }
+    );
+
+    if (!projectUser) throw new ErrorHandler(NOT_FOUND, 'Project User not Found');
+
+    return projectUser;
   }
 
   static async assingProject(userId: number, projectId: number) {

@@ -3,6 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn, Index, OneToMany } from 'typeor
 import { TeamProjectEntity } from './team-project.entity';
 import { ProjectTeamEntity } from './project-team.entity';
 import { State } from '../common/enumerations/state';
+import { TeamProjectUserEntity } from './team-project-user.entity';
 
 @Index('uk_name_team', ['nameTeam'], { unique: true })
 @Entity('team')
@@ -27,4 +28,7 @@ export class TeamEntity {
 
   @OneToMany(() => ProjectTeamEntity, projectTeam => projectTeam.team)
   projectTeam: ProjectTeamEntity[];
+
+  @OneToMany(() => TeamProjectUserEntity, teamProjectUser => teamProjectUser.team)
+  teamProjectUser: TeamProjectUserEntity[];
 }

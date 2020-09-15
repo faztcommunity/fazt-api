@@ -10,6 +10,7 @@ import {
 import { ProjectEntity } from './project.entity';
 import { UserEntity } from './user.entity';
 import { TeamProjectEntity } from './team-project.entity';
+import { TeamProjectUserEntity } from './team-project-user.entity';
 
 @Entity('project_user')
 @Index('uk_project_user', ['user', 'project'], { unique: true })
@@ -39,4 +40,7 @@ export class ProjectUserEntity {
     onUpdate: 'RESTRICT'
   })
   teamProject: TeamProjectEntity[];
+
+  @OneToMany(() => TeamProjectUserEntity, teamProjectUser => teamProjectUser.team)
+  teamProjectUser: TeamProjectUserEntity[];
 }

@@ -1,6 +1,6 @@
 import { ErrorRouter } from '../error';
 import { auth } from '../middlewares/auth.middleware';
-import { CategoryProjectController } from '../controllers/category-project.controller';
+import { CategoryProjectController } from '../controllers/project-category.controller';
 
 const router = new ErrorRouter();
 
