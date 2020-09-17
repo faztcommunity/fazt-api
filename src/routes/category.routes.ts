@@ -1,13 +1,13 @@
 import { CategoryController } from '../controllers/category.controller';
 import { ErrorRouter } from '../error';
 import { auth } from '../middlewares/auth.middleware';
-
+import { categoryCategoryValidator } from '../validators/category.validators';
 const router = new ErrorRouter();
 
 router
   .route('/')
-  .get(CategoryController.getCategories)
-  .post(auth, CategoryController.createCategory);
+  .get(auth, CategoryController.getCategories)
+  .post(auth, categoryCategoryValidator, CategoryController.createCategory);
 
 router
   .route('/:id')
