@@ -15,9 +15,11 @@ import ProjectTeamRoutes from './project-team.routes';
 import CategoryProjectRoutes from './project-category.routes';
 import SkillProjectRoutes from './skill-project.routes';
 import SkillCategoryRoutes from './skill-category.routes';
+import TeamProjectUserRoutes from './team-project-user.routes';
 
 const router = Router();
 
+router.use('/teams/projects/users', TeamProjectUserRoutes);
 router.use('/users/skills', skillUserRoutes);
 router.use('/users/social-medias', socialMediaUserRoutes);
 router.use('/users/roles', RolUserRoutes);
