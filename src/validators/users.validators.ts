@@ -1,5 +1,4 @@
-import { Handler } from 'express';
-import { check, body } from 'express-validator';
+import { check } from 'express-validator';
 
 export const signUpValidator = [
   check('name', 'the name is required').not().isEmpty(),

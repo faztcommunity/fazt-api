@@ -1,12 +1,14 @@
 import { ProjectController } from '../controllers/project.controller';
 import { ErrorRouter } from '../error';
 import { auth } from '../middlewares/auth.middleware';
+import { validate } from '../middlewares/validator.middleware';
+import { createProjectValidator } from '../validators/projects.validators';
 const router = new ErrorRouter();
 
 router
   .route('/')
   .get(ProjectController.getProjects)
-  .post(auth, ProjectController.createProject);
+  .post(validate(createProjectValidator), ProjectController.createProject);
 
 router
   .route('/:id')
