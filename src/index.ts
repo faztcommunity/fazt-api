@@ -1,13 +1,13 @@
 import app from './app';
 import { createConnection } from 'typeorm';
 
-import { createRoles } from './utils/create.roles';
+import { createData } from './utils/initial-setup';
 
 async function init() {
   try {
     const con = await createConnection();
     console.log('Postgres is Online');
-    createRoles(con);
+    createData(con);
 
   } catch (err) {
     console.log('Error Creating Postgres Connection:', err.message);
