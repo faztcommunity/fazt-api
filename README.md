@@ -20,6 +20,7 @@ npm install
 ### Run Development Server
 
 ```bash
+docker volume create pgdata # if you have docker
 docker-compose up -d # if you have docker
 npm run dev
 ```
