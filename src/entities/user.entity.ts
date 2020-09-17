@@ -10,7 +10,7 @@ import { UserState } from '../common/enumerations/state';
 @Entity('user')
 export class UserEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })
-  id: number;
+  id?: number;
 
   @Column('character varying', { name: 'name', length: 45 })
   name: string;
@@ -34,23 +34,23 @@ export class UserEntity {
   userDescription: string | null;
 
   @Column('integer', { name: 'activation_key', nullable: true })
-  activationKey: number | null;
+  activationKey?: number | null;
 
   @Column('integer', { name: 'reset_key', nullable: true })
-  resetKey: number | null;
+  resetKey?: number | null;
 
   @Column('integer', { name: 'reset_date', nullable: true })
-  resetDate: number | null;
+  resetDate?: number | null;
 
   @OneToMany(() => SkillUserEntity, skillUser => skillUser.user)
-  skillUser: SkillUserEntity[];
+  skillUser?: SkillUserEntity[];
 
   @OneToMany(() => RolUserEntity, rolUser => rolUser.user)
-  rolUser: RolUserEntity[];
+  rolUser?: RolUserEntity[];
 
   @OneToMany(() => SocialMediaUserEntity, socialMediaUser => socialMediaUser.user)
-  socialMediaUser: SocialMediaUserEntity[];
+  socialMediaUser?: SocialMediaUserEntity[];
 
   @OneToMany(() => ProjectUserEntity, projectUser => projectUser.user)
-  projectUser: ProjectUserEntity[];
+  projectUser?: ProjectUserEntity[];
 }

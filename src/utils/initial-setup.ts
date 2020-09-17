@@ -5,6 +5,7 @@ import { RolUserService } from '../services/rol-user.service';
 import { UserService } from '../services/user.service';
 import { UserEntity } from '../entities/user.entity';
 import { ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_USERNAME } from '../config';
+import { UserState } from '../common/enumerations/state';
 
 export const createData = async (con: Connection) => {
   const roles = await RolService.getAll();
@@ -25,8 +26,10 @@ export const createData = async (con: Connection) => {
       username: ADMIN_USERNAME,
       password: ADMIN_PASSWORD,
       imagePath: '',
-      userDescription: ''
+      userDescription: '',
+      stateUser: UserState.ACTIVE
     };
+
     const userCreated = await UserService.createUser(adminData);
 
     if (userCreated) {
