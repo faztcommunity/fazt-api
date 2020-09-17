@@ -23,6 +23,17 @@ export class RolUserService {
       .getMany();
   }
 
+
+  static async checkRol(userId: number, nameRol: string) {
+    const user = await UserService.getOne(userId);
+    const rol = await RolService.getNameRol(nameRol)
+
+    const rolUserExist = await this.rolUserRepository.findOne({ rol, user });
+  
+    return rolUserExist;
+  }
+
+
   static async assignRol(userId: number, rolId: number) {
     const user = await UserService.getOne(userId);
     const rol = await RolService.getOne(rolId);

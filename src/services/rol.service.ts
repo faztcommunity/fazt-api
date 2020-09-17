@@ -17,6 +17,19 @@ export class RolService {
     });
   }
 
+  static async getNameRol(nameRol: string) {
+    const rol = await this.rolRepository.findOne(
+      {
+        nameRol
+      },
+      { select: ['id', 'nameRol'] }
+    );
+
+    if (!rol) throw new ErrorHandler(NOT_FOUND, 'Rol not Found');
+
+    return rol;
+  }
+
   static async getOne(id: number) {
     const rol = await this.rolRepository.findOne(
       {
