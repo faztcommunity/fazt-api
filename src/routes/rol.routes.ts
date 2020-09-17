@@ -1,10 +1,14 @@
 import { RolController } from '../controllers/rol.controller';
 import { ErrorRouter } from '../error';
 import { auth } from '../middlewares/auth.middleware';
+import { createRolValidator } from '../validators/rol.validators';
 
 const router = new ErrorRouter();
 
-router.route('/').get(RolController.getRoles).post(auth, RolController.createRol);
+router
+  .route('/')
+  .get(RolController.getRoles)
+  .post(auth, createRolValidator, RolController.createRol);
 
 router
   .route('/:id')
