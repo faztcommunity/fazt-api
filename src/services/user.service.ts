@@ -3,10 +3,13 @@ import bcrypt from 'bcrypt';
 import { NOT_FOUND, BAD_REQUEST } from 'http-status-codes';
 
 import { UserEntity } from '../entities/user.entity';
+import { Roles } from '../common/roles/default';
 
 import { InjectRepo } from '../decorators';
 import { ErrorHandler } from '../error';
 import { UserState } from '../common/enumerations/state';
+import { RolService } from '../services/rol.service';
+import { RolUserService } from '../services/rol-user.service';
 
 export class UserService {
   @InjectRepo(UserEntity)
@@ -32,7 +35,8 @@ export class UserService {
     return user;
   }
 
-  static async create(userData: UserEntity) {
+  static async createUser(userData: UserEntity) {
+
     const userExist = await this.userRepository.findOne({
       where: [{ email: userData.email }, { username: userData.username }]
     });
@@ -47,7 +51,22 @@ export class UserService {
       imagePath: ''
     });
 
-    return await this.userRepository.save(user);
+    const userCreated = await this.userRepository.save(user);
+
+    return userCreated;
+  }
+
+  static async create(userData: UserEntity) {
+    
+    const userCreated = await UserService.createUser(userData);
+
+    const rolGuest = await RolService.getNameRol(Roles.GUEST);
+
+    if (rolGuest) {
+      await RolUserService.assignRol(userCreated.id, rolGuest.id);
+    }
+
+    return userCreated;
   }
 
   static async logIn(email: string, password: string) {
