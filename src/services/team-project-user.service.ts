@@ -13,14 +13,14 @@ export class TeamProjectUserService {
   @InjectRepo(TeamProjectUserEntity)
   private static teamProjectUserRepository: Repository<TeamProjectUserEntity>;
 
-  static async getProjectUser(idTeam: number) {
+  static async getTeamProjectUser(idTeam: number) {
     const team = await TeamService.getOne(idTeam);
 
     return await this.teamProjectUserRepository
       .createQueryBuilder('teamProjectUser')
       .where({ team })
-      .select(['teamProjectUser.id', 'projectUser.id'])
-      .leftJoin('teamProjectUser.project', 'projectUser')
+      .select(['teamProjectUser.id', 'team.id', 'team.nameTeam'])
+      .leftJoin('teamProjectUser.team', 'team')
       .getMany();
   }
 
