@@ -10,8 +10,7 @@ import { TeamEntity } from './team.entity';
 import { ProjectUserEntity } from './project-user.entity';
 import { State } from '../common/enumerations/state';
 
-@Index('uk_team_project_user', ['team_project_user', 'project_user'], { unique: true })
-@Index('uk_project_user_team', ['team_project_user', 'team'], { unique: true })
+@Index('uk_team_project_user', ['projectUser', 'team'], { unique: true })
 @Entity('team_project_user')
 export class TeamProjectUserEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })

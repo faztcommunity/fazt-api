@@ -2,7 +2,7 @@ import { Index, Entity, PrimaryGeneratedColumn, ManyToOne, JoinColumn } from 'ty
 import { CategoryEntity } from './category.entity';
 import { ProjectEntity } from './project.entity';
 
-@Index('uk_category_project', ['category', 'project'], { unique: true })
+@Index('uk_project_category', ['category', 'project'], { unique: true })
 @Entity('project_category')
 export class CategoryProjectEntity {
   @PrimaryGeneratedColumn({ type: 'integer', name: 'id' })

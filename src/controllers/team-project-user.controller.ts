@@ -4,8 +4,8 @@ import { Handler } from 'express';
 import { TeamProjectUserService } from '../services/team-project-user.service';
 
 export class TeamProjectUserController {
-  static getProjectUser: Handler = async (req, res) => {
-    const teamProjectUser = await TeamProjectUserService.getProjectUser(
+  static getTeamProjectUser: Handler = async (req, res) => {
+    const teamProjectUser = await TeamProjectUserService.getTeamProjectUser(
       parseInt(req.params.id)
     );
 
@@ -18,7 +18,7 @@ export class TeamProjectUserController {
 
   static assingProjectUser: Handler = async (req, res) => {
     const id = parseInt(req.params.id);
-    const projectUserId = parseInt(req.body.projectId);
+    const projectUserId = parseInt(req.body.projectUserId);
 
     const teamProjectUser = await TeamProjectUserService.assingProjectUser(
       id,
@@ -33,7 +33,9 @@ export class TeamProjectUserController {
   };
 
   static removeProjectUser: Handler = async (req, res) => {
-    await TeamProjectUserService.removeProjectUser(req.body.teamId, req.body.projectId);
+    const id = parseInt(req.params.id);
+    const projectUserId = parseInt(req.body.projectUserId);
+    await TeamProjectUserService.removeProjectUser(id, projectUserId);
 
     res.status(OK).json({
       message: 'Project Removed!',

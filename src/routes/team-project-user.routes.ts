@@ -6,7 +6,7 @@ const router = new ErrorRouter();
 
 router
   .route('/:id')
-  .get(auth, TeamProjectUserController.getProjectUser)
+  .get(auth, TeamProjectUserController.getTeamProjectUser)
   .patch(auth, TeamProjectUserController.assingProjectUser)
   .delete(auth, TeamProjectUserController.removeProjectUser);
 
