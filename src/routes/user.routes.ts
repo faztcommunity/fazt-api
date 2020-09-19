@@ -13,5 +13,6 @@ router
   .put(auth, UserController.updateUserData);
 
 router.post('/login', logInValidator, UserController.logIn);
+router.get('/get_details', auth, UserController.getUser);
 
 export default router.router;

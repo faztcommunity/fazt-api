@@ -38,6 +38,15 @@ export class UserController {
     });
   };
 
+  static getUser: Handler = async (req, res) => {
+    const user = await UserService.getOne(req.user.id);
+
+    res.status(OK).json({
+      statusCode: OK,
+      data: user
+    });
+  };
+
   static deleteUser: Handler = async (req, res) => {
     await UserService.delete(req.user.id);
 
